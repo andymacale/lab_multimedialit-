@@ -133,17 +133,17 @@ La trasformata Wavelet gode delle seguenti proprietà:
     \item adattabilità, poiché si possono rappresentare funzioni discontinue e con angoli in modo molto efficiente;
     \item complessità temporale lineare, cioè diverse trasformazioni si possono compiere in tempo $O(N)$.
 \end{itemize}
-\section{Applicazione della trasformata Wavelet: l'analisi multirisoluzione}
+\section{Analisi multirisoluzione}
 Per effettuare l'analisi multirisoluzione di un'immagine, è necessario definire in maniera compatta la formula dell'espansione di un segnale $f(t)$ in serie.
 \begin{equation*}
-    f(t)=\sum_{j}\sum_{i}a_{ij}\psi_{ij}(t)=\sum_{j}\sum_{i}a_{ij}2^{\frac{i}{2}}\psi\left(2^it-j\right)
-\end{equation*}
+    f(t)=\sum_{k}\sum_{j}a_{jk}\psi_{jk}(t)=\sum_{k}\sum_{j}a_{jk}2^{\frac{j}{2}}\psi\left(2^jt-k\right)
+\end{equation*}i
 In particolare:
 \begin{itemize}
-    \item $a_{ij}$ sono coefficienti reali di espansione;
-    \item $\psi_{ij}(t)$ sono le funzioni di espansione.
+    \item $a_{jk}$ sono coefficienti reali di espansione;
+    \item $\psi_{jk}(t)$ sono le funzioni di espansione.
 \end{itemize}
-In particolare, si crea un mapping dove le $j$ sono le ascisse e $i$ le ordinate: le $f_i(t)$ più in basso rappresentano i dettagli grossolani; fino ad arrivare più vicino a $f(t)$, che rappresentano i dettagli fini, come mostrato nell'immagine di seguito.
+In particolare, si crea un mapping dove le $k$ sono le ascisse e $j$ le ordinate: le $\hat{f}_j(t)$ più in basso rappresentano i dettagli a bassa risoluzione; fino ad arrivare più vicino a $f(t)$, che rappresentano i dettagli ad alta risoluzione. Ne è mostrato un esempio nell'immagine di seguito.
 \begin{figure}[htbp]
         \centering
         \includegraphics[width=1\textwidth]{cap4/serie} 
@@ -151,4 +151,28 @@ In particolare, si crea un mapping dove le $j$ sono le ascisse e $i$ le ordinate
         \label{fig:serie}
 \end{figure}
 \subsection{Creazione delle piramide dell'immagine}
-
+Una semplice struttura per rappresentare un'immagine a più risoluzione è la cosiddetta piramide dell'immagine, in cui:
+\begin{itemize}
+    \item alla base è presente la rappresentazione dell'immagine con la massima risoluzione, detto livello J;
+    \item all'apice è presente la rappresentazione dell'immagine con la minima risoluzione, detto livello 0.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap4/Slide2} 
+        \caption{Piramide dell'immagine} 
+        \label{fig:pyramid}
+\end{figure}
+La costruzione della piramide avviene nel modo seguente:
+\begin{enumerate}
+    \item si riduce la risoluzione con un filtro di approssimazione (es. Gaussiano) e si esegue un sottocampionamento di un fattore $2$;
+    \item si sovracampiona di un fattore $2$ il risultato ottenuto e si applica un filtro di interpolazione, creando una predizione con la stessa risoluzione dell'ingresso iniziale;
+    \item si esegue la differenza tra la predizione e l'input iniziale.
+\end{enumerate}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap4/Slide3} 
+        \caption{Schema di costruzione della piramide dell'immagine} 
+        \label{fig:cost}
+\end{figure}
+\subsection{Condizioni}
+kpp
