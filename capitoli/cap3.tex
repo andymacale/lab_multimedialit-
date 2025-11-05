@@ -1,0 +1,230 @@
+Fino ad ora, sono state trattate le immagini nel dominio spaziale, considerandole come funzioni a due variabili $f(x,y)$. Questa rappresentazione è sicuramente molto comoda ed intuitiva, poiché nelle immagini in bianco e nero, non è altro che una matrice $M\to N$ dove ogni elemento corrisponde al livello di grigio di un pixel. Tuttavia, tale rappresentazione diventa decisamente meno comoda nel momento in cui si eseguono delle operazioni di filtraggio, perché l'operazione di convoluzione risulta decisamente costosa in termini computazionali.
+\section{Dominio della frequenza}
+Per risolvere tale problema, si passa nel dominio della frequenza. L'idea di base, è:
+\begin{itemize}
+    \item una funzione periodica si può riscrivere in serie di Fourier come somma di seni e coseni moltiplicati per coefficienti distinti;
+    \begin{equation*}
+        f(t)=\sum_{i=-\infty}^{\infty}c_n \exp\left(j2\pi\frac{nt}{T}\right) : f(t)=f(t-T)
+    \end{equation*}
+    \item una funzione non periodica si può rappresentare in frequenza come l'integrale di seni e coseni moltiplicati per una funzione pesata.
+    \begin{equation*}
+        F(\nu)=\int_{-\infty}^{\infty}f(t)\exp\left(-j2\pi t \nu\right) \, dt
+    \end{equation*}
+\end{itemize}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{cap3/tf} 
+        \caption{Rappresentazione della trasformata di Fourier} 
+        \label{fig:tf}
+\end{figure}
+
+\subsection{Trasformata di Fourier in due dimensioni}
+Passando in un due dimensioni, le frequenze sono due:
+\begin{itemize}
+    \item frequenza spaziale lungo l'asse $x$, definita come $u$;
+    \item frequenza spaziale lungo l'asse $y$, definita come $v$.
+\end{itemize}
+Come si può intuire facilmente, se la funzione pesata in una dimensione ha due variabili, in due dimensione ne servono ben quattro: infatti $x$ e $y$ saranno gli indici di sommatoria, stessa cosa per l'antitrasformata che saranno $u$ e $v$.
+\begin{equation*}
+        F(u,v)=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}f(x,y)\exp\left[-j2\pi\left(\frac{ux}{M}+\frac{vy}{N}\right)\right]
+    \end{equation*}
+\begin{equation*}
+     f(x,y)=\frac{1}{MN}\sum_{u=0}^{M-1}\sum_{v=0}^{N-1}F(u,v)\exp\left[j2\pi\left(\frac{ux}{M}+\frac{vy}{N}\right)\right]
+\end{equation*}
+Il valore della trasformata di Fourier alla frequenza di origine prende il nome di componente DC: esso si calcola facendo la media tra il prodotto dell'intensità di $f(x,y)$ e un fattore $MN$. Infatti, risulta molto comune eseguire una traslazione della componente DC sul punto $(M/2, N/2)$.
+\begin{equation*}
+        F(u,v)=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[f(x,y)+(1)^{x+y}\right]\exp\left[-j2\pi\left(\frac{ux}{M}+\frac{vy}{N}\right)\right]
+\end{equation*}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap3/frequenza} 
+        \caption{Immagine nel dominio spaziale (a sinistra) ed in frequenza (a destra)} 
+        \label{fig:frequenza}
+\end{figure}
+\subsection{Proprietà della trasformata di Fourier}
+La trasformata di Fourier gode della seguenti proprietà:
+\begin{itemize}
+    \item proprietà di traslazione, che afferma che se l'immagine è traslata nello spazio, in frequenza sarà traslata solo nella fase ma non in ampiezza;
+    \begin{equation*}
+        F[f(x-x_0,y-y_0)]=F(u,v)\exp\left[-j2\pi\left(\frac{ux_0}{M}+\frac{vy_0}{N}\right)\right]
+    \end{equation*}
+    \item linearità;
+    \begin{equation*}
+        F[af_1(x,y)+bf_2(x,y)]=aF_1(u,v)+bF_2(u,v)
+    \end{equation*}
+    \item proprietà di rotazione, che afferma che se l'immagine è ruotata di un angolo $\theta$, anche in frequenza sarà ruotata dello stesso angolo;
+    \item separabilità, ossia si può eseguire prima la trasformata sulle righe e poi sulle colonne (o viceversa).
+\end{itemize}
+\subsection{Teorema della convoluzione e applicazione al filtraggio}
+La potenzialità del passaggio dal dominio spaziale al dominio della frequenza sta nel teorema della convoluzione. Tale teorema afferma che eseguire una convoluzione nel dominio spaziale corrisponde ad eseguire un prodotto nel dominio della frequenza, con un costo computazione molto meno elevato.
+\begin{center}
+    $f(x,y)\ast h(x,y) \longleftrightarrow F(u,v)H(u,v)$
+\end{center}
+Ciò consiste nel trasformare l'immagine originale in frequenza; moltiplicarla per il filtro in frequenza, denominato anche funzione di trasferimento; e trasformare l'immagine filtrata nel dominio spaziale.In particolare, si fa riferimento a due tipologie di frequenza:
+\begin{itemize}
+    \item le basse frequenze, che rappresentano le aree omogenee;
+    \item le alte frequenze, che rappresentano i dettagli.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap3/schema} 
+        \caption{Filtraggio nel dominio della frequenza} 
+        \label{fig:schemaFrequenza}
+\end{figure}
+\section{Filtro di Notch}
+Il filtro più semplice da implementare è il filtro di Notch, chiamato anche filtro elimina-banda, che consiste nel far passare tutte le frequenze, eccetto per una tacca (notch in inglese), che corrisponde alla componente DC.
+\begin{equation*}
+        H(u,v) = 
+        \begin{dcases}
+               0 & \text{se } (u,v) = \left(\frac{M}{2},\frac{N}{2}\right) \\[1.5ex]
+                1 & \text{se } (u,v) \ne \left(\frac{M}{2},\frac{N}{2}\right)
+            \end{dcases}
+    \end{equation*}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.65\textwidth]{cap3/notch} 
+        \caption{Immagine originale (a sinistra) e immagine filtrata con un filtro Notch (a destra)} 
+        \label{fig:notch}
+\end{figure}
+\section{Filtri passa-basso}
+I filtri passa-basso (LPF, dall'inglese low-pass filter) attenuano le alte frequenze, applicando quindi l'effetto di sfocatura e riduzione del rumore. Infatti, corrispondono ai filtri di smussamento nel dominio spaziale. Innanzitutto, si considera la distanza euclidea in frequenza $D(u,v)$, calcolata come segue.
+\begin{equation*}
+    D(u,v)=\sqrt{\left(u-\frac{M}{2}\right)^2+\left(v-\frac{N}{2}\right)^2}
+\end{equation*}
+Inoltre, si considera la cosiddetta frequenza di cutoff ($D_0$), che cambia il comportamento del filtro in base a tale valore.
+\subsection{Filtro passa-basso ideale}
+Il filtro passa-basso ideale fa passare solamente le frequenze la cui distanza euclidea è minore od al più uguale alla frequenza di cutoff.
+\begin{equation*}
+        H(u,v) = 
+        \begin{dcases}
+               1 & \text{se } D(u,v) \le D_0 \\
+               0 & \text{se } D(u,v) > D_0
+            \end{dcases}
+\end{equation*}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{cap3/idealeL} 
+        \caption{Funzionamento di un filtro passo-basso ideale} 
+        \label{fig:LPF_ideale}
+\end{figure}
+In particolare, maggiore sarà il cutoff e minore sarà la sfocatura, poiché passarranno più frequenze.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{cap3/LPF_ideale} 
+        \caption{Da sinistra: immagine originale, LPF ideale $D_0=8$ e LPF ideale $D_0=16$} 
+        \label{fig:LPF_ideale2}
+\end{figure}
+\subsection{Filtro passa-basso di Butterworth}
+Il filtro passa-basso di Butterworth permette di eseguire una sfocatura molto meno intensa rispetto a quella ideale, ma neanche ai livello del filtro Gaussiano. Oltre alla distanza euclidea ed alla frequenza di cutoff, si aggiunge un parametro $n$, che indica l'ordine del filtro, ovvero la sua ripidità: infatti, maggiore è l'ordine, più si avvicina ad un filtro passa basso ideale.
+\begin{equation*}
+        H(u,v) = 
+        \frac{1}{1+\left[\frac{D(u,v)}{D_0}\right]^{2n}}
+\end{equation*}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap3/butterworth} 
+        \caption{Vari ordini del filtro passa-basso di Butterworth} 
+        \label{fig:LPF_ideale2}
+\end{figure}
+\subsection{Filtro passa-basso Gaussiano}
+Il filtro passa-basso Guassiano è in grado di attenuare le alte frequenze con poca intensità. In particolare, il cutoff corrisponde alla deviazione standard della gaussiana.
+\begin{equation*}
+        H(u,v) = 
+        \exp{\left[-\frac{D^2(u,v)}{2D^2_0}\right]}
+\end{equation*}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap3/gaussiana} 
+        \caption{Filtri passa-basso Gaussiani} 
+        \label{fig:LPF_ideale2}
+\end{figure}
+\section{Filtri passa-alto}
+I filtri passa-alto (HPF, dall'inglese high-pass filter) attenuano le basse frequenze e risaltano le alte frequenze, applicando quindi l'effetto di sfocatura e riduzione del rumore. Infatti, corrispondono ai filtri di nitidezza nel dominio spaziale. Anche in questo caso, si ha la distanze euclidea e la frequenza di cutoff.\\
+Inoltre, la funzione di trasferimento di un filtro passo-alto è l'inverso di quello del filtro passa-basso.
+\begin{equation*}
+        H_{HPF}(u,v) = 1 - H_{LPF}(u,v)
+\end{equation*}
+\subsection{Filtro passa-alto ideale, di Butterworth e Gaussiano}
+Di seguito, sono riportate le formule dei filtri passa-alto ideale, di Butterworth e Gaussiano, che presentano le proprietà inverse di quelle del passo-basso.
+\begin{center}
+\begin{minipage}{0.06\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        H(u,v) = 
+        \begin{dcases}
+               0 & \text{se } D(u,v) \le D_0 \\
+               1 & \text{se } D(u,v) > D_0
+            \end{dcases}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.06\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        H(u,v) = 
+        \frac{1}{1+\left[\frac{D_0}{D(u,v)}\right]^{2n}}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.30\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        H(u,v) = 
+        1-\exp{\left[-\frac{D^2(u,v)}{2D^2_0}\right]}
+    \end{equation*}
+\end{minipage}
+\end{center}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.85\textwidth]{cap3/HPF} 
+        \caption{Da alto a sinistra senso orario: originale, HPF ideale, HPF di Butterworth e HPF Gaussiano} 
+        \label{fig:HPF}
+\end{figure}
+\subsection{Il Laplaciano, i filtri di contrasto e l'high-boost filtering}
+Nel dominio spaziale, il Laplaciano presenta la formula seguente:
+\begin{equation*}
+        g(x,y)=f(x,y)-\nabla^2f(x,y)
+\end{equation*}
+dove:
+\begin{equation*}
+        \nabla^2f=\frac{\delta^2 f}{\delta x^2}+\frac{\delta^2 f}{\delta y^2}
+\end{equation*}
+In frequenza, la trasformata di una Fourier della derivata è la seguente:
+\begin{equation*}
+    F\left[ \frac{d^2 f}{d t^2} \right]=-\nu^2F(\nu)
+\end{equation*}
+che in due dimensioni e per le immagini, corrisponde:
+\begin{equation*}
+    F\left[\nabla^2f\right]=-(u^2+v^2)F(u,v)
+\end{equation*}
+Perciò, l'immagine trasformata in frequenza si ottiene nella maniera che segue:
+\begin{equation*}
+    G(u,v)=F(u,v)+(u^2+v^2)F(u,v)=[1+(u^2+v^2)]F(u,v)
+\end{equation*}
+da cui si ricava la funzione di trasferimento.
+\begin{equation*}
+    H(u,v)=1+(u^2+v^2)
+\end{equation*}
+Infine, per quanto riguarda i filtri di contrasto e l'high-boost filtering, le formule sono rispettivamente le seguenti.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        H(u,v) = 1 - H_{lp}(u,v)
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+         H(u,v) = (A-1) + H_{lp}(u,v)
+    \end{equation*}
+\end{minipage}
+\end{center}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap3/Laplaciano} 
+        \caption{Immagine originale (a sinistra) e maschera del filtro Laplaciano (a destra)} 
+        \label{fig:HPF}
+\end{figure}
+\vfill

@@ -1,0 +1,144 @@
+In questo capitolo verranno mostrati i limiti della trasformata di Fourier, per poi introdurre la trasformata Wavelet, le sue potenzialità e le possibili applicazioni.
+\section{Limiti della trasformata di Fourier e possibile soluzione}
+Per comprendere bene i limiti della trasformata di Fourier, è necessario analizzare bene le caratteristiche di un'immagine.
+\subsection{Caratteristiche di un'immagine}
+Un'immagine si può vedere come un'insieme di regioni di texture e livelli di grigio simili, che combinati tra loro formano oggetti. In particolare, si considera:
+\begin{itemize}
+    \item l'analisi a bassa risoluzione, che analizza gli oggetti ad alto contrasto, quindi le basse frequenze;
+    \item l'analisi ad alta risoluzione, che analizza gli oggetti a basso contrasto, perciò le alte frequenze;
+    \item l'analisi multirisoluzione, che analizza gli oggetti a contrasto variabile.
+\end{itemize}
+Da qui, si nota che l'immagine è un segnale non stazionario: per prima conviene analizzare la figura seguente.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=1\textwidth]{cap4/asse_tempo} 
+        \caption{Variazione delle frequenze nell'asse temporale da $t_0=0\,s$ a $t_3=1\,s$} 
+        \label{fig:asse_tempo}
+\end{figure}
+Come si può osservare:
+\begin{itemize}
+    \item da $t_0=0\,s$ a $t_1=0,3\,s$ si hanno le basse frequenze, in cui il segnale oscilla molto lentamente;
+    \item da $t_1=0,3\,s$ a $t_2=0,85\,s$ si hanno le medie frequenze, dove le oscillazioni diventano sempre più ravvicinate e veloci;
+    \item da $t_2=0,85\,s$ a $t_3=1\,s$ si hanno le alte frequenze, dove il segnale oscilla molto velocemente.
+\end{itemize}
+Perciò, le immagini hanno le statistiche che variano localmente: per questo motivo costruire un modello statistico che copre l'intera immagine, risulta decisamente molto complesso.
+\subsection{Problemi della trasformata di Fourier}
+Tornando alla figura precedente, se si eseguisse la trasformata di Fourier di quel segnale, essa darebbe come unica informazione la presenza di una bassa, media ed alta frequenza, senza fornire la loro posizione nel tempo. Generalizzando, eseguendo la trasformata di Fourier su un'immagine, si perdono completamente le informazioni temporali e spaziali.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap4/problemi_fourier.png} 
+        \caption{Rappresentazione dei problemi della trasformata di Fourier} 
+        \label{fig:problemi_tempo}
+\end{figure}
+\subsection{Una soluzione temporanea: la trasformata di Fourier a breve termine}
+La trasformata di Fourier a breve termine (STFT, dall'inglese Short Time Fourier Transform) è una tecnica fondamentale per analizzare come il contenuto in frequenza di un segnale cambia nel tempo. Ciò consiste in:
+\begin{center}
+\begin{minipage}{0.46\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \begin{enumerate}
+    \item si definisce una finestra di tempo di una dimensione fissa;
+    \item si applica la trasformata di Fourier al segnale finestrato;
+    \item si memorizzano le frequenze trovate in quel intervallo di tempo;
+    \item si scorre la finestra leggermente avanti nel tempo e si ripete le analisi, finché non finisce il segnale, costruendo una mappa.
+\end{enumerate}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}[c]{0.5\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \centering
+        \includegraphics[width=1\textwidth]{cap4/stft} 
+        \captionof{figure}{Esecuzione della STFT} 
+        \label{fig:stft}
+\end{minipage}
+\end{center}
+Come si può facilmente intuire, la scelta della finestra risulta cruciale, poiché più la finestra è piccola, maggiore sarà la risoluzione temporale. Tuttavia, se si prende una finestra troppo piccola, si rischia che le frequenze rappresentabili siano insufficienti, tanto sarà debole il potenziale di discriminazione delle frequenze.
+\section{Introduzione alla trasformata Wavelet}
+La trasformata Wavelet si basa su piccole onde, dette appunto wavelet, che godono delle seguenti tre proprietà:
+\begin{itemize}
+    \item frequenza ed ampiezza variabile;
+    \item durata limitata, perciò non devono essere sinusoidi;
+    \item valor medio nullo.
+\end{itemize}
+Di seguito, è riportata una tabella che mostra le wavelet più utilizzate.
+\begin{table}[H] % Usa [H] per renderla non flottante
+    \centering
+    
+    % Definizione delle 3 colonne: USIAMO C (Centrato orizzontalmente)
+    \begin{tabular}{| C{1.5cm} | C{6cm} | C{8cm} |} 
+        \hline
+        
+        % Usiamo \thead per le intestazioni:
+        \textbf{Nome} & \textbf{Formula analitica} & \textbf{Grafico} \\
+        \hline % Linea spessa sotto le intestazioni
+        
+        % --- RIGA 1: SHANNON ---
+        Shannon &  
+        $\psi(t) = 2\operatorname{sinc}(2t)-\operatorname{sinc}(t)$ &  
+        \includegraphics[width=7.5cm]{cap4/shannon} \\
+        \hline
+        
+        % --- RIGA 2: MORLET ---
+        Morlet &  
+        $\psi(t) = \exp\left(-\frac{t^2}{2}\right)\cos{(5t)}$ &  
+        \includegraphics[width=7.5cm]{cap4/morlet} \\
+        \hline
+        
+        % --- RIGA 3: HAAR ---
+        Haar &  
+        $\psi(t) = \operatorname{rect}_{1/2}\left(t-\frac{1}{4}\right) - \operatorname{rect}_{1/2}\left(t-\frac{3}{4}\right) $ &  
+        \includegraphics[width=7.5cm]{cap4/haar} \\
+        \hline % Linea spessa finale
+    \end{tabular}
+    
+    % --- PUNTO CRUCIALE: USA \captionof{figure} ---
+    \captionof{figure}{Tipologie wavelet fondamentali}
+    \label{fig:wavelet_fondamentali}
+\end{table}
+\subsection{Determinazione della trasformata Wavelet}
+A questo punto, ogni segnale (non necessariamente periodico), può essere scritto in serie di wavelet.
+\begin{equation*}
+    f(t)=\sum_{i}a_i\psi_i(t)
+\end{equation*}
+$\psi_{s,\tau}$ è così definito:
+\begin{equation*}
+    \psi_{s,\tau}(t)=\frac{1}{\sqrt{s}}\psi\left(\frac{t-\tau}{s}\right)
+\end{equation*}
+dove:
+\begin{itemize}
+    \item $s$ è la scalatura;
+    \item $\tau$ è la traslazione nel tempo;
+    \item $\frac{1}{\sqrt{s}}$ è la normalizzazione;
+    \item $\psi$ è la wavelet madre;
+    \item $\psi_{s,\tau}$ è la wavelet scalata e traslata nel tempo.
+\end{itemize}
+Adesso, si possono ricavare i coefficienti della trasformata Wavelet.
+\begin{equation*}
+    \gamma(s,\tau)=\int_{-\infty}^{\infty}f(t)\psi^{*}_{s,\tau}(t) \, dt
+\end{equation*}
+Una volta eseguito ciò, è possibile ricostruire il segnale con la formula seguente.
+\begin{equation*}
+    f(t)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\gamma(s,\tau)\psi_{s,\tau}(t) \, d\tau ds
+\end{equation*}
+Nella figura che segue, viene mostrata una rappresentazione di una possibile trasformata Wavelet, partendo da un segnale $f(t)$.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=1\textwidth]{cap4/wavelet} 
+        \caption{Rappresentazione di una trasformata Wavelet} 
+        \label{fig:wavelet}
+\end{figure}
+\subsection{Proprietà}
+La trasformata Wavelet gode delle seguenti proprietà:
+\begin{itemize}
+    \item localizzazione simultanea spaziale e temporale, in cui la localizzazione della wavelet permette esplicitamente di rappresentare gli eventi nel tempo e la forma delle wavelet permettono di rappresentare i dettagli differenti e risoluzione differenti;
+    \item sparsità, in cui le funzioni usate nella pratica presentano coefficienti pari a zero o molto piccoli;
+    \item adattabilità, poiché si possono rappresentare funzioni discontinue e con angoli in modo molto efficiente;
+    \item complessità temporale lineare, cioè diverse trasformazioni si possono compiere in tempo $O(N)$.
+\end{itemize}
+\section{Applicazione della trasformata Wavelet: l'analisi multirisoluzione}
+Per effettuare l'analisi multirisoluzione di un'immagine, è necessario definire in maniera compatta la formula dell'espansione di un segnale $f(t)$ in serie.
+\begin{equation*}
+    f(t)=\sum_{j}\sum_{i}a_{ij}\psi_{ij}(t)=\sum_{j}\sum_{i}a_{ij}2^{\frac{i}{2}}\psi\left(2^it-j\right)
+\end{equation*}
+In particolare:
+\begin{itemize}
+    \item $a_{ij}$ 
+\end{itemize}
