@@ -174,5 +174,21 @@ La costruzione della piramide avviene nel modo seguente:
         \caption{Schema di costruzione della piramide dell'immagine} 
         \label{fig:cost}
 \end{figure}
-\subsection{Condizioni}
-kpp
+\subsection{Rappresentazione walet e condizioni}
+La rappresentazione wavelet consiste in un'approssimazione grossolana in totale dell'immagine, in cui viene influenzata dai coefficienti dei dettagli in scale differenti.\\
+Se un insieme di basi di funzioni $V$ si può rappresentare come una somma pesata di $\psi(2^jt-k)$, allora una gran parte dell'insieme ($V$ incluso) si può rappresentare da una somma pesata di $\psi(2^{j+1}t-k)$. Quindi
+in questo caso, per $V_j \subseteq V_{j+1}$, se $f(t) \in V_j$ allora $f(t) \in V_{j+1}$.\\
+A questo punto, l'idea di base è definire un insieme di basi di funzioni che coprono la differenza tra $V_j$ e $V_{j+1}$: costruendo la base ortogonale $W_j$.
+\begin{equation*}
+    V_{j+1}=V_j+W_j
+\end{equation*}
+Infine, si sfruttano $\phi(t)$ per $V_j$ e $\psi(t)$ per $W_j$, per ricostruire la decomposizione come coppia di wavelet:
+\begin{equation*}
+    f(t)=\sum_{k}c_k\phi\left(2^jt-k\right)+\sum_{k}d_{jk}\psi\left(2^jt-k\right)
+\end{equation*}
+dove:
+\begin{itemize}
+    \item il primo fattore indicano le basse risoluzioni;
+    \item il secondo fattore indicano le alte risoluzioni.
+\end{itemize}
+\section{Trasformata di Haar}
