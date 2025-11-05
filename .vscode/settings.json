@@ -1,0 +1,36 @@
+{
+        "latex-workshop.latex.tools": [
+        {
+            // 1. Strumento per compilare con XeLaTeX
+            "name": "xelatex_main",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%" // Variabile che punta al file .tex principale
+            ]
+        },
+        {
+            // 2. Strumento per pulire i file ausiliari
+            "name": "clean_aux",
+            "command": "latexmk",
+            "args": [
+                "-c", // Flag per pulire i file temporanei
+                "%DOC%"
+            ]
+        }
+    ],
+
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "XeLaTeX & Clean (No Aux Files)",
+            "tools": [
+                "xelatex_main", // Prima compila
+                "clean_aux"    // Poi pulisci
+            ]
+        }
+        // Puoi lasciare qui sotto le ricette predefinite se esistono, 
+        // oppure eliminare quelle che non usi.
+    ],
+}
