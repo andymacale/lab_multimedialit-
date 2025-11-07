@@ -288,3 +288,54 @@ Quindi la serie della multirisoluzione è la seguente:
     f(x)=5\varphi_{0,0}(x)+0\psi_{0,0}(x)+\frac{3}{\sqrt{2}}\psi_{1,0}(x)-\frac{1}{\sqrt{2}}\psi_{1,1}(x)=5\varphi_{0,0}(x)+\frac{3}{\sqrt{2}}\psi_{1,0}(x)-\frac{1}{\sqrt{2}}\psi_{1,1}(x)
 \end{equation*}
 \subsection{Codifica di sottobanda}
+La codifica di sottobanda consiste nel calcolare i coefficienti della bassa risoluzione da quelli di alta risoluzione, attraverso un algoritmo a struttura ad albero:
+in particolare si sfrutta un filtro passa-basso ed un filtro passa-alto. Ciò si applica sia alle righe che alle colonne, come mostrato di seguito.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{cap4/haar_transform} 
+        \caption{Processo di codifica di sottobanda}
+        \label{fig:haar_transform}
+\end{figure}
+In particolare:
+\begin{itemize}
+    \item $a(m, n)$ rappresenta l'approssimazione;
+    \item $d^V(m, n)$ rappresentano i dettagli verticali di sottobanda;
+    \item $d^H(m, n)$ rappresentano i dettagli orizzontali di sottobanda;
+    \item $d^D(m, n)$ rappresentano i dettagli diagonali di sottobanda.
+\end{itemize}
+Ovviamente, una o più di queste sottobande può a loro volta essere suddivise in quattro sottobande più piccole e così via.
+\subsection{Vantaggi della trasformata di Haar e trasformata Wavelet 2D}
+La trasformata di Haar presenta i seguenti vantaggi:
+\begin{itemize}
+    \item contiene i stessi pixel dell'immagine originale;
+    \item le sue statistiche locali rimangono relativamente costanti e facilmente modellate;
+    \item molti valori sono nulli od infinitesimi, perciò è un'ottima candidata alla compressione (trattata nel prossimo capitolo);
+    \item si possono estrarre sia le approssimazione grossolane sia quelle fini.
+\end{itemize}
+Per questo motivo, si estende ciò alla trasformata Wavelet in due dimensioni, dove i filtri passa-basso e passa-alto sono definiti 
+rispettivamente con $\varphi$ e $\psi$:
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{itemize}
+    \item approssimazione: $\varphi(x, y)=\varphi(x)\varphi(y)$;
+    \item dettagli verticali: $\psi^V(x, y)=\varphi(x)\psi(y)$;
+    \item dettagli orizzontali: $\psi^H(x,y)=\psi(x)\varphi(y)$;
+    \item dettagli diagonali: $\psi^D(x,y)=\psi(x)\psi(y)$.
+    \end{itemize}
+    \end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}[c]{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap4/2D} 
+        \captionof{figure}{Esempio di trasformata Wavelet 2D} 
+        \label{fig:wavelet_2D}
+\end{minipage}
+\end{center}
+\subsection{Elaborazione dell'immagini nel dominio wavelet}
+Nel dominio wavelet, l'elaborazione delle immagine avviene nel modo seguente:
+\begin{enumerate}
+    \item decomporre l'immagine nel dominio walet scegliendo una wavelet madre (solitamente Haar) e il numero di livello di scala di decomposizione;
+    \item modificare i coefficienti wavelet a seconda della tipologia di elaborazione, come riduzione del rumore e compressione;
+    \item ricostruire l'immagine con i coefficienti wavelet modificati.
+\end{enumerate}
