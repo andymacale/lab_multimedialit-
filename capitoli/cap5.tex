@@ -1,0 +1,142 @@
+Il processo di compressione di un'immagine, consiste nel ridurre drasticamente la quantità di dati presenti nell'immagine, poiché trasmettere un'immagine
+non compressa richiede molto tempo e molta larghezza di banda, come mostrato nell'immagine seguente.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap5/compressione} 
+        \caption{Processo di trasmissione di un'immagine compressa}
+        \label{fig:hansform}
+\end{figure}
+Basti pensare che già un'immagine $1024\times1024$ in scala di grigi con risoluzione bassa ($8 \, b/p$), per essere trasmessa in 2G ($v=50 \, kb/s $), sono necessari:
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    c=1024\times1024\times8=8388608 \, b
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \begin{equation*}
+    b=\frac{c}{v}=\frac{8388608}{50000} = 167,77216 \, s \approx 3'
+    \end{equation*}
+\end{minipage}
+\end{center}
+che è decisamente troppo elevato.
+\section{Ridondanza dei dati}
+Per prima cosa è necessario ribadire che dato ed informazione non sono assolutamente sinonimi. Infatti:
+\begin{itemize}
+    \item un'informazione è ciò che si vuole trasmettere;
+    \item un dato rappresenta i modi di trasmettere l'informazione.
+\end{itemize}
+La ridondanza dei dati si può quantificare matematicamente come entità. Infatti, si considerano le seguenti grandezze:
+\begin{itemize}
+    \item rapporto di compressione ($C_R$), che è il rapporto tra due insiemi di dati che contengono la stessa informazione;
+    \begin{equation*}
+        C_{R} = \frac{n_1}{n_2}
+    \end{equation*}
+    \item ridondanza relativa dei dati ($R_D$), che indica la quantità dei dati che sono ridondanti, spesso indicati in percentuale.
+    \begin{equation*}
+        R_D = 1-\frac{1}{C_R}
+    \end{equation*}
+\end{itemize}
+In questo paragrafo, verranno trattate le diverse tipologie di rindondanza.
+\subsection{Ridondanza di codifica}
+La ridondanza di codifica si ha nel momento in cui si sceglie un sistema di codifica non efficiente. Per calcolare l'efficienza di un
+algoritmo di compressione, dipende dal livello medio di grigio, che dipende dalla probabilità che ogni livello di grigio dell'immagine
+sia presente in tale immagine e quanti bit occupa ($l(r_k)$).
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        p_r(r_k)=\frac{n_k}{MN}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        L_{avg}=\sum_{0}^{L-1}l(r_k)p_r(r_k)
+    \end{equation*}
+\end{minipage}
+\end{center}
+Per esempio data un'immagine $256 \times 256$ con le seguenti caratteristiche:
+\begin{table}[H] % Usa [H] per renderla non flottante
+    \centering
+    \begin{tabular}{| C{5cm} | C{5cm} |} 
+            \hline
+            
+            % Usiamo \thead per le intestazioni:
+            \textbf{$r_k$} & \textbf{$p_k(r_k)$} \\ 
+            \hline % Linea spessa sotto le intestazioni
+            $r_{87}=87$ & $3/10$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{128}=128$ & $1/2$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{186}=186$ & $1/10$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{255}=255$ & $1/10$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{k} \, se \, k \neq 87, 128, 186, 255$ & ${0}$ \\
+            \hline
+    \end{tabular}
+\end{table}
+per esempio si usa per ogni livello di grigio il numero massimo rappresentabile del livello di grigio più alto ($255$), che è $8$ ($\log_{2}{(255)}$): Il
+livello medio di grigio è $L_{avg_{1}}=8\, b$. A questo punto conviene assegnare il numero di bit a seconda della probabilità: maggiore è la probabilità,
+meno bit deve avere quel livello di grigio, così lo spazio occupato sarebbe decisamente minore.
+\begin{table}[H] % Usa [H] per renderla non flottante
+    \centering
+    \begin{tabular}{| C{5cm} | C{5cm} | C{5cm}|} 
+            \hline
+            
+            % Usiamo \thead per le intestazioni:
+            \textbf{$r_k$} & \textbf{$p_k(r_k)$} & \textbf{$l_k(r_k)$} \\ 
+            \hline % Linea spessa sotto le intestazioni
+            $r_{87}=87$ & $3/10$ & $2$\\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{128}=128$ & $1/2$ & $1$\\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{186}=186$ & $1/10$ & $3$\\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{255}=255$ & $1/10$ & $3$ \\
+            \hline % Linea spessa sotto le intestazioni
+    \end{tabular}
+\end{table}
+\begin{equation*}
+    L_{avg_{2}}=\frac{3}{10}\times 2 + \frac{1}{2}\times 1 + \frac{1}{10} \times 3 + \frac{1}{10} \times 3 = \frac{17}{10} \, b = 1,7\, b
+\end{equation*}
+Infine, si calcolano le due grandezze.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        C_R = \frac{8\times10}{17}=\frac{80}{17}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        R_D = 1 - \frac{17}{80} = \frac{63}{80} = 78,75\%
+    \end{equation*}
+\end{minipage}
+\end{center}
+\subsection{Ridondanza interpixel}
+La ridondanza interpixel implica che qualsiasi valore di un pixel può essere predetto dai sui vicini, grazie alla correlazione. Per ridurre ciò,
+i dati dovrebbere essere mappati.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{cap5/interpixel} 
+        \caption{Esempio di ridondanza di interpixel}
+        \label{fig:interpixel}
+\end{figure}
+\subsection{Ridondanza psicovisiva}
+La ridondanza psicovisiva sta nel fatto che alcuni pixel sono talmente simili che l'occhio umano non li percepisce, dato che il sistema visivo umano
+non percepisce tutta l'informazione visiva con la stessa intensità: ma cerca solo caratteristiche importanti, come angoli e texture. Il classico esempio
+è un immagine a tinta unita.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{cap5/psico} 
+        \caption{Esempio di ridondanza psicovisiva}
+        \label{fig:psicovisiva}
+\end{figure}
