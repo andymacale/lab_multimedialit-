@@ -228,3 +228,63 @@ Considerando le formule seguenti di Wavelet padre (a sinistra) e Wavelet madre (
 \end{minipage}
 \end{center} 
 si considera un esempio di espansione in serie.
+\begin{equation*}
+    f(x)=\begin{dcases}
+        8 & \text{se } 0 \le x < 1/4 \\
+        2 & \text{se } 1/4 \le x < 1/2 \\
+        4 & \text{se } 1/2 \le x < 3/4 \\
+        6 & \text{se } 3/4 \le x < 1
+    \end{dcases}
+\end{equation*}
+Per prima cosa, si espande in serie in approssimazione in alta risoluzione per $j=2$.
+\begin{center}
+    $\varphi_{2,k}(x)=2\varphi\left(4x-k\right)=2\operatorname{rect}\left(4x-k-\frac{1}{2}\right)=2$ (altezza $2$)
+\end{center}
+\begin{itemize}
+    \item $k=0$: $8c_{2, 0}=2 \leftrightarrow c_{2, 0} = 4$;
+    \item $k=1$: $2c_{2, 1}=2 \leftrightarrow c_{2, 1} = 1$;
+    \item $k=2$: $4c_{2, 2}=2 \leftrightarrow c_{2, 2} = 2$;
+    \item $k=3$: $6c_{2, 3}=2 \leftrightarrow c_{2, 1} = 3$.
+\end{itemize}
+\begin{equation*}
+    f(x)=4\varphi_{2,0}(x)+\varphi_{2,1}(x)+2\varphi_{2,2}(x)+6\varphi_{2,3}(x)
+\end{equation*}
+Tuttavia, tale struttura non dice nulla sulla struttura dell'approssimazione e sul dettaglio, perciò si riscrive la formula $V_2=V_1+W_0+W_1=V_0+W_0+W_1$.
+\begin{itemize}
+    \item $V_0 \rightarrow \varphi_{0,0}$;
+    \item $W_0 \rightarrow \psi_{0,0}$;
+    \item $W_1 \rightarrow \psi_{1,0}, \psi_{1,1}$.
+\end{itemize}
+Per quando riguarda i coefficienti, si calcolano nel modo seguente.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        c_{j, k} = \frac{A+B}{\sqrt{2}}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        d_{j, k} = \frac{A-B}{\sqrt{2}}
+    \end{equation*}
+\end{minipage}
+\end{center}
+Da $V_2=V_1+W_1$:
+\begin{itemize}
+    \item $c_{1, 0}=\frac{c_{2, 0} + c_{2, 0}}{\sqrt{2}}=\frac{4+1}{\sqrt{2}}=\frac{5}{\sqrt{2}}$ (approssimazione);
+    \item $c_{1, 1}=\frac{c_{2, 2} + c_{2, 3}}{\sqrt{2}}=\frac{2+3}{\sqrt{2}}=\frac{5}{\sqrt{2}}$ (approssimazione);
+    \item $d_{1, 0}=\frac{c_{2, 0} + c_{2, 0}}{\sqrt{2}}=\frac{4-1}{\sqrt{2}}=\frac{3}{\sqrt{2}}$ (dettaglio);
+    \item $d_{1, 1}=\frac{c_{2, 2} + c_{2, 3}}{\sqrt{2}}=\frac{2-3}{\sqrt{2}}=-\frac{1}{\sqrt{2}}$ (dettaglio).
+\end{itemize}
+Da $V_1=V_0+W_0$:
+\begin{itemize}
+    \item $c_{0, 0}=\frac{c_{1, 0} + c_{1, 1}}{\sqrt{2}}=(\frac{5}{\sqrt{2}}+\frac{5}{\sqrt{2}})\frac{1}{\sqrt{2}}=5$;
+    \item $d_{0,0}=\frac{c_{1, 0} -c_{1, 1}}{\sqrt{2}}=(\frac{5}{\sqrt{2}}-\frac{5}{\sqrt{2}})\frac{1}{\sqrt{2}}=0$.
+\end{itemize}
+Quindi la serie della multirisoluzione è la seguente:
+\begin{equation*}
+    f(x)=5\varphi_{0,0}(x)+0\psi_{0,0}(x)+\frac{3}{\sqrt{2}}\psi_{1,0}(x)-\frac{1}{\sqrt{2}}\psi_{1,1}(x)=5\varphi_{0,0}(x)+\frac{3}{\sqrt{2}}\psi_{1,0}(x)-\frac{1}{\sqrt{2}}\psi_{1,1}(x)
+\end{equation*}
+\subsection{Codifica di sottobanda}
