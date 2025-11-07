@@ -182,13 +182,49 @@ A questo punto, l'idea di base è definire un insieme di basi di funzioni che co
 \begin{equation*}
     V_{j+1}=V_j+W_j
 \end{equation*}
-Infine, si sfruttano $\phi(t)$ per $V_j$ e $\psi(t)$ per $W_j$, per ricostruire la decomposizione come coppia di wavelet:
+Infine, si sfruttano $\varphi(t)$ per $V_j$ e $\psi(t)$ per $W_j$, per ricostruire la decomposizione come coppia di wavelet:
 \begin{equation*}
-    f(t)=\sum_{k}c_k\phi\left(2^jt-k\right)+\sum_{k}d_{jk}\psi\left(2^jt-k\right)
+    f(t)=\sum_{k}c_k\varphi\left(2^jt-k\right)+\sum_{k}d_{jk}\psi\left(2^jt-k\right)
 \end{equation*}
 dove:
 \begin{itemize}
-    \item il primo fattore indicano le basse risoluzioni;
+    \item il primo fattore indicano le basse risoluzioni, dove $\varphi(t)$ è una funzione di scala per le basse risoluzioni;
     \item il secondo fattore indicano le alte risoluzioni.
 \end{itemize}
-\section{Trasformata di Haar}
+\section{Dalla trasformata di Haar alla trasformata Wavelet 2D}
+In questo paragrafo viene riportata la spiegazione da come si passa dalla trasformata Haar alla trasfarmata Wavelet in due dimensioni.
+\subsection{Trasformata Haar}
+La trasformata di Haar si basa su base di funzioni che sono molto semplici, soprattutto che hanno la proprietà di essere simmetriche, separabili ed
+esprimibili in forma matriciale.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \varphi(t)=\operatorname{rect}\left(x-\frac{1}{2}\right)
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \psi(t)=\operatorname{rect}_{1/2}\left(x-\frac{1}{4}\right)-\operatorname{rect}_{1/2}\left(x-\frac{3}{4}\right)
+    \end{equation*}
+\end{minipage}
+\end{center}
+Considerando le formule seguenti di Wavelet padre (a sinistra) e Wavelet madre (a destra):
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \varphi_{jk}(x)=2^{\frac{j}{2}}\varphi\left(2^jx-k\right)
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \psi_{jk}(x)=2^{\frac{j}{2}}\psi\left(2^jx-k\right)
+    \end{equation*}
+\end{minipage}
+\end{center} 
+si considera un esempio di espansione in serie.
