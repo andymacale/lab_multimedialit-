@@ -123,7 +123,7 @@ Infine, si calcolano le due grandezze.
 \end{center}
 \subsection{Ridondanza interpixel}
 La ridondanza interpixel implica che qualsiasi valore di un pixel può essere predetto dai sui vicini, grazie alla correlazione. Per ridurre ciò,
-i dati dovrebbere essere mappati.
+i dati dovrebberero essere mappati.
 \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.4\textwidth]{cap5/interpixel} 
@@ -136,7 +136,78 @@ non percepisce tutta l'informazione visiva con la stessa intensità: ma cerca so
 è un immagine a tinta unita.
 \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.6\textwidth]{cap5/psico} 
+        \includegraphics[width=0.9\textwidth]{cap5/psico} 
         \caption{Esempio di ridondanza psicovisiva}
         \label{fig:psicovisiva}
 \end{figure}
+\section{Teoria dell'informazione}
+Per effettuare una codifica efficiente, è necessario conoscere dei cenni di teoria dell'informazione.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap5/teoria} 
+        \caption{Esempio di rappresentazione della teoria dell'informazione} 
+        \label{fig:teoria}
+\end{figure}
+\subsection{Concetti base di informazione}
+Per prima cosa è necessario comprendere i concetti base dell'informazione:
+\begin{itemize}
+    \item più la probabilità di un evento è bassa più il contenuto informativo è alto;
+    \item l'informazione di più messaggi indipendenti sono la somma delle informazione corrispottive.
+\end{itemize}
+Detto ciò, sia $X$ una sorgente che genera un messaggio $x_i$ con probabilità $p(x_i)$, l'informazione si calcola nel modo seguente:
+\begin{equation*}
+    I(x_i) = \log_{c}{\left[\frac{1}{p(x_i)}\right]}
+\end{equation*}
+dove $c$ è la base del logiritmo, che dipende dal tipo di codifica. Le più comuni sono il bit ($c=2$) ed il nat ($c=e$).
+\subsection{Entropia}
+Un altro concetto fondamentale è l'entropia dell'informazione, che misura l'incertezza media e l'informazione attesa della sorgente.
+\begin{equation*}
+    H(X)=-\sum_{i=1}^{N}p(x_i)\log_{c}{[p(x_i)]}
+\end{equation*}
+L'entropia dell'informazione è protagonista del teorema della codifica di sorgente di Shannon, che afferma che è impossibile comprimere i dati
+che presentano come velocità di codifica, cioè il numero di simboli trasmessi per secondo, minore dell'entropia senza perdere del contenuto informativo.
+\subsection{Criteri di fedeltà}
+Infine, l'ultima parte analizzata della teoria dell'informazione è quella dedicata ai criteri di fedeltà, che quantifica quanta informazione è possibile
+perdere mantenendo ancora l'informazione accettata oppure no. In particolare, si considerano due tipologie di criteri di fedeltà.\\
+Il primo criterio è quello soggettivo, che si basano solamente sulla comparazione visiva tra due immagini, classificando le immagini in rankig da eccellente ad inutilizzabile.\\
+Il secondo ed ultimo criterio è quello oggettivo, che si basa in base a delle metriche matematiche, che dipendono dall'errore ($\epsilon(x,y)$) e dall'errore assoluto ($\epsilon$),
+calcolati in base all'immagine originale ($f(x,y)$) ed all'immagine compressa ($\hat{f}(x,y)$).
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \epsilon(x,y) = \hat{f}(x,y)-f(x,y)
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \epsilon = \sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]
+    \end{equation*}
+\end{minipage}
+\end{center}
+A questo punto, i criteri di fedeltà sono dettati dalle metriche di errore quadratico medio ($RMSE$), il rapporto segnale-rumore quadrico medio ($SNR_{ms}$)
+ed il rapporto segnale-rumore di picco ($PSNR$), dove questi ultimi due si misurano in Decibel (dB), che è una scala logaritmica.
+\begin{center}
+\begin{minipage}{0.52\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        RMSE=\sqrt{\frac{1}{MN}\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]^2}
+\end{equation*}
+ \begin{equation*}
+        SNR_{ms}=\sum_{y=0}^{N-1}\hat{f}^2(x,y)\left\{\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]^2\right\}^{-1}
+\end{equation*}
+\begin{equation*}
+        PSNR=L_{max}\left\{\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]^2\right\}^{-1}
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}[c]{0.44\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap5/psnr} 
+        \captionof{figure}{Misura del PSNR in un'immagine} 
+        \label{fig:psnr}
+\end{minipage}
+\end{center}
+\section{Sistemi di codifica}
