@@ -210,4 +210,37 @@ ed il rapporto segnale-rumore di picco ($PSNR$), dove questi ultimi due si misur
         \label{fig:psnr}
 \end{minipage}
 \end{center}
-\section{Sistemi di codifica}
+\section{Modello di compressione delle immagini}
+Il modello di compressione delle immagini consistono nei seguenti operazioni:
+\begin{enumerate}
+    \item mappatura, che consiste nel prendere l'immagine ed eseguire una mappatura dei dati, riducendo la ridondanza interpixel (operazione reversibile);
+    \item quantizzazione, che esegue l'operazione di quantizzazione, riducendo la ridondanza psicovisiva (operazione irreversibile);
+    \item codifica di simbolo, che esegue un sistema di codifica dell'immagine (operazione reversibile) e lo invia al canale;
+    \item decodifica di simbolo, che dal canale prende l'immagine codifica e la ritrasforma prima della codifica;
+    \item mappatura inversa, che la riporta come matrice di pixel, leggermente diversa a causa del quantizzatore.
+\end{enumerate}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap5/modello} 
+        \caption{Schema del modello di compressione di un'immagine} 
+        \label{fig:modello}
+\end{figure}
+A seconda dell'errore, la tipologia di compressione di un'immagine si suddividono in due grandi categorie:
+\begin{itemize}
+    \item compressione lossless, in cui l'errore è nullo, perciò non viene perso alcuna informazione, sfruttando la ridondanza di codfica ed interpixel;
+    \item compressione lossy, invece, sfrutta ogni tipologia di ridondanza (anche quella psicovisiva), tollerando qualche errore o qualche
+        perdita d'informazione.
+\end{itemize}
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap5/satellite}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap5/telefono} 
+\end{minipage}
+\captionof{figure}{Esempio tipologia di immagine da comprimere lossless (a sinistra) od anche lossy (a destra)}
+\label{fig:compressione}
+\end{center}
