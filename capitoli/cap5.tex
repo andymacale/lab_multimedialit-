@@ -253,14 +253,78 @@ basa sulla probabilità di simbolo. Infatti, essa consiste in:
     \item combinare le due probabilità minori;
     \item ripetere ciò, finché rimangono due probabilità.
 \end{enumerate}
-Ad esempio, dato l'insieme $X={A,B,C;D}$ con probabilità $p(X)=\left\{\frac{1}{8},\frac{1}{2},\frac{1}{4},\frac{1}{8}\right\}$, si ordina 
+Ad esempio, dato l'insieme $X={A,B,C,D}$ con probabilità $p(X)=\left\{\frac{1}{8},\frac{1}{2},\frac{1}{4},\frac{1}{8}\right\}$, si ordina 
 $X={B,C,A,D}$ e si costruisce a partire da $B$ e poi $CAD$, che a sua volta si divide in $C$ e $AD$, che infine si divide in $A$ e $D$. In particolare,
 Ogni volta che si va a sinistra si assegna uno $0$, mentre $1$ quando si va a destra.
-\begin{figure}[H]
+\begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.6\textwidth]{cap5/huffmann} 
+        \includegraphics[width=0.35\textwidth]{cap5/huffmann} 
         \caption{Esempio di una codifica di Huffmann} 
         \label{fig:huffmann}
 \end{figure}
-In particolare, nessun simbolo possiede il prefisso di un altro simbolo.
+In particolare, nessun simbolo possiede il prefisso di un altro simbolo. Infatti:
+\begin{itemize}
+    \item $A \rightarrow 110$;
+    \item $B \rightarrow 0$;
+    \item $C \rightarrow 10$;
+    \item $D \rightarrow 111$.
+\end{itemize}
 \subsection{Codifica aritmetica}
+La codifica aritmetica è una codifica lossless in cui non c'è una corrispondenza uno ad uno tra sorgente e codice e non è presente nessuna ipotesi che
+la codifica di simbolo avvenga uno alla volta. A questo punto viene generato un intervallo $[0;1[$, in cui inizialmente viene suddiviso in base alla
+probabilità di simbolo. Poi, più il messaggio diventa lungo, minore sarà la distanza tra i due estremi dell'intervallo, in base alla probabilità.\\
+Ad esempio, dati i seguenti simboli e le probabilità seguenti: $X=\left\{A,B,C\right\}$ $p(X)=\left\{0,4;0,5;0,1\right\}$. Nel momento in cui si vuole ricostruire il messaggio
+$BBC$, si considerano i seguenti simboli:
+\begin{enumerate}
+    \item simbolo $B$ (intervallo di riferimento $[0;1[$):
+    \begin{itemize}
+        \item $A \rightarrow [0; 0,4[$
+        \item $A \rightarrow [0,4; 0,9[$ (intervallo da considerare)
+        \item $C \rightarrow [0,9; 1[$
+    \end{itemize}
+    \item simbolo $B$ (intervallo di riferimento $[0,4; 0,9[$, $\Delta=0,9-0,4=0,5$):
+    \begin{itemize}
+        \item $A \rightarrow 0,4\times0,5=0,2 \rightarrow [0,4; 0,4+0,2[ \rightarrow [0,4; 0,6[$
+        \item $A \rightarrow 0,5\times0,5=0,25 \rightarrow [0,6; 0,6+0,25[ \rightarrow [0,6; 0,85[$ (intervallo da considerare)
+        \item $C \rightarrow 0,1\times0,5=0,05 \rightarrow [0,85; 0,85+0,05[ \rightarrow [0,85; 0,9[$
+    \end{itemize}
+    \item simbolo $C$ (intervallo di riferimento $[0,6; 0,85[$, $\Delta=0,85-0,6=0,25$):
+    \begin{itemize}
+        \item $A \rightarrow 0,4\times0,25=0,1 \rightarrow [0,6; 0,6+0,1[ \rightarrow [0,6; 0,7[$
+        \item $A \rightarrow 0,5\times0,25=0,125 \rightarrow [0,7; 0,7+0,125[ \rightarrow [0,6; 0,825[$ 
+        \item $C \rightarrow 0,1\times0,25=0,025 \rightarrow [0,825; 0,825+0,025[ \rightarrow [0,825; 0,85[$ (intervallo da considerare)
+    \end{itemize}
+    \item fine: $[0,825; 0,85[$.
+\end{enumerate}
+\subsection{Codifica RLC}
+La codifica RLC (Run-length coding) è una codifica lossless molto semplice in cui concatena ogni simbolo con il numero di volte che si ripete
+consecutivamente. Ad esempio $AAABBAC$ diventa $(A, 3)(B, 2)(A, 1), (C, 1)$. Tuttavia, tale sistema di codifica non è molto efficiente, tuttavia è
+veramente semplice da implementare.
+\subsection{Codifica di Lempel Ziv}
+La codifica di Lempel Ziv è una codifica lossless che è un sistema di codifica che è composto da tre elementi: $<P,L,C>$. Dove:
+\begin{itemize}
+    \item $P$ indica quanti passi indietro bisognerebbe bloccare il testo decodificato;
+    \item $L$ è la lunghezza della stringa;
+    \item $C$ è il prossimo carattere della stringa.
+\end{itemize}
+A questo punto, l'algoritmo consiste in:
+\begin{enumerate}
+    \item si decompone la sequenza d'ingresso in stringhe;
+    \item ogni volta che un blocco differisce dal precedente, viene inserito nel dizionario;
+    \item tutte le stringhe incluse nel dizionario, vengono associate ad una posizione;
+    \item nella procedura di codifica, l'algoritmo registra ogni stringa nuova nel dizionario e la sua posizione.
+\end{enumerate}
+\subsection{Bit-plane coding}
+Il bit-plane coding consiste nella composizione multivello dell'immagine in una serie di immagini binarie e comprimere ogni immagine binaria con
+qualsiasi altra codifica lossless, ottenendo sempre una compressione lossless.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=1\textwidth]{cap5/bit} 
+        \caption{Rappresentazione del bit-plane coding} 
+        \label{fig:bit}
+\end{figure}
+\subsection{Standard di compressione lossy}
+Molto spesso, le immagini vengono compresse in maniera lossy, altrimenti occuperebbero troppo spazio, perciò molto più difficili da trasmettere. Inoltre,
+tali compressioni non presentano delle perdite significative nella maggior parte degli ambiti in cui si usano, grazie a molti standard. Lo standard più
+usato e conosciuto è il JPEG, a cui gli viene dedicato l'intero capitolo successivo.
+\vfill
