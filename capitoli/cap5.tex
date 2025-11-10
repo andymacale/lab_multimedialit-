@@ -244,3 +244,23 @@ A seconda dell'errore, la tipologia di compressione di un'immagine si suddividon
 \captionof{figure}{Esempio tipologia di immagine da comprimere lossless (a sinistra) od anche lossy (a destra)}
 \label{fig:compressione}
 \end{center}
+In questo paragrafo, sono elencate la maggior parte dei sistemi di codifica più utilizzati.
+\subsection{Codifica di Huffmann}
+La codifica di Huffmann è un sistema di codifica lossless, che usa gli alberi binari come struttura dati per costruire la codifica, la cui costruzione si
+basa sulla probabilità di simbolo. Infatti, essa consiste in:
+\begin{enumerate}
+    \item ordinare i simboli per probabilità;
+    \item combinare le due probabilità minori;
+    \item ripetere ciò, finché rimangono due probabilità.
+\end{enumerate}
+Ad esempio, dato l'insieme $X={A,B,C;D}$ con probabilità $p(X)=\left\{\frac{1}{8},\frac{1}{2},\frac{1}{4},\frac{1}{8}\right\}$, si ordina 
+$X={B,C,A,D}$ e si costruisce a partire da $B$ e poi $CAD$, che a sua volta si divide in $C$ e $AD$, che infine si divide in $A$ e $D$. In particolare,
+Ogni volta che si va a sinistra si assegna uno $0$, mentre $1$ quando si va a destra.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{cap5/huffmann} 
+        \caption{Esempio di una codifica di Huffmann} 
+        \label{fig:huffmann}
+\end{figure}
+In particolare, nessun simbolo possiede il prefisso di un altro simbolo.
+\subsection{Codifica aritmetica}
