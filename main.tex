@@ -37,6 +37,11 @@
 \definecolor{normale}{HTML}{FFFFFF}
 \AtBeginDocument{\fontsize{11}{12}\selectfont}
 
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\listoffigures}{\clearpage}{}{}{} % Rimuove \clearpage da listoffigures
+\makeatother
+
 %\setmainfont{Arial} 
 \graphicspath{{immagini/}}
 
@@ -76,17 +81,22 @@
 
 % ----------------------------------------------------
 % INIZIO MATERIA PRELIMINARE (Numerazione Romana)
-% VA POSIZIONATO QUI! Fuori da \titlepage
-\pagecolor{frontespizio} % Imposta il colore di sfondo per la pagina del titolo
-\frontmatter 
-\thispagestyle{empty}
-
 % ----------------------------------------------------
+
+% 1. IMPOSTA LA SEZIONE ROMANA (DEVE ESSERE PRIMA)
+\frontmatter 
+
+% 2. IMPOSTA IL CONTATORE A -1 (PER PAGINA 0)
+% La pagina successiva (\begin{titlepage}) sarà la pagina -1 + 1 = 0.
+\setcounter{page}{-1} 
+
+% 3. IMPOSTA IL COLORE DI SFONDO PER LA PAGINA 0
+\pagecolor{frontespizio} 
+
 % --- Frontespizio Personalizzato (Pagina 0) ---
 \begin{titlepage}
     
-    \setcounter{page}{0} 
-    \thispagestyle{empty}
+    \thispagestyle{empty} % Nasconde il numero 0.
     
     \centering    
     \includegraphics[width=11cm]{sfondo} 
@@ -103,10 +113,12 @@
 \end{titlepage}
 
 % ----------------------------------------------------
-% --- INDICE (Inizia dopo il Frontespizio) ---
+% --- INDICE (Inizia con Pagina i) ---
+
 % Cambia il colore di sfondo per l'indice
 \pagecolor{normale}
-\thispagestyle{plain}
+\setcounter{page}{1}
+\pagestyle{plain} % Mostra il numero in fondo alla pagina (i, ii, iii...)
 \tableofcontents
 \listoffigures
 
@@ -114,7 +126,7 @@
 % INIZIO CORPO PRINCIPALE (Numerazione Araba da 1)
 \mainmatter 
 
-% Inizia la numerazione araba da 1 di default, e i capitoli iniziano.
+% Inizia la numerazione araba da 1 di default.
 
 \part{Immagini}
 \chapter{Elaborazione delle immagini}
@@ -127,4 +139,5 @@
 \input{capitoli/cap4}
 \chapter{Processo di compressione delle immagini}
 \input{capitoli/cap5}
+
 \end{document}

@@ -314,12 +314,21 @@ A questo punto, l'algoritmo consiste in:
     \item tutte le stringhe incluse nel dizionario, vengono associate ad una posizione;
     \item nella procedura di codifica, l'algoritmo registra ogni stringa nuova nel dizionario e la sua posizione.
 \end{enumerate}
+Per esempio, data la stringa $xyxxyxyxxyy$, si procede come segue:
+\begin{enumerate}
+    \item legge $x$: non disponibile nel dizionario, quindi aggiunge $<0, 0, x>$;
+    \item (buffer $[x]$) legge $y$: non disponibile nel dizionario, quindi aggiunge $<0, 0, y>$;
+    \item (buffer $[xy]$) legge $x$, che si trova a $2$ posizioni indietro, si trova un match lungo $1$ (il carattere prima della $x$ è un'altra $x$), $<2, 1, x>$;
+    \item (buffer $[xyxx]$) legge $y$, che si trova a $3$ posizioni indietro, si trova un match lungo $2$ ($yx$ c'è, $yxy$ non c'è), $<3, 2, y>$;
+    \item (buffer $[xyxxyxy]$) legge $x$, si cerca il match più lungo, che è $xxy$ ($3$), che si trova $5$ posizioni indietro, $<5, 3, y>$;
+    \item fine: $<0, 0, x>$ $<0, 0, y>$ $<2, 1, x>$ $<3, 2, y>$ $<5, 3, y>$.
+\end{enumerate}
 \subsection{Bit-plane coding}
 Il bit-plane coding consiste nella composizione multivello dell'immagine in una serie di immagini binarie e comprimere ogni immagine binaria con
-qualsiasi altra codifica lossless, ottenendo sempre una compressione lossless.
+qualsiasi altra codifica lossless, ottenendo una compressione lossless.
 \begin{figure}[htbp]
         \centering
-        \includegraphics[width=1\textwidth]{cap5/bit} 
+        \includegraphics[width=0.35\textwidth]{cap5/bit} 
         \caption{Rappresentazione del bit-plane coding} 
         \label{fig:bit}
 \end{figure}
