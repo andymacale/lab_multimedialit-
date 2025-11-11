@@ -1,0 +1,95 @@
+Il formato JPEG (Joint Photographic Expert Group) è sicuramente il formato delle immagini più conosciuto ed usato, poiché ottiene dei risultati molto
+notevoli nelle foto (sia in bianco e nero che a colori), tuttavia non per i cartoni animati e per le immagini generate al computer, nonostante implementi
+un modello di compressione lossy. In particolare, ne esistono due versioni, entrambe trattate in questo capitolo.
+\section{Prima versione di JPEG}
+Di seguito è mostrato uno schema che riassume i passi eseguiti nel formato di compressione della prima versione di JPEG.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=1\textwidth]{cap6/schema1} 
+        \caption{Schema del modello di compressione JPEG} 
+        \label{fig:schemaJPEG1}
+\end{figure}
+\subsection{Fase 1: conversione da RGB a YCbCr}
+Un'immagine a colori viene rappresentata nel formato RGB, che non sono altre tre matrici dove R contiene i livelli di rosso, G di verde e B di blu. tuttavia
+tale rappresentazione non risulta efficace nella compressione, dato che sono ridondanti. Per questo motivo, si convertono tali matrici nel formato YCbCr, dove Y è luminanza e CbCr
+rappresentano la crominanza, che insieme non sono affatto ridondanti. Infatti, l'occhio umano percepisci la variazione di luminosità che di colore, dato
+dal fatto che l'occhio umano ha molti più bastoncelli che coni. La formula di conversione è la seguente:
+\begin{equation*}
+    \begin{bmatrix}
+        Y\\
+        Cb\\
+        Cr
+    \end{bmatrix}=
+    \begin{bmatrix}
+        0,299 & 0,587 & 0,114\\
+        -0,1687 & -0,3313 & 0,5\\
+        0,5 & -0,4187 & -0,0813
+    \end{bmatrix} \begin{bmatrix}
+        R\\
+        G\\
+        B
+    \end{bmatrix}+ \begin{bmatrix}
+        0\\
+        128\\
+        128
+    \end{bmatrix}
+\end{equation*}
+Inoltre, la risoluzione delle componenti cromatiche vengono ridotte di un fattore $2$. In particolare:
+\begin{itemize}
+    \item $4:4:4$ non si ha nessun sottocampionamento;
+    \item $4:2:2$ si ha una riduzione solamente nella direzione orizzontale;
+    \item $4:2:0$ si ha una riduzione sia nella direzione orizzontale sia in quella verticale.
+\end{itemize}
+\subsection{Fase 2: trasformata DCT}
+A questo punto, viene suddivisa l'immagine in blocchi da $8x8$, poiché è la dimensione che permette la migliore qualità rispetto alla dimensione del file.
+Per ogni blocco, viene eseguita la cosiddetta DCT (Discete Cosine Transform), che lavora nell'intervallo da $-128$ a $128$, perciò il blocco deve essere
+prima traslato negativamente di $128$. A questo punto, la formula della DCT è la seguente:
+\begin{equation*}
+    G(u,v)=\alpha(u)\alpha(v)\sum_{x=0}^{7}\sum_{y=0}^{7}g(x,y)\cos{\left[\frac{\pi}{8}\left(x+\frac{1}{2}\right)u\right]}\cos{\left[\frac{\pi}{8}\left(y+\frac{1}{2}\right)v\right]}
+\end{equation*}
+dove la moltiplicazione dei coseni non dipende dai valori di $g(x,y)$ e $\alpha$ è una funzione di normalizzazione.
+Inoltre, dei $64$ coefficienti ottenuti:
+\begin{itemize}
+    \item $G(0,0)$ è il nucleo e viene classificato come coefficiente DC;
+    \item gli altri $63$ coefficienti vengono classificati come coefficienti AC.
+\end{itemize}
+Infine, i motivi per cui si usa la DCT e non la trasformata di Fourier sono:
+\begin{itemize}
+    \item la DCT è reale pura, mentre la trasformata di Fourier è complessa;
+    \item la DCT presenta meno coefficienti di qualsiasi segnale;
+    \item il nucleo della trasformata diretta ed inversa sono gli stessi nella DCT.
+\end{itemize}
+\subsection{Fase 3: quantizzazione}
+Nella fase di quantizzazione avviene la perdita vera e propria di informazione della compressione. Infatti, viene diviso punto punto per una determinata
+matrice e approssimato alla parte intera più piccola. Siccome la quantizzazione avviene in base ad una soglia, viene ridotto il numero di bit per
+campionamento. La formula è la seguente:
+\begin{equation*}
+    T^{*}(u,v)= \left\lfloor \frac{T(u,v)}{Z(u,v)} \right\rfloor
+\end{equation*}
+dove:
+\begin{itemize}
+    \item $T(u,v)$ è il coefficiente trasformato;
+    \item $Z(u,v)$ è il coefficiente trasformato normalizzato;
+    \item $T^{*}(u,v)$ è il coefficiente sogliato e quantizzato dell'approssimazione di $T(u,v)$.
+\end{itemize}
+\subsection{Fase 4: pattern zig-zag}
+A questo punto, vengono ordinati i coefficienti usando un pattern zig-zag, in questo modo vengono ottenute sequenze consecutive di $0$ molto più lungh
+rispetto che farlo per riga.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=1\textwidth]{cap6/zigzag} 
+        \caption{Pattern zig-zag} 
+        \label{fig:zig-zag}
+\end{figure}
+\subsection{Fase 5: Codifica di entropia}
+A questo punto:
+\begin{itemize}
+    \item tutti i coefficienti DC vengono codificati con la DPCM (Differential pulse-code modulation), che non è altro che la differenza tra i
+    coefficienti DC ed i coefficienti DC dell'immagine precedente;
+    \item tutti i coefficienti AC vengono codificati utilizzando la RLC, siccome sono presenti molti $0$ consecutivi.
+\end{itemize}
+Infine, tutti i coefficienti vengono codificati in una sequenza binaria, come quella di Huffmann e quella aritmetica; ed infine viene rieseguita la
+IDCT per riottenere l'immagine compressa.
+\section{JPEG2000}
+La seconda
+\vfill

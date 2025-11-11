@@ -26,9 +26,12 @@
 \usepackage{pagecolor} % Necessario per \pagecolor
 \usepackage{chngcntr} % <-- PACCHETTO AGGIUNTO
 \usepackage{amsmath}
-\usepackage{array} 
+\usepackage{array}
+\usepackage{fancyhdr}
 % Definisce un nuovo tipo di colonna chiamato 'C' (maiuscolo) che centra orizzontalmente e verticalmente.
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+
+
 \usepackage{makecell} 
 % \renewcommand{\arraystretch}{1.5}
 \tolerance=3000
@@ -125,6 +128,20 @@
 % ----------------------------------------------------
 % INIZIO CORPO PRINCIPALE (Numerazione Araba da 1)
 \mainmatter 
+\pagestyle{fancy}
+\fancyhf{} % Pulisce gli header e i footer
+
+% Intestazioni (Headers)
+% Pagina PARI (Sinistra): Titolo della Sezione/Capitolo
+\fancyhead[LE]{\nouppercase{\rightmark}} 
+% Pagina DISPARI (Destra): Titolo della Part/Capitolo
+\fancyhead[RO]{\nouppercase{\leftmark}} 
+
+% Piè di Pagina (Footers) - Numerazione alternata
+\fancyfoot[LE,RO]{\thepage} 
+
+\renewcommand{\headrulewidth}{0.4pt} % Aggiunge una linea orizzontale
+\renewcommand{\footrulewidth}{0pt} % Rimuove la linea dal piè di pagina
 
 % Inizia la numerazione araba da 1 di default.
 
@@ -139,5 +156,8 @@
 \input{capitoli/cap4}
 \chapter{Processo di compressione delle immagini}
 \input{capitoli/cap5}
-
+\chapter{Formato JPEG}
+\input{capitoli/cap6}
+\part{Video}
+\chapter{Creazione dei video}
 \end{document}
