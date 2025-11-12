@@ -91,5 +91,128 @@ A questo punto:
 Infine, tutti i coefficienti vengono codificati in una sequenza binaria, come quella di Huffmann e quella aritmetica; ed infine viene rieseguita la
 IDCT per riottenere l'immagine compressa.
 \section{JPEG2000}
-La seconda
+La seconda versione di JPEG, denominata JPEG2000, è una versione molto migliorata rispetto alla precedente, sebbene purtroppo sia ad oggi poco utilizzata
+nell'ambito comune, per la scarsa implementazione nei browser principali. Tuttavia, trova largo utilizzo in ambiti più tecnici, come nella medicina, dove
+è necessaria una risoluzione molto più alta.\\
+Questo standard presenta:
+\begin{itemize}
+    \item migliori performance di velocità/distorsione;
+    \item possibilità di definire delle regioni di interesse (ROI, dall'inglese regions of interest), per avere maggiore qualità;
+    \item funzionamento anche con immagini veramente molto grandi.
+\end{itemize}
+Tuttavia, il vantaggio più importante di JPEG2000 è sicuramente la scalabilità dei seguenti quattro tipi:
+\begin{itemize}
+    \item scalabilità di risoluzione, ossia è possibile ottenere un flusso progressivo di immagini, partendo dalla risoluzione più bassa;
+    \item scalabilità di distorsione, cioè è possibile ottenere un flusso progressivo di SNR basso;
+    \item scalabilità spazioale, ovvero è possibile ottenere un flusso progressivo di una specifica regione, partendo da una piccola ridotta;
+    \item scalabilità dei componenti, dove possibile ottenere un flusso progressivo, partendo da una scala di grigi per arrivare ad un'immagine a colori.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap6/roi} 
+        \caption{Esempio di applicazione ROI dall'immagine originale (a sinistra) all'immagine compressa (a destra)} 
+        \label{fig:roi}
+\end{figure}
+Di seguito, è elencato uno schema riassuntivo del processo di compressione di JPEG2000.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=1\textwidth]{cap6/schema2} 
+        \caption{Schema del modello di compressione JPEG2000} 
+        \label{fig:schemaJPEG2000}
+\end{figure}
+\subsection{Fase 1: preprocessing}
+Per prima cosa, si esegue il cosiddetto preprocessing, che si compone in tre sottofasi, di cui alcune sono molto simili alla prima versione di JPEG.\\
+Innanzittutto, si effettua l'estrazione delle componenti e la trasformazione, in cui si mappano le componenti RGB e si trasformano in YCbCr, per ridurre
+la correlazione tra le componenti, conducendo a due tipologie di trasformazioni:
+\begin{itemize}
+    \item trasformazione delle componenti irreversibile (ICT, irreversibile component transfomation);
+    \item trasformazione delle componenti reversibile (RCT, reversibile component transfomation).
+\end{itemize}
+Successivamente, si esegue la cosiddetta piastrellatura dell'immagine (in inglese image tiling), in cui avviene una partizione dell'immagine in blocchi
+rettangolari non sovrapposti, in modo tale da poter essere compressi in maniera indipendente.\\
+Infine, avviene la traslazione dei coefficienti di $-128$, passanda dall'intervallo $[0,255]$ a $[-128,128]$, per avere la trasformata centrata in $0$.
+\subsection{Fase 2: discrete Wavelet transform}
+A questo punto, ad ogni blocco viene effettuata la DWT (Discrete Wavelet Transform), poiché:
+\begin{itemize}
+    \item permette la decomposizione multirisoluzione;
+    \item ammette la scalatura di risoluzione;
+    \item ogni livello di bassa risoluzione, viene suddiviso in sottobande di dimensioni dimezzate.
+\end{itemize}
+In particolare, JPEG2000 supporta da $0$ a $32$ stadi: solitamente per le immagini naturali, se ne usano tra $4$ ed $8$.
+\subsection{Fase 3: codifica di blocchi}
+Nella fase di codifica dei blocchi, ogni sottobanda viene partizionata in codifiche di blocchi, tipicamente di dimensione 32x32 o 64x64, in cui
+ogni blocco viene codificato separatamente. In questo modo, si ha la scalatura di risoluzione e spaziale.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.3\textwidth]{cap6/code} 
+        \caption{Schema della fase di codifica di blocchi} 
+        \label{fig:codeblocks}
+\end{figure}
+\subsection{Fase 4: quantizzazione}
+Nella fase di quantizzazione, i coefficienti wavelet sono quantizzati usando un quantizzatore uniforme, in cui per ogni sottobanda $b$ e la larghezza
+del gradino del quantizzatore di base $\Delta_{b}$, si quantizza ogni coefficiente, sfruttando la formula seguente:
+\begin{equation*}
+    q=\operatorname{sign}(y) \left\lfloor \frac{|y|}{\Delta_{b}} \right\rfloor
+\end{equation*}
+Di seguito, è riportato un esempio con $y=-21,7$ e $\Delta_{b}=10$.
+\begin{center}
+\begin{minipage}{0.28\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    q=\operatorname{sign}(-21,7) \left\lfloor \frac{|-21,7|}{10} \right\rfloor=-2
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.68\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.9\textwidth]{cap6/quantizzazione}
+        \captionof{figure}{Esempio di quantizzazione JPEG2000}
+        \label{fig:quantizzazioneq}
+\end{minipage}
+\end{center}
+\subsection{Fase 5: EBCOT}
+La fase di EBCOT (Embedded Block Coding with Optimized Truncation) consiste nel prendere un blocco e codificarlo con il bit-plane dal bit 
+più significativo a quello meno significativo. Inoltre, se alcuni piani più significativi non contengono $1$, allora il piano viene impostato sul piano 
+di bit più in alto, con almeno un $1$.\\
+In questo modo, si ha una classificazione dei coefficienti, partendo da quelli più insignificanti, classificati come $0$, finché non viene codificato
+il primo non-zero, divendando significativo, codificando il suo segno e tutta la sua sottosequenza di bit. Ad esempio, i dati con la riduzione di
+distorsione più alta dovrebbere essere codificati per primi per media di rappresentazione di bit compressi. Per essere codificato, il coefficiente deve superare:
+\begin{itemize}
+    \item la propagazione di significatività, in cui se è un bit è insignificante, ma almeno uno dei suo vicini lo è, allora viene codificato, oppure allora
+    stesso tempo è significante, e il suo flag è $1$, allora il segno del simbolo è codificato;
+    \item la raffinatezza di magnitudine, che codifica campioni significativi che non sono stati codificati nel passaggio precedente;
+    \item il passaggio di pulizia, in cui codifica tutti i bit che sono stati passati attraverso i due passaggi di codifica precedenti.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{cap6/ebcot} 
+        \caption{Fase di EBCOT}
+        \label{fig:ebcot}
+\end{figure}
+\subsection{Fase 6: codifica aritmetica adattiva}
+Ora, per ridurre la ridondanza sostanziale tra piani di bit successivi, si usa la codifica aritmetica adattiva, in cui è in grado di cambiare tra ben
+$18$ modelli di probabilità adattiva. In particolare:
+\begin{itemize}
+    \item seleziona i modelli basati sulla bit codificati precedentemente dal piano corrette a quelli precedenti;
+    \item ogni modello stima la sua distribuzione di probabilità;
+    \item in questo contesto usa la probabilità condizionale.
+\end{itemize}
+\subsection{Fase 7: strati di qualità}
+I flussi di bit risultanti per ogni blocco di codice sono organizzati in livelli di qualità per ottenere:
+\begin{itemize}
+    \item scalabilità della risoluzione, cioè l'eliminazione dei componenti dalle sottobande ad alta risoluzione;
+    \item scalabilità della distorsione, ossia l'eliminazione degli bit meno significativi dalla quantizzazione incorporata;
+\end{itemize}
+I livelli di qualità consentono la gestione di questa struttura di scalabilità:
+\begin{itemize}
+    \item specificando come ogni blocco deve essere troncato rispetto agli altri;
+    \item fornendo ad ogni livello nel flusso incorporato un miglioramento progressivo;
+    \item ottimizzando la struttura dei livelli durante la compressione, per un embedding ottimale.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap6/qualita} 
+        \caption{Strati di qualità}
+        \label{fig:stratiqualitaJPEG2000}
+\end{figure}
 \vfill
