@@ -289,7 +289,7 @@ Ciò prende il nome di high-boost filtering.
         \centering
         \includegraphics[width=0.9\textwidth]{cap2/nitidezza.png} 
         \caption{Originale, Laplaciano filtro di contrasto e high-boost filtering da in alto a sinistra in senso orario} 
-        \label{fig:f4}
+        \label{fig:f4k}
 \end{figure}
 \subsection{Filtri di rilevamento dei bordi}
 Per rilevare i bordi, sfruttare la derivata seconda è molto semplice da implementare. Tuttavia, presenta un problema da non sottovalutare: è molto sensibile al rumore. Per questo motivo, se l'obiettivo è quello di rilevare i bordi, conviene invece usare la derivata prima. Inoltre, in matematica, la derivata prima rileva i picchi: per questo motivo, è l'operazione che permette di rilevare i bordi. Tuttavia, va eseguito sia per le righe che per le colonne.\\

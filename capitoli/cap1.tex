@@ -37,13 +37,13 @@ Ciò spiega che il sistema visivo tende a sottostimare od a sovrastimare i bordi
         \centering % Centra l'immagine all'interno della minipage
         \includegraphics[width=\textwidth]
         {immagini/cap1/Cornsweet_illusion.png} % L'immagine occupa tutta la larghezza della minipage
-        \label{fig:corn}
+        \label{fig:cornsweet}
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth} % Minipage che occupa quasi metà della larghezza del testo
         \centering % Centra l'immagine all'interno della minipage
         \includegraphics[width=\textwidth]{immagini/cap1/Illusion_of_gray_dots_nevit_065.svg.png} % L'immagine occupa tutta la larghezza della minipage
-        \label{fig:griglia}
+        \label{fig:grigliall}
     \end{minipage}
     \caption{Illusione del mais dolce (a sinistra) e la griglia di Hermann (a destra)}
     \label{fig:confronto_immagini}
@@ -120,7 +120,7 @@ In questo paragrafo, vengono elencati una serie di possibili manipolazioni, anda
         \label{fig:griglia}
     \end{minipage}
     \caption{Esempi di possibili manipolazioni di immagini}
-    \label{fig:confronto_immagini}
+    \label{fig:confronto_immaginii}
 \end{figure}
 In particolare, si considera:\\
 \begin{itemize}
@@ -138,7 +138,7 @@ Di seguito ne è riportato un grafico che ne riporta le principali tipologie di 
 La prima ed anche la più semplice è la funzione identità, in cui il livello di grigio in entrata corrisponde a quello d'uscita, perciò l'immagine non riporta alcuna alterazione. Tale funzione è una retta che va da $(0,0)$ a $(L-1, L-1)$.
 \begin{equation*}
     s=r
-    \label{eq:identità}
+    \label{eq:identitàa}
 \end{equation*}
 La seconda è la funzione negativa, in cui inverte i livelli di grigio, creando la cosiddetta immagine negativa. Questa funzione non è altro che una retta che va da $(0,L-1)$ a $(L-1,0)$.
 \begin{equation*}
@@ -245,7 +245,7 @@ La seconda funzione di trasformazione lineare a tratti è il gray-level slicing,
     \item sfondo costante, in cui l'intervallo viene mappato ad un livello alto ($L-1$) ed il resto al livello $0$;
     \begin{equation*}
     s=s_{high}\text{rect}_{B-A}\left(r-\frac{A+B}{2}\right)
-    \label{eq:sfondocost}
+    \label{eq:sfondocosts}
     \end{equation*}
     \item sfondo invariato, in cui l'intervallo viene mappato ad un livello alto ($L-1$) ed il resto viene lasciato invariato.
     \begin{equation*}
@@ -278,7 +278,7 @@ Quando si parla di un'immagine, è possibile costruire l'istogramma dell'immagin
         \end{aligned}
     \end{equation*}
     \captionof{figure}{Esempio di istogramma di un'immagine 4x4 con livello di grigio $[0,9]$} % <--- NOTA: Ho usato \captionof (richiede \usepackage{caption})
-    \label{fig:kjmkp}
+    \label{fig:kjmkpl}
 \end{center}
 In termini statistici, è preferibile rappresentare l'istogramma normalizzato, ossia dividere $n_k$ con il numero totale di pixel $n$.
 \begin{equation*}

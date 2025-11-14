@@ -13,28 +13,8 @@ Di seguito è mostrato uno schema che riassume i passi eseguiti nel formato di c
 Un'immagine a colori viene rappresentata nel formato RGB, che non sono altre tre matrici dove R contiene i livelli di rosso, G di verde e B di blu. tuttavia
 tale rappresentazione non risulta efficace nella compressione, dato che sono ridondanti. Per questo motivo, si convertono tali matrici nel formato YCbCr, dove Y è luminanza e CbCr
 rappresentano la crominanza, che insieme non sono affatto ridondanti. Infatti, l'occhio umano percepisci la variazione di luminosità che di colore, dato
-dal fatto che l'occhio umano ha molti più bastoncelli che coni. La formula di conversione è la seguente:
-\begin{equation*}
-    \begin{bmatrix}
-        Y\\
-        Cb\\
-        Cr
-    \end{bmatrix}=
-    \begin{bmatrix}
-        0,299 & 0,587 & 0,114\\
-        -0,1687 & -0,3313 & 0,5\\
-        0,5 & -0,4187 & -0,0813
-    \end{bmatrix} \begin{bmatrix}
-        R\\
-        G\\
-        B
-    \end{bmatrix}+ \begin{bmatrix}
-        0\\
-        128\\
-        128
-    \end{bmatrix}
-\end{equation*}
-Inoltre, la risoluzione delle componenti cromatiche vengono ridotte di un fattore $2$. In particolare:
+dal fatto che l'occhio umano ha molti più bastoncelli che coni. Ciò, verrà trattato nei capitoli successivi. \\
+Comunque, la risoluzione delle componenti cromatiche vengono ridotte di un fattore $2$. In particolare:
 \begin{itemize}
     \item $4:4:4$ non si ha nessun sottocampionamento;
     \item $4:2:2$ si ha una riduzione solamente nella direzione orizzontale;
@@ -211,7 +191,7 @@ I livelli di qualità consentono la gestione di questa struttura di scalabilità
 \end{itemize}
 \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.8\textwidth]{cap6/qualita} 
+        \includegraphics[width=0.9\textwidth]{cap6/qualita} 
         \caption{Strati di qualità}
         \label{fig:stratiqualitaJPEG2000}
 \end{figure}
