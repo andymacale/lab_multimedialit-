@@ -1,0 +1,106 @@
+La creazione di un video avviene mediante una sequenza di immagini 2D, che rappresentano la proiezione di una scena 3D in movimento sul piano immagine
+della videocamera.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap8/primo} 
+        \caption{Primo video mai realizzato} 
+        \label{fig:primo}
+\end{figure}
+In questo capitolo, verranno analizzate le caretteristiche del video.
+\section{Proporzioni}
+La prima caratteristica fondamentale del video è la proporzione, che non è altro che il rapporto tra l'larghezza e l'altezza. Tale rapporto è fisso:
+infatti risulta tre valori standard:
+\begin{itemize}
+    \item 4:3, usato nelle vecchie TV, per i canali SD, poiché risulta troppo squadrato;
+    \item 16:9, usato nella maggior parte delle TV, per i canali DC;
+    \item 21:9, usato nella maggior parte dei video, ma invece in pochissime TV.
+\end{itemize}
+Nel caso in cui il video e la TV hanno proporzioni diversi, verranno mostrati degli spazi vuoti, come mostrato nell'immagine di seguito.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap8/rapporti}
+        \caption{Video mostrati in varie TV} 
+        \label{fig:rapporti}
+\end{figure}
+\section{Frame rate}
+Per dare la sensazione di movimento, le immagini devono essere ricaricate, in generale a frequenza di $60 Hz$. Il frame rate non è altro che il tempo
+impiegato tra due immagini successive, espresso in frame per seconds (fps). Solitamente, il frame rate per essere considerato accettabile deve essere
+almeno 30 fps, mentre è buono a 60 fps, eccellente sopra i 120 fps.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap8/fps} 
+        \caption{Come varia il frame rate in un video} 
+        \label{fig:fps}
+\end{figure}
+\section{Modalità di trasmissione}
+Una caratteristica molto importante è come avviene la trasmissione di un video, a seconda della qualità richiesta.\\
+Il metodo di trasmissione più semplice, ma che richiede molto più risoluzione e larghezza di banda è il metodo progressivo, in cui ogni immagine viene
+trasmessa esattamente come viene mostrata.\\
+Se invece, non si possiede molta larghezza di banda oppure il framerate non è molto alto, allora si opta per il metodo interlacciato, che consiste nel
+trasmettere prima le linee pari e poi quelle dispari, creando l'illusione del frame rate doppio rispetto a quello reale. Tuttavia, è necessario fornire
+le seguenti considerazioni:
+\begin{itemize}
+        \item è necessario un tempo di ritracciamento, che crea degli impulsi neri;
+        \item occorrono dei segnali di sincronizzazione, per garantire che l'immagine inizi in alto a sinistra;
+        \item per evitare lo sfarfallio, si deve effettuare un aggiornamento completo a $50 Hz$.
+\end{itemize}
+\section{Risoluzione}
+Analogamente per le immagini, anche per quanto riguarda i video la risoluzione non è altro che il numero di pixel presenti. Tuttavia, qui è cruciale
+anche le proporzioni, il frame rate e la modalità di trasmissione. In particolare:
+\begin{itemize}
+        \item formato PAL (Phase Alternate Line), sviluppato principalmente in Europa (Francia esclusa ad esempio), in 4:3 a 25 fps ad una risoluzione 
+              massima a 720x576px;
+        \item HD ready, con risoluzione a 720p (progressivo) a 50 fps (720p/50);
+        \item HDTV (1080i/25);
+        \item Full HDTV (1080p/50);
+        \item Ultra HD, composto dal 2K, dal 4K e dall'8K.
+\end{itemize}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{cap8/risoluzione} 
+        \caption{La differenza tra le varie risoluzioni} 
+        \label{fig:risoluzionevideo}
+\end{figure}
+\section{Rappresentazione dei colori}
+Come accennato all'inizio del corso, i coni presenti nell'occhio umano rispondono a tre lunghezze d'onda fondamentali:
+\begin{itemize}
+        \item rosso ($700 nm$);
+        \item verde ($546,1 nm$);
+        \item blu ($435,8 nm$).
+\end{itemize}
+Tale lunghezze d'onda fanno parte dello spettro visibile.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap8/spettro} 
+        \caption{Spettro della luce visibile} 
+        \label{fig:spettrocolori}
+\end{figure}
+\subsection{Teorie della tipologia di colore}
+Per formare ogni colore, si considerano due teorie, a seconda del comportamento dell'assorbimento della luce.\\
+La prima è la teoria sottrattiva, in cui il nero assorbe più luce ed il bianco riflette più luce. A questo punto, tutti i colori, esclusi quelli del
+pigmento, vengono assorbiti. In questo caso, i colori primari sono il ciano, il magenta, il giallo ed il nero. Tale teoria trova largo utilizzo nelle 
+stampanti.
+Tuttavia, nei video si usa l'altra teoria, ossia la teoria additiva, in cui il nero riflette più luce, mentre il bianco asssorbe più luce. A questo
+punto, i colori primari sono gli stessi della luce visibile, perciò il rosso, il verde ed il blu.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap8/pigmento}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap8/luce} 
+\end{minipage}
+\end{center}
+\captionof{figure}{Teoria sottrattiva (a sinistra) e teoria additiva (a destra)}
+\label{fig:dcdksjcddjdcjds}
+\subsection{Rappresentazione dei colori}
+Per quanto riguarda la rappresentazione dei colori, ciò può avvenire semplicimente con la ruota dei colori, detto HSV, dove:
+\begin{itemize}
+        \item H sta per hue, che indica la rotazione sulla ruota dei colori;
+        \item S sta per saturation, che indica la saturazione;
+        \item V sta per value, che indica il valore di luminosità.
+\end{itemize}
+Un'altra rappresentazione è RGB, che non 
+\vfill
