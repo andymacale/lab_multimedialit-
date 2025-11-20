@@ -102,5 +102,74 @@ Per quanto riguarda la rappresentazione dei colori, ciò può avvenire semplicim
         \item S sta per saturation, che indica la saturazione;
         \item V sta per value, che indica il valore di luminosità.
 \end{itemize}
-Un'altra rappresentazione è RGB, che non 
+Un'altra rappresentazione è RGB, in cui vengono rappresentati i tre colori su degli assi cartesiani in tre dimensioni. In particolare, sull'asse $y$
+si rappresenta il verde, poiché presenta una maggiore risposta alla luce; il rosso ed il blu rispettivamente sull'asse $x$ e $z$, come mostrato nella
+figura seguente.
+\begin{center}
+\begin{minipage}{0.56\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.95\textwidth]{cap8/rgb}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.40\textwidth} % Colonna Destra (48% della larghezza del testo)
+     \begin{table}[H] % Usa [H] per renderla non flottante
+    \centering
+    \begin{tabular}{| C{2cm} | C{2cm} |} 
+            \hline
+            % Usiamo \thead per le intestazioni:
+            \textbf{Punto} & \textbf{Colore} \\ 
+            \hline % Linea spessa sotto le intestazioni
+            $(0,0,0)$ & Nero \\
+            \hline % Linea spessa sotto le intestazioni
+            $(0,0,1)$ & Blu \\
+            \hline % Linea spessa sotto le intestazioni
+            $(0,1,0)$ & Verde \\
+            \hline % Linea spessa sotto le intestazioni
+            $(0,1,1)$ & Ciano \\
+            \hline % Linea spessa sotto le intestazioni
+            $(1,0,0)$ & Rosso \\
+            \hline
+            $(1,0,1)$ & Viola \\
+            \hline
+            $(1,1,0)$ & Giallo \\
+            \hline
+            $(1,1,1)$ & Bianco \\
+            \hline
+    \end{tabular}
+\end{table}
+\end{minipage}
+\end{center}
+\captionof{figure}{Rappresentazione cartesiana di RGB}
+\label{fig:dcdkssjcddjdcjds}
+Come già visto nella compressione JPEG, se si separano le tre componenti RGB, esse sono molto correlate, poiché rappresentano più o meno lo stesso
+contenuto informativo, cambiando solo leggermente i livelli di grigio. Per questo motivo, si sceglie la rappresentazione YCbCr, poiché è più compatibile
+con il sistema visivo umano.
+\begin{center}
+\begin{minipage}{0.30\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \begin{equation*}
+        Y=K_rR+K_bB+(1-K_r-K_b)G
+\end{equation*}    
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.30\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+\begin{equation*}
+        C_b=\frac{0,5(B-y)}{1-K_b}
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.30\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+\begin{equation*}
+        C_r=\frac{0,5(R-y)}{1-K_r}
+\end{equation*}
+\end{minipage}
+\end{center}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{cap8/analisi_colore_risultato} 
+        \caption{Divisione immagine in RGB e YCbCr} 
+        \label{fig:analis_colore_risultato}
+\end{figure}
 \vfill
