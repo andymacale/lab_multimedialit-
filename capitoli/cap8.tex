@@ -172,4 +172,27 @@ con il sistema visivo umano.
         \caption{Divisione immagine in RGB e YCbCr} 
         \label{fig:analis_colore_risultato}
 \end{figure}
+\subsection{Acquisizione dei colori}
+Nella fase di acquisizione, la luce viene catturata tramite il CCD (Charge Coupled Device), che non è altro che un array di celle che contengono colori.
+Nella maggior parte delle camere possiedono un chip singolo: tuttavia, la soluzione migliore sarebbe possederne tre diversi. Per l'occhio umano, la
+distribuzione migliore è $50 \%$ di verde, $25 \%$ di rosso e $25 \%$ di blu. In particolare:
+\begin{itemize}
+        \item i sensori verdi sono elementi sensibili alla luminanza;
+        \item i sensori rossi e blu sono elementi sensibili alla crominanza.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap8/camera} 
+        \caption{Modalità di acquisizione di immagini} 
+        \label{fig:camere}
+\end{figure}
+\subsection{Quantizzazione}
+Per quanto riguarda la quantizzazione, devono essere definiti il numero di livelli, tipicamente sono $8$ ($8 b/p$). Questo numero viene definito dalla
+legge di Weber, di meno (già con $6$) si comincia ad avere sfocatura. Con $8 b/p$ si ha l'LDR (Low Dynamic Range), che è il rapporto tra il valore
+massimo ed il valore minimo di una misura fisica. Per esempio:
+\begin{itemize}
+        \item per una scena tra la parte più chiara e quella più scura;
+        \item per un display tra il massimo e minimo dell'intensità emessa dallo schermo.
+\end{itemize}
+Infine, con $32 b/p$ si ha l'HDR (High Dynamic Range), che posso acquisire immagini con esposizioni molto diverse, per avere scene più dinamiche.
 \vfill
