@@ -28,6 +28,12 @@
 \usepackage{amsmath}
 \usepackage{array}
 \usepackage{fancyhdr}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\tableofcontents}{\clearpage}{}{}{}
+\patchcmd{\listoffigures}{\clearpage}{}{}{}
+\patchcmd{\listoftables}{\clearpage}{}{}{}
+\makeatother
 % Definisce un nuovo tipo di colonna chiamato 'C' (maiuscolo) che centra orizzontalmente e verticalmente.
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 
@@ -39,11 +45,6 @@
 \definecolor{frontespizio}{HTML}{7DF9FF}
 \definecolor{normale}{HTML}{FFFFFF}
 \AtBeginDocument{\fontsize{11}{12}\selectfont}
-
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd{\listoffigures}{\clearpage}{}{}{} % Rimuove \clearpage da listoffigures
-\makeatother
 
 %\setmainfont{Arial} 
 \graphicspath{{immagini/}}
@@ -91,7 +92,7 @@
 
 % 2. IMPOSTA IL CONTATORE A -1 (PER PAGINA 0)
 % La pagina successiva (\begin{titlepage}) sarà la pagina -1 + 1 = 0.
-\setcounter{page}{-1} 
+%\setcounter{page}{-1} 
 
 % 3. IMPOSTA IL COLORE DI SFONDO PER LA PAGINA 0
 \pagecolor{frontespizio} 
@@ -125,6 +126,7 @@
 \tableofcontents
 \listoffigures
 
+
 % ----------------------------------------------------
 % INIZIO CORPO PRINCIPALE (Numerazione Araba da 1)
 \mainmatter 
@@ -147,20 +149,22 @@
 
 \part{Immagini}
 \chapter{Elaborazione delle immagini}
-\input{capitoli/cap1}
+\input{capitoli/cap01}
 \chapter{Filtri nel dominio spaziale}
-\input{capitoli/cap2}
+\input{capitoli/cap02}
 \chapter{Filtri nel dominio della frequenza}
-\input{capitoli/cap3}
+\input{capitoli/cap03}
 \chapter{Trasformata Wavelet}
-\input{capitoli/cap4}
+\input{capitoli/cap04}
 \chapter{Processo di compressione delle immagini}
-\input{capitoli/cap5}
+\input{capitoli/cap05}
 \chapter{Formato JPEG}
-\input{capitoli/cap6}
+\input{capitoli/cap06}
 \chapter{Fondamenti della percezione della profondità}
-\input{capitoli/cap7}
+\input{capitoli/cap07}
 \part{Video}
 \chapter{Creazione e caratteristiche dei video}
-\input{capitoli/cap8}
+\input{capitoli/cap08}
+\chapter{Video stereoscopico e tecnologie 3D}
+\input{capitoli/cap09}
 \end{document}

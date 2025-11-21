@@ -1,0 +1,339 @@
+Il processo di compressione di un'immagine, consiste nel ridurre drasticamente la quantità di dati presenti nell'immagine, poiché trasmettere un'immagine
+non compressa richiede molto tempo e molta larghezza di banda, come mostrato nell'immagine seguente.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap05/compressione} 
+        \caption{Processo di trasmissione di un'immagine compressa}
+        \label{fig:hansform}
+\end{figure}
+Basti pensare che già un'immagine $1024\times1024$ in scala di grigi con risoluzione bassa ($8 \, b/p$), per essere trasmessa in 2G ($v=50 \, kb/s $), sono necessari:
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    c=1024\times1024\times8=8388608 \, b
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \begin{equation*}
+    b=\frac{c}{v}=\frac{8388608}{50000} = 167,77216 \, s \approx 3'
+    \end{equation*}
+\end{minipage}
+\end{center}
+che è decisamente troppo elevato.
+\section{Ridondanza dei dati}
+Per prima cosa è necessario ribadire che dato ed informazione non sono assolutamente sinonimi. Infatti:
+\begin{itemize}
+    \item un'informazione è ciò che si vuole trasmettere;
+    \item un dato rappresenta i modi di trasmettere l'informazione.
+\end{itemize}
+La ridondanza dei dati si può quantificare matematicamente come entità. Infatti, si considerano le seguenti grandezze:
+\begin{itemize}
+    \item rapporto di compressione ($C_R$), che è il rapporto tra due insiemi di dati che contengono la stessa informazione;
+    \begin{equation*}
+        C_{R} = \frac{n_1}{n_2}
+    \end{equation*}
+    \item ridondanza relativa dei dati ($R_D$), che indica la quantità dei dati che sono ridondanti, spesso indicati in percentuale.
+    \begin{equation*}
+        R_D = 1-\frac{1}{C_R}
+    \end{equation*}
+\end{itemize}
+In questo paragrafo, verranno trattate le diverse tipologie di rindondanza.
+\subsection{Ridondanza di codifica}
+La ridondanza di codifica si ha nel momento in cui si sceglie un sistema di codifica non efficiente. Per calcolare l'efficienza di un
+algoritmo di compressione, dipende dal livello medio di grigio, che dipende dalla probabilità che ogni livello di grigio dell'immagine
+sia presente in tale immagine e quanti bit occupa ($l(r_k)$).
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        p_r(r_k)=\frac{n_k}{MN}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        L_{avg}=\sum_{0}^{L-1}l(r_k)p_r(r_k)
+    \end{equation*}
+\end{minipage}
+\end{center}
+Per esempio data un'immagine $256 \times 256$ con le seguenti caratteristiche:
+\begin{table}[H] % Usa [H] per renderla non flottante
+    \centering
+    \begin{tabular}{| C{5cm} | C{5cm} |} 
+            \hline
+            
+            % Usiamo \thead per le intestazioni:
+            \textbf{$r_k$} & \textbf{$p_k(r_k)$} \\ 
+            \hline % Linea spessa sotto le intestazioni
+            $r_{87}=87$ & $3/10$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{128}=128$ & $1/2$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{186}=186$ & $1/10$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{255}=255$ & $1/10$ \\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{k} \, se \, k \neq 87, 128, 186, 255$ & ${0}$ \\
+            \hline
+    \end{tabular}
+\end{table}
+per esempio si usa per ogni livello di grigio il numero massimo rappresentabile del livello di grigio più alto ($255$), che è $8$ ($\log_{2}{(255)}$): Il
+livello medio di grigio è $L_{avg_{1}}=8\, b$. A questo punto conviene assegnare il numero di bit a seconda della probabilità: maggiore è la probabilità,
+meno bit deve avere quel livello di grigio, così lo spazio occupato sarebbe decisamente minore.
+\begin{table}[H] % Usa [H] per renderla non flottante
+    \centering
+    \begin{tabular}{| C{5cm} | C{5cm} | C{5cm}|} 
+            \hline
+            
+            % Usiamo \thead per le intestazioni:
+            \textbf{$r_k$} & \textbf{$p_k(r_k)$} & \textbf{$l_k(r_k)$} \\ 
+            \hline % Linea spessa sotto le intestazioni
+            $r_{87}=87$ & $3/10$ & $2$\\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{128}=128$ & $1/2$ & $1$\\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{186}=186$ & $1/10$ & $3$\\
+            \hline % Linea spessa sotto le intestazioni
+            $r_{255}=255$ & $1/10$ & $3$ \\
+            \hline % Linea spessa sotto le intestazioni
+    \end{tabular}
+\end{table}
+\begin{equation*}
+    L_{avg_{2}}=\frac{3}{10}\times 2 + \frac{1}{2}\times 1 + \frac{1}{10} \times 3 + \frac{1}{10} \times 3 = \frac{17}{10} \, b = 1,7\, b
+\end{equation*}
+Infine, si calcolano le due grandezze.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        C_R = \frac{8\times10}{17}=\frac{80}{17}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        R_D = 1 - \frac{17}{80} = \frac{63}{80} = 78,75\%
+    \end{equation*}
+\end{minipage}
+\end{center}
+\subsection{Ridondanza interpixel}
+La ridondanza interpixel implica che qualsiasi valore di un pixel può essere predetto dai sui vicini, grazie alla correlazione. Per ridurre ciò,
+i dati dovrebberero essere mappati.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{cap05/interpixel} 
+        \caption{Esempio di ridondanza di interpixel}
+        \label{fig:interpixel}
+\end{figure}
+\subsection{Ridondanza psicovisiva}
+La ridondanza psicovisiva sta nel fatto che alcuni pixel sono talmente simili che l'occhio umano non li percepisce, dato che il sistema visivo umano
+non percepisce tutta l'informazione visiva con la stessa intensità: ma cerca solo caratteristiche importanti, come angoli e texture. Il classico esempio
+è un immagine a tinta unita.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap05/psico} 
+        \caption{Esempio di ridondanza psicovisiva}
+        \label{fig:psicovisiva}
+\end{figure}
+\section{Teoria dell'informazione}
+Per effettuare una codifica efficiente, è necessario conoscere dei cenni di teoria dell'informazione.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap05/teoria} 
+        \caption{Esempio di rappresentazione della teoria dell'informazione} 
+        \label{fig:teoria}
+\end{figure}
+\subsection{Concetti base di informazione}
+Per prima cosa è necessario comprendere i concetti base dell'informazione:
+\begin{itemize}
+    \item più la probabilità di un evento è bassa più il contenuto informativo è alto;
+    \item l'informazione di più messaggi indipendenti sono la somma delle informazione corrispottive.
+\end{itemize}
+Detto ciò, sia $X$ una sorgente che genera un messaggio $x_i$ con probabilità $p(x_i)$, l'informazione si calcola nel modo seguente:
+\begin{equation*}
+    I(x_i) = \log_{c}{\left[\frac{1}{p(x_i)}\right]}
+\end{equation*}
+dove $c$ è la base del logiritmo, che dipende dal tipo di codifica. Le più comuni sono il bit ($c=2$) ed il nat ($c=e$).
+\subsection{Entropia}
+Un altro concetto fondamentale è l'entropia dell'informazione, che misura l'incertezza media e l'informazione attesa della sorgente.
+\begin{equation*}
+    H(X)=-\sum_{i=1}^{N}p(x_i)\log_{c}{[p(x_i)]}
+\end{equation*}
+L'entropia dell'informazione è protagonista del teorema della codifica di sorgente di Shannon, che afferma che è impossibile comprimere i dati
+che presentano come velocità di codifica, cioè il numero di simboli trasmessi per secondo, minore dell'entropia senza perdere del contenuto informativo.
+\subsection{Criteri di fedeltà}
+Infine, l'ultima parte analizzata della teoria dell'informazione è quella dedicata ai criteri di fedeltà, che quantifica quanta informazione è possibile
+perdere mantenendo ancora l'informazione accettata oppure no. In particolare, si considerano due tipologie di criteri di fedeltà.\\
+Il primo criterio è quello soggettivo, che si basano solamente sulla comparazione visiva tra due immagini, classificando le immagini in rankig da eccellente ad inutilizzabile.\\
+Il secondo ed ultimo criterio è quello oggettivo, che si basa in base a delle metriche matematiche, che dipendono dall'errore ($\epsilon(x,y)$) e dall'errore assoluto ($\epsilon$),
+calcolati in base all'immagine originale ($f(x,y)$) ed all'immagine compressa ($\hat{f}(x,y)$).
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \epsilon(x,y) = \hat{f}(x,y)-f(x,y)
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        \epsilon = \sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]
+    \end{equation*}
+\end{minipage}
+\end{center}
+A questo punto, i criteri di fedeltà sono dettati dalle metriche di errore quadratico medio ($RMSE$), il rapporto segnale-rumore quadrico medio ($SNR_{ms}$)
+ed il rapporto segnale-rumore di picco ($PSNR$), dove questi ultimi due si misurano in Decibel (dB), che è una scala logaritmica.
+\begin{center}
+\begin{minipage}{0.52\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        RMSE=\sqrt{\frac{1}{MN}\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]^2}
+\end{equation*}
+ \begin{equation*}
+        SNR_{ms}=\sum_{y=0}^{N-1}\hat{f}^2(x,y)\left\{\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]^2\right\}^{-1}
+\end{equation*}
+\begin{equation*}
+        PSNR=L_{max}\left\{\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[\hat{f}(x,y)-f(x,y)\right]^2\right\}^{-1}
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}[c]{0.44\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap05/psnr} 
+        \captionof{figure}{Misura del PSNR in un'immagine} 
+        \label{fig:psnr}
+\end{minipage}
+\end{center}
+\section{Modello di compressione delle immagini}
+Il modello di compressione delle immagini consistono nei seguenti operazioni:
+\begin{enumerate}
+    \item mappatura, che consiste nel prendere l'immagine ed eseguire una mappatura dei dati, riducendo la ridondanza interpixel (operazione reversibile);
+    \item quantizzazione, che esegue l'operazione di quantizzazione, riducendo la ridondanza psicovisiva (operazione irreversibile);
+    \item codifica di simbolo, che esegue un sistema di codifica dell'immagine (operazione reversibile) e lo invia al canale;
+    \item decodifica di simbolo, che dal canale prende l'immagine codifica e la ritrasforma prima della codifica;
+    \item mappatura inversa, che la riporta come matrice di pixel, leggermente diversa a causa del quantizzatore.
+\end{enumerate}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap05/modello} 
+        \caption{Schema del modello di compressione di un'immagine} 
+        \label{fig:modello}
+\end{figure}
+A seconda dell'errore, la tipologia di compressione di un'immagine si suddividono in due grandi categorie:
+\begin{itemize}
+    \item compressione lossless, in cui l'errore è nullo, perciò non viene perso alcuna informazione, sfruttando la ridondanza di codfica ed interpixel;
+    \item compressione lossy, invece, sfrutta ogni tipologia di ridondanza (anche quella psicovisiva), tollerando qualche errore o qualche
+        perdita d'informazione.
+\end{itemize}
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap05/satellite}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap05/telefono} 
+\end{minipage}
+\captionof{figure}{Esempio tipologia di immagine da comprimere lossless (a sinistra) od anche lossy (a destra)}
+\label{fig:compressione}
+\end{center}
+In questo paragrafo, sono elencate la maggior parte dei sistemi di codifica più utilizzati.
+\subsection{Codifica di Huffmann}
+La codifica di Huffmann è un sistema di codifica lossless, che usa gli alberi binari come struttura dati per costruire la codifica, la cui costruzione si
+basa sulla probabilità di simbolo. Infatti, essa consiste in:
+\begin{enumerate}
+    \item ordinare i simboli per probabilità;
+    \item combinare le due probabilità minori;
+    \item ripetere ciò, finché rimangono due probabilità.
+\end{enumerate}
+Ad esempio, dato l'insieme $X={A,B,C,D}$ con probabilità $p(X)=\left\{\frac{1}{8},\frac{1}{2},\frac{1}{4},\frac{1}{8}\right\}$, si ordina 
+$X={B,C,A,D}$ e si costruisce a partire da $B$ e poi $CAD$, che a sua volta si divide in $C$ e $AD$, che infine si divide in $A$ e $D$. In particolare,
+Ogni volta che si va a sinistra si assegna uno $0$, mentre $1$ quando si va a destra.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.35\textwidth]{cap05/huffmann} 
+        \caption{Esempio di una codifica di Huffmann} 
+        \label{fig:huffmann}
+\end{figure}
+In particolare, nessun simbolo possiede il prefisso di un altro simbolo. Infatti:
+\begin{itemize}
+    \item $A \rightarrow 110$;
+    \item $B \rightarrow 0$;
+    \item $C \rightarrow 10$;
+    \item $D \rightarrow 111$.
+\end{itemize}
+\subsection{Codifica aritmetica}
+La codifica aritmetica è una codifica lossless in cui non c'è una corrispondenza uno ad uno tra sorgente e codice e non è presente nessuna ipotesi che
+la codifica di simbolo avvenga uno alla volta. A questo punto viene generato un intervallo $[0;1[$, in cui inizialmente viene suddiviso in base alla
+probabilità di simbolo. Poi, più il messaggio diventa lungo, minore sarà la distanza tra i due estremi dell'intervallo, in base alla probabilità.\\
+Ad esempio, dati i seguenti simboli e le probabilità seguenti: $X=\left\{A,B,C\right\}$ $p(X)=\left\{0,4;0,5;0,1\right\}$. Nel momento in cui si vuole ricostruire il messaggio
+$BBC$, si considerano i seguenti simboli:
+\begin{enumerate}
+    \item simbolo $B$ (intervallo di riferimento $[0;1[$):
+    \begin{itemize}
+        \item $A \rightarrow [0; 0,4[$
+        \item $A \rightarrow [0,4; 0,9[$ (intervallo da considerare)
+        \item $C \rightarrow [0,9; 1[$
+    \end{itemize}
+    \item simbolo $B$ (intervallo di riferimento $[0,4; 0,9[$, $\Delta=0,9-0,4=0,5$):
+    \begin{itemize}
+        \item $A \rightarrow 0,4\times0,5=0,2 \rightarrow [0,4; 0,4+0,2[ \rightarrow [0,4; 0,6[$
+        \item $A \rightarrow 0,5\times0,5=0,25 \rightarrow [0,6; 0,6+0,25[ \rightarrow [0,6; 0,85[$ (intervallo da considerare)
+        \item $C \rightarrow 0,1\times0,5=0,05 \rightarrow [0,85; 0,85+0,05[ \rightarrow [0,85; 0,9[$
+    \end{itemize}
+    \item simbolo $C$ (intervallo di riferimento $[0,6; 0,85[$, $\Delta=0,85-0,6=0,25$):
+    \begin{itemize}
+        \item $A \rightarrow 0,4\times0,25=0,1 \rightarrow [0,6; 0,6+0,1[ \rightarrow [0,6; 0,7[$
+        \item $A \rightarrow 0,5\times0,25=0,125 \rightarrow [0,7; 0,7+0,125[ \rightarrow [0,6; 0,825[$ 
+        \item $C \rightarrow 0,1\times0,25=0,025 \rightarrow [0,825; 0,825+0,025[ \rightarrow [0,825; 0,85[$ (intervallo da considerare)
+    \end{itemize}
+    \item fine: $[0,825; 0,85[$.
+\end{enumerate}
+\subsection{Codifica RLC}
+La codifica RLC (Run-length coding) è una codifica lossless molto semplice in cui concatena ogni simbolo con il numero di volte che si ripete
+consecutivamente. Ad esempio $AAABBAC$ diventa $(A, 3)(B, 2)(A, 1), (C, 1)$. Tuttavia, tale sistema di codifica non è molto efficiente, tuttavia è
+veramente semplice da implementare.
+\subsection{Codifica di Lempel Ziv}
+La codifica di Lempel Ziv è una codifica lossless che è un sistema di codifica che è composto da tre elementi: $<P,L,C>$. Dove:
+\begin{itemize}
+    \item $P$ indica quanti passi indietro bisognerebbe bloccare il testo decodificato;
+    \item $L$ è la lunghezza della stringa;
+    \item $C$ è il prossimo carattere della stringa.
+\end{itemize}
+A questo punto, l'algoritmo consiste in:
+\begin{enumerate}
+    \item si decompone la sequenza d'ingresso in stringhe;
+    \item ogni volta che un blocco differisce dal precedente, viene inserito nel dizionario;
+    \item tutte le stringhe incluse nel dizionario, vengono associate ad una posizione;
+    \item nella procedura di codifica, l'algoritmo registra ogni stringa nuova nel dizionario e la sua posizione.
+\end{enumerate}
+Per esempio, data la stringa $xyxxyxyxxyy$, si procede come segue:
+\begin{enumerate}
+    \item legge $x$: non disponibile nel dizionario, quindi aggiunge $<0, 0, x>$;
+    \item (buffer $[x]$) legge $y$: non disponibile nel dizionario, quindi aggiunge $<0, 0, y>$;
+    \item (buffer $[xy]$) legge $x$, che si trova a $2$ posizioni indietro, si trova un match lungo $1$ (il carattere prima della $x$ è un'altra $x$), $<2, 1, x>$;
+    \item (buffer $[xyxx]$) legge $y$, che si trova a $3$ posizioni indietro, si trova un match lungo $2$ ($yx$ c'è, $yxy$ non c'è), $<3, 2, y>$;
+    \item (buffer $[xyxxyxy]$) legge $x$, si cerca il match più lungo, che è $xxy$ ($3$), che si trova $5$ posizioni indietro, $<5, 3, y>$;
+    \item fine: $<0, 0, x>$ $<0, 0, y>$ $<2, 1, x>$ $<3, 2, y>$ $<5, 3, y>$.
+\end{enumerate}
+\subsection{Bit-plane coding}
+Il bit-plane coding consiste nella composizione multivello dell'immagine in una serie di immagini binarie e comprimere ogni immagine binaria con
+qualsiasi altra codifica lossless, ottenendo una compressione lossless.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.35\textwidth]{cap05/bit} 
+        \caption{Rappresentazione del bit-plane coding} 
+        \label{fig:bit}
+\end{figure}
+\subsection{Standard di compressione lossy}
+Molto spesso, le immagini vengono compresse in maniera lossy, altrimenti occuperebbero troppo spazio, perciò molto più difficili da trasmettere. Inoltre,
+tali compressioni non presentano delle perdite significative nella maggior parte degli ambiti in cui si usano, grazie a molti standard. Lo standard più
+usato e conosciuto è il JPEG, a cui gli viene dedicato l'intero capitolo successivo.
+\vfill

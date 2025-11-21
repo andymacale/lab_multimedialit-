@@ -1,0 +1,198 @@
+La creazione di un video avviene mediante una sequenza di immagini 2D, che rappresentano la proiezione di una scena 3D in movimento sul piano immagine
+della videocamera.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap08/primo} 
+        \caption{Primo video mai realizzato} 
+        \label{fig:primo}
+\end{figure}
+In questo capitolo, verranno analizzate le caretteristiche del video.
+\section{Proporzioni}
+La prima caratteristica fondamentale del video è la proporzione, che non è altro che il rapporto tra l'larghezza e l'altezza. Tale rapporto è fisso:
+infatti risulta tre valori standard:
+\begin{itemize}
+    \item 4:3, usato nelle vecchie TV, per i canali SD, poiché risulta troppo squadrato;
+    \item 16:9, usato nella maggior parte delle TV, per i canali DC;
+    \item 21:9, usato nella maggior parte dei video, ma invece in pochissime TV.
+\end{itemize}
+Nel caso in cui il video e la TV hanno proporzioni diversi, verranno mostrati degli spazi vuoti, come mostrato nell'immagine di seguito.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap08/rapporti}
+        \caption{Video mostrati in varie TV} 
+        \label{fig:rapporti}
+\end{figure}
+\section{Frame rate}
+Per dare la sensazione di movimento, le immagini devono essere ricaricate, in generale a frequenza di $60 Hz$. Il frame rate non è altro che il tempo
+impiegato tra due immagini successive, espresso in frame per seconds (fps). Solitamente, il frame rate per essere considerato accettabile deve essere
+almeno 30 fps, mentre è buono a 60 fps, eccellente sopra i 120 fps.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap08/fps} 
+        \caption{Come varia il frame rate in un video} 
+        \label{fig:fps}
+\end{figure}
+\section{Modalità di trasmissione}
+Una caratteristica molto importante è come avviene la trasmissione di un video, a seconda della qualità richiesta.\\
+Il metodo di trasmissione più semplice, ma che richiede molto più risoluzione e larghezza di banda è il metodo progressivo, in cui ogni immagine viene
+trasmessa esattamente come viene mostrata.\\
+Se invece, non si possiede molta larghezza di banda oppure il framerate non è molto alto, allora si opta per il metodo interlacciato, che consiste nel
+trasmettere prima le linee pari e poi quelle dispari, creando l'illusione del frame rate doppio rispetto a quello reale. Tuttavia, è necessario fornire
+le seguenti considerazioni:
+\begin{itemize}
+        \item è necessario un tempo di ritracciamento, che crea degli impulsi neri;
+        \item occorrono dei segnali di sincronizzazione, per garantire che l'immagine inizi in alto a sinistra;
+        \item per evitare lo sfarfallio, si deve effettuare un aggiornamento completo a $50 Hz$.
+\end{itemize}
+\section{Risoluzione}
+Analogamente per le immagini, anche per quanto riguarda i video la risoluzione non è altro che il numero di pixel presenti. Tuttavia, qui è cruciale
+anche le proporzioni, il frame rate e la modalità di trasmissione. In particolare:
+\begin{itemize}
+        \item formato PAL (Phase Alternate Line), sviluppato principalmente in Europa (Francia esclusa ad esempio), in 4:3 a 25 fps ad una risoluzione 
+              massima a 720x576px;
+        \item HD ready, con risoluzione a 720p (progressivo) a 50 fps (720p/50);
+        \item HDTV (1080i/25);
+        \item Full HDTV (1080p/50);
+        \item Ultra HD, composto dal 2K, dal 4K e dall'8K.
+\end{itemize}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{cap08/risoluzione} 
+        \caption{La differenza tra le varie risoluzioni} 
+        \label{fig:risoluzionevideo}
+\end{figure}
+\section{Rappresentazione dei colori}
+Come accennato all'inizio del corso, i coni presenti nell'occhio umano rispondono a tre lunghezze d'onda fondamentali:
+\begin{itemize}
+        \item rosso ($700 nm$);
+        \item verde ($546,1 nm$);
+        \item blu ($435,8 nm$).
+\end{itemize}
+Tale lunghezze d'onda fanno parte dello spettro visibile.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap08/spettro} 
+        \caption{Spettro della luce visibile} 
+        \label{fig:spettrocolori}
+\end{figure}
+\subsection{Teorie della tipologia di colore}
+Per formare ogni colore, si considerano due teorie, a seconda del comportamento dell'assorbimento della luce.\\
+La prima è la teoria sottrattiva, in cui il nero assorbe più luce ed il bianco riflette più luce. A questo punto, tutti i colori, esclusi quelli del
+pigmento, vengono assorbiti. In questo caso, i colori primari sono il ciano, il magenta, il giallo ed il nero. Tale teoria trova largo utilizzo nelle 
+stampanti.
+Tuttavia, nei video si usa l'altra teoria, ossia la teoria additiva, in cui il nero riflette più luce, mentre il bianco asssorbe più luce. A questo
+punto, i colori primari sono gli stessi della luce visibile, perciò il rosso, il verde ed il blu.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap08/pigmento}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.7\textwidth]{cap08/luce} 
+\end{minipage}
+\end{center}
+\captionof{figure}{Teoria sottrattiva (a sinistra) e teoria additiva (a destra)}
+\label{fig:dcdksjcddjdcjds}
+\subsection{Rappresentazione dei colori}
+Per quanto riguarda la rappresentazione dei colori, ciò può avvenire semplicimente con la ruota dei colori, detto HSV, dove:
+\begin{itemize}
+        \item H sta per hue, che indica la rotazione sulla ruota dei colori;
+        \item S sta per saturation, che indica la saturazione;
+        \item V sta per value, che indica il valore di luminosità.
+\end{itemize}
+Un'altra rappresentazione è RGB, in cui vengono rappresentati i tre colori su degli assi cartesiani in tre dimensioni. In particolare, sull'asse $y$
+si rappresenta il verde, poiché presenta una maggiore risposta alla luce; il rosso ed il blu rispettivamente sull'asse $x$ e $z$, come mostrato nella
+figura seguente.
+\begin{center}
+\begin{minipage}{0.56\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.95\textwidth]{cap08/rgb}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.40\textwidth} % Colonna Destra (48% della larghezza del testo)
+     \begin{table}[H] % Usa [H] per renderla non flottante
+    \centering
+    \begin{tabular}{| C{2cm} | C{2cm} |} 
+            \hline
+            % Usiamo \thead per le intestazioni:
+            \textbf{Punto} & \textbf{Colore} \\ 
+            \hline % Linea spessa sotto le intestazioni
+            $(0,0,0)$ & Nero \\
+            \hline % Linea spessa sotto le intestazioni
+            $(0,0,1)$ & Blu \\
+            \hline % Linea spessa sotto le intestazioni
+            $(0,1,0)$ & Verde \\
+            \hline % Linea spessa sotto le intestazioni
+            $(0,1,1)$ & Ciano \\
+            \hline % Linea spessa sotto le intestazioni
+            $(1,0,0)$ & Rosso \\
+            \hline
+            $(1,0,1)$ & Viola \\
+            \hline
+            $(1,1,0)$ & Giallo \\
+            \hline
+            $(1,1,1)$ & Bianco \\
+            \hline
+    \end{tabular}
+\end{table}
+\end{minipage}
+\end{center}
+\captionof{figure}{Rappresentazione cartesiana di RGB}
+\label{fig:dcdkssjcddjdcjds}
+Come già visto nella compressione JPEG, se si separano le tre componenti RGB, esse sono molto correlate, poiché rappresentano più o meno lo stesso
+contenuto informativo, cambiando solo leggermente i livelli di grigio. Per questo motivo, si sceglie la rappresentazione YCbCr, poiché è più compatibile
+con il sistema visivo umano.
+\begin{center}
+\begin{minipage}{0.30\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \begin{equation*}
+        Y=K_rR+K_bB+(1-K_r-K_b)G
+\end{equation*}    
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.30\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+\begin{equation*}
+        C_b=\frac{0,5(B-y)}{1-K_b}
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.30\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+\begin{equation*}
+        C_r=\frac{0,5(R-y)}{1-K_r}
+\end{equation*}
+\end{minipage}
+\end{center}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{cap08/analisi_colore_risultato} 
+        \caption{Divisione immagine in RGB e YCbCr} 
+        \label{fig:analis_colore_risultato}
+\end{figure}
+\subsection{Acquisizione dei colori}
+Nella fase di acquisizione, la luce viene catturata tramite il CCD (Charge Coupled Device), che non è altro che un array di celle che contengono colori.
+Nella maggior parte delle camere possiedono un chip singolo: tuttavia, la soluzione migliore sarebbe possederne tre diversi. Per l'occhio umano, la
+distribuzione migliore è $50 \%$ di verde, $25 \%$ di rosso e $25 \%$ di blu. In particolare:
+\begin{itemize}
+        \item i sensori verdi sono elementi sensibili alla luminanza;
+        \item i sensori rossi e blu sono elementi sensibili alla crominanza.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap08/camera} 
+        \caption{Modalità di acquisizione di immagini} 
+        \label{fig:camere}
+\end{figure}
+\subsection{Quantizzazione}
+Per quanto riguarda la quantizzazione, devono essere definiti il numero di livelli, tipicamente sono $8$ ($8 b/p$). Questo numero viene definito dalla
+legge di Weber, di meno (già con $6$) si comincia ad avere sfocatura. Con $8 b/p$ si ha l'LDR (Low Dynamic Range), che è il rapporto tra il valore
+massimo ed il valore minimo di una misura fisica. Per esempio:
+\begin{itemize}
+        \item per una scena tra la parte più chiara e quella più scura;
+        \item per un display tra il massimo e minimo dell'intensità emessa dallo schermo.
+\end{itemize}
+Infine, con $32 b/p$ si ha l'HDR (High Dynamic Range), che posso acquisire immagini con esposizioni molto diverse, per avere scene più dinamiche.
+\vfill

@@ -1,0 +1,505 @@
+Nelle telecomunicazioni, per filtrare un segnale nel dominio del tempo, si l'operazione di convoluzione.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        x(t)*h(t)=\int_{-\infty}^{\infty}h(\tau)x(t-\tau)\, d\tau
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        x[n]*h[n]=\sum_{i=-\infty}^{\infty}h[i]x[n-i]
+    \end{equation*}
+\end{minipage}
+\end{center}
+Per quanto riguarda le immagini, nel dominio spaziale, la convoluzione avviene in due dimensioni (somma del prodotto elemento per elemento delle due matrici), dove:
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{itemize}
+    \item l'immagine è il segnale d'ingresso;
+    \item il filtro è il nucleo della convoluzione, detto maschera.
+    \end{itemize}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    g(x,y)=\sum_{i=-\infty}^{\infty}\sum_{j=-\infty}^{\infty}h(i,j)f(x-i,y-j)
+    \end{equation*}
+\end{minipage}
+\end{center}
+Per esempio, data l'immagine e il filtro seguente:
+\begin{center}
+\begin{minipage}{0.14\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        f(x,y) = \begin{bmatrix}
+            5 & 8 & 3 & 4 \\
+            3 & 2 & 1 & 1 \\
+            0 & 9 & 5 & 3 \\
+            4 & 2 & 7 & 2
+        \end{bmatrix}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.14\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h(x,y) = \begin{bmatrix}
+            2 & 1 & 0 \\
+            1 & 1 & -1 \\
+            0 & -1 & -2
+        \end{bmatrix}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.45\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h_{flip}(x,y) = -\begin{bmatrix}
+            2 & 1 & 0 \\
+            1 & 1 & -1 \\
+            0 & -1 & -2
+        \end{bmatrix}=
+        \begin{bmatrix}
+            -2 & -1 & 0 \\
+            -1 & -1 & 1 \\
+            0 & 1 & 2
+         \end{bmatrix}   
+    \end{equation*}
+\end{minipage}
+\end{center}
+si mette all'inizio in posizione $(0,0)$ dell'immagine e quello è il punto centrale dell'immagine. Come si può notare, sono presenti dei punti dell'immagine che vanno fuori dall'immagine. Per evitare ciò, è possibile:
+\begin{itemize}
+    \item ignorare i bordi, partendo dai punti in cui si ha una piena sovrapposizione dell'immagine;
+    \item si assumono i valori fuori dai bordi pari a 0.
+\end{itemize}
+\begin{equation*}
+    g(0,0)=\begin{bmatrix}
+            -2 & -1 & 0 \\
+            -1 & -1 & 1 \\
+            0 & 1 & 2
+         \end{bmatrix}*\begin{bmatrix}
+            0 & 0 & 0 \\
+            0 & 5 & 8 \\
+            0 & 3 & 5
+        \end{bmatrix}=-1\times 5 + 1 \times 8 + 1 \times 3 + 5 \times 5 = 20
+\end{equation*}
+L'immagine finale, ponendo i punti fuori dall'immagine pari a $0$, è dunque la seguente.
+\begin{equation*}
+    g(x,y)=\begin{bmatrix}
+            20 & 10 & 2 & 2 \\
+            18 & 1 & -8 & -7 \\
+            14 & 22 & 5 & -3 \\
+            6 & -4 & -16 & -18
+         \end{bmatrix}
+\end{equation*}
+Nel caso in cui si ignorassero i bordi, si applicherebbe il filtro solamente nei punti $(1,1)$, $(1,2)$, $(2,1)$ e $(2,2)$. Come si può intuire, l'immagine di output viene tagliata.
+\begin{equation*}
+    g(x,y)=\begin{bmatrix}
+            3 & 10\\
+            -4 & 5  
+         \end{bmatrix}
+\end{equation*}
+Infine, eseguire convoluzioni con maschere risulta essere molto versatile, poiché a seconda dei coefficienti della maschera, si possono ottenere risultati differenti: per esempio la sfocatura, il contrasto od il rilevamento dei bordi. In questo capitolo, vengono spiegati i filtri di smussamento e di nitidezza.
+\section{Filtri di smussamento}
+I filtri di smussamento permettono di gestire la sfocatura dell'immagine e della riduzione del rumore. In particolare, la sfocatura è un processo che serve per rimuovere piccoli dettagli e colmare piccoli scalini in linee e curve. La sfocatura accompagna la riduzione del rumore. 
+\subsection{Filtri di smussamento lineari}
+I filtri di smussamento lineari applicano la media dei pixel del vicinato. Essi ripiazzano il valore di ogni pixel con la media dei livello di grigio definiti dalla maschera. In particolare, a seconda dei valori della maschera si hanno tre tipologie di filtro.\\
+La prima tipologia è il filtro media aritmetica, in cui la maschera contiene il prodotto scalare tra l'inverso del numero di elementi della maschera e la maschera stessa di tutti $1$.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        h(x,y) = \frac{1}{9}\begin{bmatrix}
+            1 & 1 & 1 \\
+            1 & 1 & 1 \\
+            1 & 1 & 1
+        \end{bmatrix}
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+         h(x,y) = \frac{1}{25}\begin{bmatrix}
+            1 & 1 & 1 & 1\\
+            1 & 1 & 1 & 1\\
+            1 & 1 & 1 & 1\\
+            1 & 1 & 1 & 1
+        \end{bmatrix}
+    \end{equation*}
+\end{minipage}
+\end{center}
+Tale filtro applica una sfocatura uniforme all'immagine: più la maschera contiene elementi, maggiore sarà la sfocatura.
+La seconda tipologia è il filtro media ponderata, in cui si vuole dare più importanza a dei pixel rispetto ad altri, ad esempio il pixel centrale.
+\begin{equation*}
+        h(x,y) = \begin{bmatrix}
+            3/40 & 1/8 & 3/40 \\
+            1/8 & 1/5 & 1/8 \\
+            3/40 & 1/8 & 3/40
+        \end{bmatrix}
+\end{equation*}
+La terza ed ultima tipologia è il filtro gaussiano, in cui la maschera è una gaussiana a due dimensioni, in cui la deviazione standard ($\sigma$) ne determina la larghezza della campana.
+\begin{equation*}
+        h(x,y) = \exp{\left[\frac{-(x^2+y^2)}{2\sigma^2}\right]}
+\end{equation*}
+La deviazione standard controlla l'intensità della sfocatura: più è alto più sfoca. Comunque, essa sfoca molto meno brutalmente rispetto al filtro media.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{cap02/men_gauss} 
+        \caption{Filtro media e gaussiano} 
+        \label{fig:f1}
+\end{figure}
+\subsection{Filtri di smussamento non lineari}
+I filtri di smussamento non lineari non presentano un'operazione di convoluzione vera e propria, ma si basano su ordinamento statistico: in particolare, in base al ranking dei pixel. I pixel che sono considerati non rappresentativi vengono eliminati. Inoltre, vengono sostituiti i valori dei pixel con il valore della classifica. Questa tipologia viene usata per la riduzione del rumore, sfocando però l'immagine.\\
+Il filtro di smussamento non lineare più comune è il filtro mediano, che consiste nel:
+\begin{enumerate}
+    \item prendere una porzione di un'immagine (solitamente 3x3 o 5x5);
+    \begin{equation*}
+        \begin{bmatrix}
+            9 & 12 & 0 \\
+            5 & 5 & 9 \\
+            8 & 10 & 7
+        \end{bmatrix}
+    \end{equation*}
+    \item convertire tale porzione in un array ordinato;
+    \begin{equation*}
+        \left\{0, 5, 5, 7, 8, 9, 9, 10, 12\right\} \to 8
+    \end{equation*}
+    \item sostituire la mediana dell'array nella porzione presa, sfocando l'immagine;
+    \begin{equation*}
+        \begin{bmatrix}
+            8 & 8 & 8 \\
+            8 & 8 & 8 \\
+            8 & 8 & 8
+        \end{bmatrix}
+    \end{equation*}
+    \item iterare i passaggi precedenti per tutta l'immagine.
+\end{enumerate}
+Questo filtro permette di rimuovere il rumore sale e pepe, molto comune nelle foto più datate, in cui l'immagine presenta dei pixel completamente bianchi e neri: infatti, tali pixel non saranno mai dei mediani: per questo motivo vengono eliminati. Inoltre, la sfocatora non è così evidente, un altro lato positivo da non sottovalutare.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.85\textwidth]{cap02/salt} 
+        \caption{Rimozione del rumore sale e pepe con un filtro mediano (sinistra originale e destra modificata)} 
+        \label{fig:f2}
+\end{figure}
+\section{Filtri di nitidezza}
+I filtri di shapening preservano i dettagli, andando ad evidenziare i bordi. Per fare ciò, è necessario trovare quella operazione che permetta di distinguire quali sono i pixel dell'immagine che sono uguali oppure molto simili. Tale operazioni sono:
+\begin{itemize}
+    \item la derivata prima, che esegue la differenza tra il pixel successivo ed il pixel corrente;
+    \begin{equation*}
+        \frac{\delta f}{\delta x}=f(x+1)-f(x)
+    \end{equation*}
+    \item la derivata seconda, che esegue la somma tra il pixel successivo ed il pixel precedente e infine sottrae due volte il pixel corrente.
+    \begin{equation*}
+        \frac{\delta^2 f}{\delta x^2}=f(x+1)+f(x-1)-2f(x)
+    \end{equation*}
+\end{itemize}
+Per tali scopi, risulta molto conveniente usare la derivata seconda, poiché presenta una risposta più forte per i dettagli (facilmente intuibile) ed ha un'implementazione decisamente più semplice (poco intuibile).
+\subsection{Il Laplaciano}
+Il filtro di nitidezza più usato è il Laplaciano, che sfrutta il gradiente secondo dell'immagine: ciò è decisamente logico, dato che in più di una dimensione e con le derivate parziale, si fa riferimento ad ogni derivata parziale, perciò è necessario il gradiente.
+\begin{equation*}
+        \nabla^2 f = \frac{\delta^2 f}{\delta x^2}+\frac{\delta^2 f}{\delta y^2}
+\end{equation*}
+Con dei calcoli matematici si ricava la formula seguente:
+\begin{equation*}
+        \frac{\delta^2 f}{\delta x^2}=f(x+1,y)+f(x-1,y)-2f(x,y) \\
+\end{equation*}
+\begin{equation*}
+        \frac{\delta^2 f}{\delta y^2}=f(x,y+1)+f(x,y-1)-2f(x,y) \\
+\end{equation*}
+\begin{equation*}
+        \nabla^2 f=f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1)-4f(x,y)
+\end{equation*}
+da cui si ricava la maschera, ricavando i coefficienti del gradiente.
+\begin{equation*}
+       \nabla^2 f=\begin{bmatrix}
+            f(x-1,y-1) & f(x-1,y) & f(x-1,y+1) \\
+           f(x,y-1) & f(x,y) & f(x,y+1) \\
+            f(x+1,y-1) & f(x+1,y) & f(x+1,y+1) \\
+        \end{bmatrix}=\begin{bmatrix}
+            0 & 1 & 0 \\
+            1 & -4 & 1 \\
+            0 & 1 & 0
+        \end{bmatrix}
+\end{equation*}
+Tuttavia, tale filtro trova solamente i bordi dell'immagine. Per questo motivo, l'immagine di output è solamente  uno dei fattori della somma algebrica con l'immagine originale.
+\begin{equation*}
+        g(x,y)=f(x,y)+c\nabla^2\left[(x,y)\right]
+\end{equation*}
+In particolare, $c=1$ se il coefficiente centrale è positivo; $c=-1$ altrimenti.
+A questo punto, la nuova immagine è la seguente.
+\begin{equation*}
+        g(x,y)=f(x,y)-f(x+1,y)-f(x-1,y)-f(x,y+1)-f(x,y-1)+4f(x,y)
+\end{equation*}
+\begin{equation*}
+        g(x,y)=5f(x,y)-f(x+1,y)-f(x-1,y)-f(x,y+1)-f(x,y-1)
+\end{equation*}
+Perciò, la maschera è la seguente.
+\begin{equation*}
+        h(x,y)=\begin{bmatrix}
+            0 & -1 & 0 \\
+            -1 & 5 & -1 \\
+            0 & -1 & 0
+        \end{bmatrix}
+\end{equation*}
+Infatti, ora si comprende il motivo per cui la sua semplicità di implementazione. Inoltre, il Laplaciano è presenta i seguenti vantaggi:
+isotopico:perciò è indipendente dal punto in cui viene applicato, poiché applica gli array circolare, quindi la rotazione resta invariata.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.85\textwidth]{cap02/laplaciano.png} 
+        \caption{Applicazione del Laplaciano (sinistra originale e destra modificata)} 
+        \label{fig:f3}
+\end{figure}
+\subsection{Filtri di contrasto}
+ Nel caso serve capire una scala di dettagli da evidenziare all'immagine, piuttosto che sfruttare un'operazione fissa, conviene usare i filtri di contrasto (in inglese unsharp mask). Ciò consiste in:
+ \begin{enumerate}
+     \item si applica un filtro Gaussiano;
+     \begin{equation*}
+        \bar{f}(x,y)=f(x,y)*\exp{\left[\frac{-(x^2+y^2)}{2\sigma^2}\right]}
+    \end{equation*}
+    \item si sottrae l'immagine originale con l'immagine filtrata con il filtro gaussiano, ottenendo la maschera dell'immagine;
+    \begin{equation*}
+        g_{mask}(x,y)=f(x,y)-\bar{f}(x,y)
+    \end{equation*}
+    \item si aggiunge all'immagine originale la maschera dell'immagine moltiplicata per un fattore di scala di dettagli $k$.
+    \begin{equation*}
+        g(x,y)=f(x,y)+kg_{mask}(x,y)
+    \end{equation*}
+ \end{enumerate}
+ 
+ Ciò si dimostra nel modo seguente.
+ \begin{equation*}
+        g(x,y)=f(x,y)+kg_{mask}(x,y)=f(x,y)+k[f(x,y)-\bar{f}(x,y)]=(1+k)f(x,y)-\bar{f}(x,y)
+\end{equation*}
+Siccome l'immagine mascherata è un'ottima approssimazione del Laplaciano ed il filtro guassiano si può approssimare con un filtro medio 3x3, si approssima $c \approx 1 + k$, che prende il nome di fattore di amplificazione.
+\begin{equation*}
+\begin{bmatrix}
+            -1 & -1 & -1 \\
+            -1 & c & -1 \\
+            -1 & -1 & -1
+        \end{bmatrix}
+\end{equation*}
+Ciò prende il nome di high-boost filtering. 
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap02/nitidezza.png} 
+        \caption{Originale, Laplaciano filtro di contrasto e high-boost filtering da in alto a sinistra in senso orario} 
+        \label{fig:f4k}
+\end{figure}
+\subsection{Filtri di rilevamento dei bordi}
+Per rilevare i bordi, sfruttare la derivata seconda è molto semplice da implementare. Tuttavia, presenta un problema da non sottovalutare: è molto sensibile al rumore. Per questo motivo, se l'obiettivo è quello di rilevare i bordi, conviene invece usare la derivata prima. Inoltre, in matematica, la derivata prima rileva i picchi: per questo motivo, è l'operazione che permette di rilevare i bordi. Tuttavia, va eseguito sia per le righe che per le colonne.\\
+Il primo nucleo prende il nome di operatori di Roberts, in cui si approssima attraverso l'equivalenza digitale della derivata del primo ordine, prendendo in considerazione la differenza tra il pixel successivo e il pixel precedente lungo la riga e lungo la colonna.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        h_x(x,y) \approx f(x+1,y) - f(x-1,y)
+    \end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+        h_y(x,y) \approx f(x,y+1) - f(x,y-1)
+    \end{equation*}
+\end{minipage}
+\end{center}
+Ciò si può rappresentare anche con due matrici 2x2.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h_x=\begin{bmatrix}
+        0 & -1 \\
+        1 & 0
+    \end{bmatrix}
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h_y=\begin{bmatrix}
+        -1 & 0 \\
+        0 & 1
+    \end{bmatrix}
+\end{equation*}
+\end{minipage}
+\end{center}
+Di seguito, è riportato un esempio con l'immagine 3x3 seguente.
+\begin{equation*}
+    f(x,y)=\begin{bmatrix}
+        10 & 20 & 30\\
+        40 & 50 & 60\\
+        70 & 80 & 90
+    \end{bmatrix}
+\end{equation*}
+Adesso, si applicano le due convoluzioni: viene mostrato solo un prodotto per riga e per colonna.
+\begin{equation*}
+    h_x(1,1)=\begin{bmatrix}
+        0 & -1 \\
+        1 & 0
+    \end{bmatrix}*\begin{bmatrix}
+        10 & 20 \\
+        40 & 50
+    \end{bmatrix}=0 \times 10 + (-1) \times 20 + 1 \times 40 + 0 \times 50 = 20
+\end{equation*}
+\begin{equation*}
+    h_y(1,1)=\begin{bmatrix}
+        -1 & 0 \\
+        0 & 1
+    \end{bmatrix}*\begin{bmatrix}
+        10 & 20 \\
+        40 & 50
+    \end{bmatrix}= -1 \times 10 + 0 \times 20 + 0 \times 40 + 1 \times 50 = 40
+\end{equation*}
+Tuttavia, si preferisce usare la coppia di kernel di Prewitt e di Sobel, riportati di seguito rispettivamente.
+\begin{center}
+\begin{minipage}{0.11\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    Prewitt
+\end{minipage}
+\hfill
+\begin{minipage}{0.31\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h_x=\begin{bmatrix}
+        -1 & 0 & 1\\
+        -1 & 0 & 1\\
+        -1 & 0 & 1
+    \end{bmatrix}
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.31\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h_y=\begin{bmatrix}
+        -1 & -1 & -1\\
+        0 & 0 & 0\\
+        1 & 1 & 1
+    \end{bmatrix}
+\end{equation*}
+\end{minipage}
+\end{center}
+\begin{center}
+\begin{minipage}{0.11\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    Sobel
+\end{minipage}
+\hfill
+\begin{minipage}{0.31\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h_x=\begin{bmatrix}
+        -1 & 0 & 1\\
+        -2 & 0 & 2\\
+        -1 & 0 & 1
+    \end{bmatrix}
+\end{equation*}
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.31\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+    \begin{equation*}
+    h_y=\begin{bmatrix}
+        -1 & -2 & -1\\
+        0 & 0 & 0\\
+        1 & 2 & 1
+    \end{bmatrix}
+\end{equation*}
+\end{minipage}
+\end{center}
+Tali nuclei condividono le seguenti due proprietà:
+\begin{itemize}
+    \item hanno i coefficienti opposti per avere un'alta risposta nella regione dell'immagine con molta variazione d'intensità, in cui la probabilità che ci sia un bordo è molto alta;
+    \item la somma dei coefficienti è pari a $0$: ciò significa che quando è applicato ad un'immagine con una regione completamente omogenea, il risultato è $0$.
+\end{itemize}
+Una volta fatto ciò, si calcolano:
+\begin{itemize}
+    \item la magnitudine, che misura quanto è forte il bordo;
+    \begin{equation*}
+        h=\sqrt{h_x^2+h_y^2}
+    \end{equation*}
+    \item la direzione, che misura l'orientamento del bordo.
+    \begin{equation*}
+        \theta =  \operatorname{atan2}(h_y, h_x)=
+        \begin{dcases}
+               \arctan\left(\frac{h_y}{h_x}\right) & \text{se } h_x > 0 \\[1.5ex]
+                \arctan\left(\frac{h_y}{h_x}\right)+\pi & \text{se } h_x < 0 \land h_y \ge 0 \\[1.5ex]
+                \arctan\left(\frac{h_y}{h_x}\right)-\pi & \text{se } h_x < 0 \land h_y < 0 \\[1.5ex]
+                \frac{\pi}{2} & \text{se } h_x = 0 \land h_y > 0 \\[1.5ex]
+                -\frac{\pi}{2} & \text{se } h_x = 0 \land h_y < 0 \\[1.5ex]    0 & \text{se } h_x = 0 \land h_y = 0 
+            \end{dcases}
+    \end{equation*}
+\end{itemize}
+Combinando questi due risultati, è possibile comprendere bene la forza effettiva del bordo.\\
+A seconda del kernel utilizzato, è possibile applicare dei filtri di rilevamento dei bordi. In questo corso ne vengono analizzati di due tipologie.\\
+Il primo, che è anche quello più potente disponibile ad oggi, è il rilevatore di bordi di Canny. L'algoritmo consiste nei seguenti passaggi:\\
+\begin{enumerate}
+    \item si applica un filtro gaussiano per ridurre il rumore;
+    \begin{equation*}
+        \bar{f}(x,y)=f(x,y)*\exp{\left[\frac{-(x^2+y^2)}{2\sigma^2}\right]}
+    \end{equation*}
+    \item si calcolano i gradienti locali con la coppia di kernel di Sobel;
+    \begin{center}
+    \begin{minipage}{0.46\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+        \centering
+        \begin{equation*}
+        h_x=\begin{bmatrix}
+            -1 & 0 & 1\\
+            -2 & 0 & 2\\
+            -1 & 0 & 1
+        \end{bmatrix}
+    \end{equation*}
+    \end{minipage}
+    \hfill % Spazio elastico per separare le due colonne
+    \begin{minipage}{0.46\textwidth} % Colonna Destra (48% della larghezza del testo)
+        \centering
+        \begin{equation*}
+        h_y=\begin{bmatrix}
+            -1 & -2 & -1\\
+            0 & 0 & 0\\
+            1 & 2 & 1
+        \end{bmatrix}
+    \end{equation*}
+    \end{minipage}
+    \end{center}
+     \begin{center}
+    \begin{minipage}{0.46\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+        \centering
+        \begin{equation*}
+        h=\sqrt{h_x^2+h_y^2}
+    \end{equation*}
+    \end{minipage}
+    \hfill % Spazio elastico per separare le due colonne
+    \begin{minipage}{0.46\textwidth} % Colonna Destra (48% della larghezza del testo)
+        \centering
+        \begin{equation*}
+        \theta =  \operatorname{atan2}(h_y, h_x)
+    \end{equation*}
+    \end{minipage}
+    \end{center}
+    \item avviene la cosiddetta soppressione dei non-massimi, in cui si guarda la direzione e si confronta la magnitudine calcolata con i suoi vicini, che viene mantenuta solamente se è un massimo locale;
+    \item si effettua un'ulteriore processo decisionale a soglia, per classificare un pixel come bordo forte ($h(p) > T_{alta}$), bordo debole ($h(p) < T_{bassa}$) oppure un non bordo ($T_{bassa} \le h(p) \le T_{alta}$);
+    \item si prendono solo i bordi forti oppure i bordi deboli adiacenti (anche in diagonale) con un bordo forte, il resto dei bordi deboli vengono scartati.
+\end{enumerate}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.95\textwidth]{cap02/bordi} 
+        \caption{Immagine originale (a sinistra) e immagine con i bordi rilevati con il rilevatore di Canny ( a destra)} 
+        \label{fig:f4}
+\end{figure}
+Infine, la seconda ed ultima tipologia di rilevamento dei bordi è la trasformata di Hough, che sfrutta un metodo matematico per rilevare linee in un'immagine. Ciò, può essere usata per rilevare bordi potenzialmente sparsi, rotti od isolati; in linee utili, corrispondenti ai bordi dell'immagine. Tale processo consiste nel prendere un punto di coordinata $(x,y)$ e memorizzare tutti i punti appartenenti alla retta $y=ax+b$. Ad esempio data il punto $(x,y)=(1,3)$ si ottengono i punti alle coordinate $3=a+b$, perciò a $b=3-a$, come $(x,y)=(0,3)$.
+Ripetendo ciò per gli altri punti, si ottengono una serie di punti che intersecano varie linee: i punti che hanno più intersezioni corrispondono alle linee più lunghe dell'immagine.\\
+Tuttavia, le linee verticali hanno gradiente infinito: per risolvere ciò si usano le coordinate normali.
+\begin{equation*}
+    \rho = x \cos{\theta}+y\sin{\theta}
+\end{equation*}
+A questo punto, le linee più rilevanti dell'immagine, corrispondono ai valori più elevati di $(\rho, \theta)$.
+\vfill
