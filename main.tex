@@ -23,12 +23,19 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{mathtools}
+\usepackage{xcolor}
 \usepackage{pagecolor} % Necessario per \pagecolor
 \usepackage{chngcntr} % <-- PACCHETTO AGGIUNTO
 \usepackage{amsmath}
 \usepackage{array}
 \usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage{eso-pic}
+\usepackage{tikz}
+\usepackage{geometry}
+\usepackage[font=normalsize]{caption}
 \usepackage{etoolbox}
+\usepackage{lmodern}
 \makeatletter
 \patchcmd{\tableofcontents}{\clearpage}{}{}{}
 \patchcmd{\listoffigures}{\clearpage}{}{}{}
@@ -42,8 +49,6 @@
 % \renewcommand{\arraystretch}{1.5}
 \tolerance=3000
 % Definizione Colori
-\definecolor{frontespizio}{HTML}{7DF9FF}
-\definecolor{normale}{HTML}{FFFFFF}
 \AtBeginDocument{\fontsize{11}{12}\selectfont}
 
 %\setmainfont{Arial} 
@@ -95,32 +100,46 @@
 %\setcounter{page}{-1} 
 
 % 3. IMPOSTA IL COLORE DI SFONDO PER LA PAGINA 0
-\pagecolor{frontespizio} 
 
 % --- Frontespizio Personalizzato (Pagina 0) ---
 \begin{titlepage}
+
+  \color{white}
     
     \thispagestyle{empty} % Nasconde il numero 0.
+    \AddToShipoutPictureBG*{%
+      \begin{tikzpicture}[remember picture, overlay]
+        \node[opacity=1, inner sep=0pt] at (current page.center) {
+          % 'keepaspectratio' evita che l'immagine si deformi se il libro non è A4
+          % 'min width' e 'min height' assicurano che copra tutto
+          \includegraphics[width=\paperwidth, height=\paperheight]{sfondo_sfocato.jpg}
+        };
+      \end{tikzpicture}%
+    }
     
-    \centering    
-    \includegraphics[width=11cm]{sfondo} 
-    \vspace{0.5cm}
-    
-    % --- TITOLO E DATI ---
-    {\Huge\bfseries Laboratorio di multimedialità \par}
-    {\large A.A. 2024-25 \par}
-    {\large Andrea Macale \par}
-    
-    % --- Spazio in fondo ---
-    \vfill
-    
+    \centering 
+
+\includegraphics[width=11cm]{sfondo} 
+
+\vspace{0.5cm}
+
+{\fontsize{30pt}{36pt}\selectfont \bfseries Laboratorio di \\ multimedialità \par}
+
+\vspace{2cm} 
+
+{\fontsize{15pt}{18pt}\selectfont A.A. 2024-25 \par}
+
+\vspace{1cm} 
+
+{\fontsize{18pt}{22pt}\selectfont \textbf{Andrea Macale} \par}
+
+\vfill
 \end{titlepage}
 
 % ----------------------------------------------------
 % --- INDICE (Inizia con Pagina i) ---
 
 % Cambia il colore di sfondo per l'indice
-\pagecolor{normale}
 \setcounter{page}{1}
 \pagestyle{plain} % Mostra il numero in fondo alla pagina (i, ii, iii...)
 \tableofcontents
