@@ -1,0 +1,90 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1}{\ignorespaces Struttura dell'occhio umano}}{2}{}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Coni e bastoncelli}}{3}{}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Illusione del mais dolce (a sinistra) e la griglia di Hermann (a destra)}}{4}{}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Esempi di possibili manipolazioni di immagini}}{5}{}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Possibili manipolazioni delle immagini}}{6}{}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Immagine originale (a sinistra) e immagine in negativo (a destra)}}{7}{}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Esempio di due immagini a cui sono state applicate con $r$ differenti}}{7}{}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Realizzazione della correzione gamma sui monitor}}{8}{}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Calibrazione del gamma (azzurro la gamma dell'immagine, viola la gamma del display e la rossa la gamma complessiva)}}{8}{}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Definizione analitica e grafico del contrast stretching}}{9}{}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Definizione analitica e grafico del thresholding}}{9}{}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Gray-level slicing a sfondo costante (a sinistra) e a sfondo invariato (a destra)}}{10}{}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Esempio di istogramma di un'immagine 4x4 con livello di grigio $[0,9]$}}{11}{}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Calcolo dell'istogramma normalizzato}}{12}{}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Esempio di istogramma di un'immagine equalizzata}}{12}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {16}{\ignorespaces Filtro media e gaussiano}}{14}{}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Rimozione del rumore sale e pepe con un filtro mediano (sinistra originale e destra modificata)}}{15}{}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Applicazione del Laplaciano (sinistra originale e destra modificata)}}{17}{}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Originale, Laplaciano filtro di contrasto e high-boost filtering da in alto a sinistra in senso orario}}{18}{}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Immagine originale (a sinistra) e immagine con i bordi rilevati con il rilevatore di Canny ( a destra)}}{20}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {21}{\ignorespaces Rappresentazione della trasformata di Fourier}}{21}{}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Immagine nel dominio spaziale (a sinistra) ed in frequenza (a destra)}}{22}{}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Filtraggio nel dominio della frequenza}}{23}{}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Immagine originale (a sinistra) e immagine filtrata con un filtro Notch (a destra)}}{23}{}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Funzionamento di un filtro passo-basso ideale}}{24}{}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Da sinistra: immagine originale, LPF ideale $D_0=8$ e LPF ideale $D_0=16$}}{24}{}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Vari ordini del filtro passa-basso di Butterworth}}{25}{}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Filtri passa-basso Gaussiani}}{25}{}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Da alto a sinistra senso orario: originale, HPF ideale, HPF di Butterworth e HPF Gaussiano}}{26}{}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Immagine originale (a sinistra) e maschera del filtro Laplaciano (a destra)}}{27}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {31}{\ignorespaces Variazione delle frequenze nell'asse temporale da $t_0=0\,s$ a $t_3=1\,s$}}{28}{}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Rappresentazione dei problemi della trasformata di Fourier}}{29}{}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Esecuzione della STFT}}{29}{}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Tipologie wavelet fondamentali}}{30}{}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Rappresentazione di una trasformata Wavelet}}{31}{}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Analisi dei dettagli delle serie}}{32}{}%
+\contentsline {figure}{\numberline {37}{\ignorespaces Piramide dell'immagine}}{33}{}%
+\contentsline {figure}{\numberline {38}{\ignorespaces Schema di costruzione della piramide dell'immagine}}{33}{}%
+\contentsline {figure}{\numberline {39}{\ignorespaces Processo di codifica di sottobanda}}{35}{}%
+\contentsline {figure}{\numberline {40}{\ignorespaces Esempio di trasformata Wavelet 2D}}{36}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {41}{\ignorespaces Processo di trasmissione di un'immagine compressa}}{37}{}%
+\contentsline {figure}{\numberline {42}{\ignorespaces Esempio di ridondanza di interpixel}}{38}{}%
+\contentsline {figure}{\numberline {43}{\ignorespaces Esempio di ridondanza psicovisiva}}{39}{}%
+\contentsline {figure}{\numberline {44}{\ignorespaces Esempio di rappresentazione della teoria dell'informazione}}{39}{}%
+\contentsline {figure}{\numberline {45}{\ignorespaces Misura del PSNR in un'immagine}}{40}{}%
+\contentsline {figure}{\numberline {46}{\ignorespaces Schema del modello di compressione di un'immagine}}{41}{}%
+\contentsline {figure}{\numberline {47}{\ignorespaces Esempio tipologia di immagine da comprimere lossless (a sinistra) od anche lossy (a destra)}}{41}{}%
+\contentsline {figure}{\numberline {48}{\ignorespaces Esempio di una codifica di Huffmann}}{42}{}%
+\contentsline {figure}{\numberline {49}{\ignorespaces Rappresentazione del bit-plane coding}}{43}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {50}{\ignorespaces Schema del modello di compressione JPEG}}{44}{}%
+\contentsline {figure}{\numberline {51}{\ignorespaces Pattern zig-zag}}{46}{}%
+\contentsline {figure}{\numberline {52}{\ignorespaces Esempio di applicazione ROI dall'immagine originale (a sinistra) all'immagine compressa (a destra)}}{47}{}%
+\contentsline {figure}{\numberline {53}{\ignorespaces Schema del modello di compressione JPEG2000}}{47}{}%
+\contentsline {figure}{\numberline {54}{\ignorespaces Schema della fase di codifica di blocchi}}{48}{}%
+\contentsline {figure}{\numberline {55}{\ignorespaces Esempio di quantizzazione JPEG2000}}{49}{}%
+\contentsline {figure}{\numberline {56}{\ignorespaces Fase di EBCOT}}{49}{}%
+\contentsline {figure}{\numberline {57}{\ignorespaces Strati di qualità}}{50}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {58}{\ignorespaces Processo di adattamento}}{51}{}%
+\contentsline {figure}{\numberline {59}{\ignorespaces Processo di vergenza}}{51}{}%
+\contentsline {figure}{\numberline {60}{\ignorespaces \textit {A Rainy Day in Paris} che mostra le occlusioni (1), le dimensioni relative (2), le tessiture (3), la prospettiva lineare (4), la prospettiva aerea (5) e le ombre (6)}}{52}{}%
+\contentsline {figure}{\numberline {61}{\ignorespaces Esempio di occlusione}}{52}{}%
+\contentsline {figure}{\numberline {62}{\ignorespaces Esempio di dimensioni relative}}{53}{}%
+\contentsline {figure}{\numberline {63}{\ignorespaces Esempio di tessitura}}{53}{}%
+\contentsline {figure}{\numberline {64}{\ignorespaces Esempio di prospettiva lineare}}{54}{}%
+\contentsline {figure}{\numberline {65}{\ignorespaces Esempio di prospettiva aerea}}{54}{}%
+\contentsline {figure}{\numberline {66}{\ignorespaces Esempio di ombre}}{55}{}%
+\contentsline {figure}{\numberline {67}{\ignorespaces Se $\alpha _{BL}$ e $\alpha _{BR}$ sono uguali, allora $BR$ e $BL$ sono punti retinici corrispondenti}}{56}{}%
+\contentsline {figure}{\numberline {68}{\ignorespaces Descrizione dell'oroptero (a sinistra) e della diplopia fisiologica (a destra)}}{57}{}%
+\contentsline {figure}{\numberline {69}{\ignorespaces Dalla prima immagine a sinistra: stereoscopio di Wheatstone, coppie stereo d'autore e anaglifo}}{57}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {70}{\ignorespaces Primo video mai realizzato}}{59}{}%
+\contentsline {figure}{\numberline {71}{\ignorespaces Video mostrati in varie TV}}{60}{}%
+\contentsline {figure}{\numberline {72}{\ignorespaces Come varia il frame rate in un video}}{60}{}%
+\contentsline {figure}{\numberline {73}{\ignorespaces La differenza tra le varie risoluzioni}}{61}{}%
+\contentsline {figure}{\numberline {74}{\ignorespaces Spettro della luce visibile}}{62}{}%
+\contentsline {figure}{\numberline {75}{\ignorespaces Teoria additiva (a sinistra) e sottrattiva (a destra)}}{62}{}%
+\contentsline {figure}{\numberline {76}{\ignorespaces Rappresentazione cartesiana di RGB}}{63}{}%
+\contentsline {figure}{\numberline {77}{\ignorespaces Divisione immagine in RGB e YCbCr}}{63}{}%
+\contentsline {figure}{\numberline {78}{\ignorespaces Modalità di acquisizione di immagini}}{64}{}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {79}{\ignorespaces Esempio pratico del funzionamento del parallasse di movimento}}{65}{}%
