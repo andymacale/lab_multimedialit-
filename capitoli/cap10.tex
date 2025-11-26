@@ -1,2 +1,71 @@
+I video non compressi contengono una quantità di dati veramente immensa. Ad esempio, per elaborare un segnale video HDTV-R a 720p a $60 \, \text{fps}$:
+\begin{equation*}
+    c = \left(720 \times 1280 \, \frac{\text{px}}{\text{frame}}\right) \times \left(60 \, \frac{\text{frame}}{\text{s}}\right) \times
+    \left(3 \,  \frac{\text{color}}{\text{px}}\right) \times \left(8 \,  \frac{\text{b}}{\text{color}}\right) =
+    1,3264 \, \text{Gb/s}
+\end{equation*}
+dove la banda del canale è solamente $20 \, \text{Mb/s}$: da qui si rende necessario comprimere i video.
+\section{Processo di compressione video}
+Il processo di compressione video consiste nel ridurre la ridondanza spaziale con i frame, similmente a come avviene in JPEG, e temporale.
+\subsection{Fase 1: differenza tra frame}
+Un video non è altro che è una sequenza di frame, in cui gli oggetti appiaiono, si muovono e scompaiono e i pixel di sfondo rimangono gli stessi. A
+questo punto, se si sottraggono due immagini:
+\begin{itemize}
+    \item il cambiamento di sfondo è solamente rumore;
+    \item i bordi degli oggetti presentano dei cambiamenti significativi.
+\end{itemize}
+Questa operazione prende il nome di DPCM (Difference Pulse-Code Modulation), in cui il frame 0 è il fermo immagine ed il resto sono la differenza
+tra il frame corrente e quello precedente: per esempio la differenza frame 1 è la differenza tra il frame 1 ed il frame 0, la differenza frame 2 è la 
+differenza tra il frame 2 ed il frame 1 e così via. Perciò:
+\begin{itemize}
+    \item se la scena è priva di movimento, allora tutte le differenze di frame sono nulle, potendo comprimere molto contenuto informativo;
+    \item se nella scena è presente movimento, si può vedere la differenza tra le due immagini.
+\end{itemize}
+La differenza tra due frame può essere causata:
+\begin{itemize}
+    \item il movimento della camera di contorni sullo sfondo o di oggetti fissi si possono vedere dalla immagine differenziale;
+    \item il movimento degli oggetti si può vedere grazie ai contorni degli oggetti in movimento;
+    \item i cambi di illuminazione, come fari e lampioni;
+    \item tagli di sceni, l'immagine differenziale presenti dei cambiamenti netti;
+    \item rumore.
+\end{itemize}
+A questo punto, se la differenza tra due frame è solamente rumore, allora si preferisce avere differenza nulla. Invece, se si riesce a vedere qualcosa
+nell'immagine differenziale ed anche a riconoscerla, significa che è presente correlazione nell'immagine differenziale. L'obiettivo è rimuovere la
+correlazione, compensando il movimento.
+\begin{center}
+\begin{minipage}{0.30\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.9\textwidth]{cap10/f0}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.30\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.9\textwidth]{cap10/f1} 
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.30\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \centering
+        \includegraphics[width=0.9\textwidth]{cap10/fd} 
+\end{minipage}
+\captionof{figure}{Differenza tra $f_0$ (a sinistra) a $f_1$ (al centro) mostrato a destra}
+\label{fig:euhfeihfeihfeifhieeihei}
+\end{center}
+Nella compressione video, si definiscono due tipologie di frame:
+\begin{itemize}
+    \item key frame, se la compressione è basata sul contenuto del frame;
+    \item delta frame, se la compressione è basata sul contenuto dell'ultimo key frame.
+\end{itemize}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap10/frame} 
+        \caption{Sequenza di key frame e delta frame} 
+        \label{fig:seq_key_delta}
+\end{figure}
+Infine, la quantità di dati da codificare può essere ridotto significativamente se il frame precedente è sottratto dal frame corrente: 
+in questo modo si ottiene la cosiddetta immagine residua.
+\subsection{Fase 2: Motion JPEG}
+Nella fase di Motion JPEG, avviene la compressione JPEG ad ogni fotogramma del video, effettuando una compressione puramente spaziale con velocità di
+compressione da 2:1 a 12:1 con perdita di dati fino a 5:1, detta qualità broadcast.
+\subsection{Fase 3: sfruttamento della ridondanza temporale}
 
 \vfill
