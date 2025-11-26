@@ -6,19 +6,19 @@ non compressa richiede molto tempo e molta larghezza di banda, come mostrato nel
         \caption{Processo di trasmissione di un'immagine compressa}
         \label{fig:hansform}
 \end{figure}
-Basti pensare che già un'immagine $1024\times1024$ in scala di grigi con risoluzione bassa ($8 \, b/p$), per essere trasmessa in 2G ($v=50 \, kb/s $), sono necessari:
+Basti pensare che già un'immagine $1024\times1024$ in scala di grigi con risoluzione bassa ($8 \, \text{b/p}$), per essere trasmessa in 2G ($v=50 \, \text{kb/s}$), sono necessari:
 \begin{center}
 \begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
     \centering
     \begin{equation*}
-    c=1024\times1024\times8=8388608 \, b
+    c=1024\times1024\times8=8388608 \, \text{b}
 \end{equation*}
 \end{minipage}
 \hfill % Spazio elastico per separare le due colonne
 \begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
     \centering
         \begin{equation*}
-    b=\frac{c}{v}=\frac{8388608}{50000} = 167,77216 \, s \approx 3'
+    b=\frac{c}{v}=\frac{8388608}{50000} = 167,77216 \, \text{s} \approx 3'
     \end{equation*}
 \end{minipage}
 \end{center}

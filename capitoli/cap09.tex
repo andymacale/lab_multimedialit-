@@ -49,4 +49,85 @@ Un esempio pratico è quando si guida in autostrada di notte: le strisce bianche
 Per quanto riguarda il movimento delle ombre, è una combinazione di semplici principi fisici e fenomeni astronomici. Un'ombra si muove perché la 
 sorgente luminosa, l'oggetto che la proietta oppure la superficie che la riceve sono in movimento. Tale movimento può aiutare il cervello a 
 processare la direzione del movimento dell'oggetto o della sorgente luminosa.
+\section{Tecnologie per il video 3D}
+Adesso si entra nel cuore della tridimensionalità, trattando il funzionamento del video 3D, esploso negli anni 2010, parlando sia del cinema 3D, ma
+anche delle TV 3D.
+\subsection{Dolby 3D}
+Il Dolby 3D è una tecnologia del cinema 3D che funziona grazie a proiettori con un refresh di:
+\begin{itemize}
+    \item $96 \, \text{Hz}$, in cui garantisce un refresh di $48 \, \text{Hz}$ per occhio, comportando allo spettatore una percezione di immagine instabile;
+    \item $144 \, \text{Hz}$ in cui garantisce un refresh di $72 \, \text{Hz}$ per occhio, comportando allo spettatore una visione più piacevole e meno affaticante.
+\end{itemize}
+Tuttavia, per funzionare correttamente si devono indossare gli occhiali Dolby 3D, in cui sono composti da due lenti passive non polarizzate e colorate
+liviemente, in questo modo viene filtrata più luce e si ha un decadimento della qualità cromatica dell'immagine.
+\subsection{Introduzione alla luce polarizzata e Real D}
+A questo punto, viene usata la luce polarizzata, in cui due proiettori inviano sullo schermo le immagini di sinistra ed immagini di destra, in cui i 
+spettatori devono essere dotati di occhiali con lenti polarizzate, in modo tale da filtrare uno dei due fasci luminosi: così, ciascun occhio vede 
+solamente uno dei due segnali. Inoltre, ciascun proiettore è dotato di un filtro che polarizza la luce per far sì che i due segnali luminosi siano
+polarizzati in modo ortogonale tra loro. Uno schermo che fa ciò è il cosiddetto Silver Screen, che mantiene la polarizzazione delle immagini proiettate
+ed allo stesso tempo compensa la perdita di luce.\\
+La prima implementazione avviene con il cinema Real D, in cui possono avvenire due tipologie di polarizzazione:
+\begin{itemize}
+    \item polarizzazione lineare, in cui due immagini parallele vengono proiettate e sovrapposte sullo schermo attraverso dei filtri polarizzatori
+            ortogonali, con l'effetto indesiderato della visione sfocata nel caso in cui lo spettatore inclini la testa;
+    \item polarizzazione circolare, in cui due immagini vengono sovrapposte sullo stesso schermo circolare, attraverso dei filtri di polarizzazione
+            opposta, che risolve il problema della polarizzazione lineare.
+\end{itemize}
+\subsection{Sistemi LCD}
+I sistemi LCD usano degli occhiali con filtri a cristalli liquidi (LCD) alimentati a batterie, che sono in grado di lavorare con il proiettore. Questi
+occhiali sono attrezzati con due lenti LCD sincronizzati con un filtro infrarosso generato dal sistema di proiezione che oscura un LCD in maniera
+alternata, facendo da otturatore.
+\subsection{Cinema 3D più avanzati: Xpand3D ed High Frame Rate 3D}
+Il cinema Xpand3D presenta l'enorme vantaggio di non richiedere un silverscreen: in questo modo si ha un'intensità luminosa omogenea in qualsiasi posizione
+della sala. Grazie a questo vantaggio, l'intera sala viene costantemente illuminata da un segnale infrarossi, che permette di sincronizzare gli occhiali
+Xpand con il comando toggle, in cui oscura le lenti LCD in maniera alternata.\\
+Tuttavia, la tecnologia migliore è l'High Frame Rate 3D, in cui presenta un frame rate tale da non percepire sfarfallii ed artefatti a
+$30 \, \text{fps}$ fino frame non distinguibili come separati dall'occhio umano dai $55 \, \text{fps}$, fino ad arrivare a $120 \, \text{fps}$.
+\subsection{TV 3D}
+Le TV 3D si dividono in due categorie principali.\\
+La prima categoria contiene le TV con il 3D attivo, in cui lo spettatore indossa degli occhiali con otturatori attivi con lenti a cristalli liquidi, che si
+oscurano in presenza di un segnale elettrico. Inviando una sequenza di tali segnali in modo sincrono con la riproduzione dei fotogrammi sullo schermo,
+la frequenza deve superare la persistenza della visione sulla retina, in modo tale che ciascun occhio veda soltanto il fotogramma a lui destinato. Per
+questo motivo, si rende necessario aumentare il numero di fotogrammi inviati almeno del doppio ($100-120 \, \text{Hz}$). Infine, la TV deve anche disporre
+di un emittotore wireless che invii agli occhiali un segnale di sincronizzazione. Tale tecnologia tende ad avere immagine piuttosto scure\\
+La seconda ed ultima categoria appartiene alle TV con il 3D passivo, che si basa su occhiali polarizzati come nel cinema. A questo punto, la TV è dotata
+di un particolare filtro che polarizza ogni riga di pixel, con l'obiettivo di mostrare le righe dispari ad un occhio e le righe pari all'altro occhio:
+infatti, ciascun fotogramma viene scomposto in righe verticali, dove metà sono visibili solo da un occhio e l'altra metà solamente dall'altro occhio.
+Tuttavia, tale tecnologia porta ad un riduzione della risoluzione, poiché ogni occhio percepisce 1920x540 (Full HD), ma gli occhiali sono
+decisamente meno fastidiosi.\\
+Infine, in entrambe le tecnologie hanno un problema di non adattabilità per uso prolungato.
+\section{Tecnologie di visualizzazione avanzata: l'autostereoscopia}
+Le tecnologie di visualizzazione avanzata permettono di dare l'impressione della tridimensionalità, senza l'utilizzo di occhiali, implementando la
+cosiddetta autostereoscopia. Questi schermi, solamente di tipo LCD, permettono il funzionamento sia in modalità 2D che in 3D.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap09/3ds} 
+        \caption{Esempio pratico di schermo autostereoscopico: serie Nintendo 3DS} 
+        \label{fig:3ds}
+\end{figure}
+\subsection{Schermi a microlenti}
+Gli schermi a microlenti possiedono un pannello a LCD od al plasma con una lamina trasparente composta da lenti semicilindriche o semisferiche. La
+superficie del pannello coincide con il piano focale delle lenti, che operano una diffrazione della luce, inviata nella direzione voluta. In questo
+modo gli occhi vedono due insieme di pixel differente per ogni microlente. Infine, per ottenere la visione tridimensionale, si associa ad ogni insieme
+una coppia stereoscopica.\\
+Tali schermi hanno il vantaggio di avere la possibilità di un sistema multi-view, a discapito della riduzione significativa della risoluzione, poiché
+viene divisa da ciascun occhio per il numero di viste.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap09/microlenti} 
+        \caption{Schermi a microlenti} 
+        \label{fig:microlenti}
+\end{figure}
+\subsection{Schermi a barriera di parallasse}
+La barriera di parallasse è costituita da un pannello elettro-ottico con fessure sottili verticali equidistanti fra loro, che viene applicata sopra al
+display LCD.  A questo punto, le immagini di destra e di sinistra vengono divise in strisce verticali, ognuna associata ad una colonna di pixel del
+pannello LCD. Inoltre, la barriera rende visibile solo la componente stereoscopia relativa ad un singolo occhio, mascherando la componente dell'altro
+occhio. Infine, presenta come vantaggi la buona qualità dell'immagine e l'assenza di sfarfallii; tuttavia ha una luminosità ridotta, il dimezzamento
+della definizione orizzontale e la necessità dell'osservatore di porsi ad una distanza opportuna ed entro un certo angolo visuale.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{cap09/barriera} 
+        \caption{Schermi a barriera di parallasse} 
+        \label{fig:barriera_di_parallasse}
+\end{figure}
 \vfill
