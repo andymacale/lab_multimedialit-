@@ -5,9 +5,9 @@ I video non compressi contengono una quantità di dati veramente immensa. Ad ese
     1,3264 \, \text{Gb/s}
 \end{equation*}
 dove la banda del canale è solamente $20 \, \text{Mb/s}$: da qui si rende necessario comprimere i video.
-\section{Processo di compressione video}
-Il processo di compressione video consiste nel ridurre la ridondanza spaziale con i frame, similmente a come avviene in JPEG, e temporale.
-\subsection{Fase 1: differenza tra frame}
+\section{Codifica dei video}
+La codifica video consiste nel ridurre la ridondanza spaziale con i frame, similmente a come avviene in JPEG, e temporale.
+\subsection{Differenza tra frame}
 Un video non è altro che è una sequenza di frame, in cui gli oggetti appiaiono, si muovono e scompaiono e i pixel di sfondo rimangono gli stessi. A
 questo punto, se si sottraggono due immagini:
 \begin{itemize}
@@ -50,7 +50,7 @@ correlazione, compensando il movimento.
 \captionof{figure}{Differenza tra $f_0$ (a sinistra) a $f_1$ (al centro) mostrato a destra}
 \label{fig:euhfeihfeihfeifhieeihei}
 \end{center}
-Nella compressione video, si definiscono due tipologie di frame:
+Nella codifica video, si definiscono due tipologie di frame:
 \begin{itemize}
     \item key frame, se la compressione è basata sul contenuto del frame;
     \item delta frame, se la compressione è basata sul contenuto dell'ultimo key frame.
@@ -63,9 +63,52 @@ Nella compressione video, si definiscono due tipologie di frame:
 \end{figure}
 Infine, la quantità di dati da codificare può essere ridotto significativamente se il frame precedente è sottratto dal frame corrente: 
 in questo modo si ottiene la cosiddetta immagine residua.
-\subsection{Fase 2: Motion JPEG}
+\subsection{Motion JPEG e sfruttamento della ridondanza temporale}
 Nella fase di Motion JPEG, avviene la compressione JPEG ad ogni fotogramma del video, effettuando una compressione puramente spaziale con velocità di
-compressione da 2:1 a 12:1 con perdita di dati fino a 5:1, detta qualità broadcast.
-\subsection{Fase 3: sfruttamento della ridondanza temporale}
+compressione da 2:1 a 12:1 con perdita di dati fino a 5:1, detta qualità broadcast. A ciò si aggiunge lo sfruttamento della ridondanza temporale, infatti
+esistono tre tipologie di movimento:
+\begin{itemize}
+    \item traslazionella fase, il movimento tipico degli oggetti rigidi;
+    \item rotazione attraverso un asse;
+    \item zoom.
+\end{itemize}
+Ciò, permette di comprendere i parametri che descrivono il movimento. In particolare, si prendono alcune porzioni di frame e si stima il moto tra due
+frame: il frame corrente ed il frame di riferimento. Il problema è capire bene quali sono le porzioni.\\
+Infine, si esegue la codifica ed avviene attraverso i vettori di movimento $dx$ e $dy$. L'idea generale sta nel trovare una regione $P_C$ nel frame
+corrente, trovare una regione $P_R$ nella finestra di ricerca nel frame di riferimento, per minimizzare l'errore tra la regione $P_R$ e $P_C$.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap10/regioni} 
+        \caption{Stima del movimento} 
+        \label{fig:regioni}
+\end{figure}
+\subsection{Block matching}
+A questo punto, gli algoritmi di codifica dei video solitamente contengono due tipologie di schemi di codifica:
+\begin{itemize}
+    \item la codifca intraframe, che è simile alla codifica di immagini fisse, poiché non sfrutta la correlazione di frame adiacenti;
+    \item la codifica interframe, che invece include la stima e la componensazione del movimento, per ridurre la ridondanza temporale.
+\end{itemize}
+La tecnica del block matching consiste nel dividere il frame corrente in blocchi, per trovare un blocco candidato nella regione di ricerca, che ha la
+correlazione maggiore con il blocco sorgente. In particolare, la differenza tra il blocco sorgente ed il blocco candidato prende il nome di vettori di
+movimento. Infatti, quest'ultimo descrive la distanza tra la posizione del blocco in fase di codifica e la posizione del blocco con la corrispondenza 
+migliore nel frame di riferimento. Infine, l'immagine residua dell'errore contiene le differenze tra l'immagine desiderata e quella prevista. Ciò, si
+calcola con l'MSE o l'MAE.
+\begin{center}
+\begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
+    \centering
+        \begin{equation*}
+            MSE = \sum\left[ b\left(B_{ref}\right) - b(\left(B_{curr}\right) \right]^2
+        \end{equation*}     
+\end{minipage}
+\hfill % Spazio elastico per separare le due colonne
+\begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
+    \begin{equation*}
+            MAE = \sum\left| b\left(B_{ref}\right) - b(\left(B_{curr}\right)\right|
+    \end{equation*}
+\end{minipage}
+\end{center}
+\section{Processo di compressione video}
+In questo paragrafo si entra nel cuore del capitolo: vengono spiegate le varie tecniche della compressione video.
+\subsection{Codifica basata sul block matching}
 
 \vfill
