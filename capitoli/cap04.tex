@@ -150,7 +150,7 @@ In particolare, si crea un mapping dove le $k$ sono le ascisse e $j$ le ordinate
         \caption{Analisi dei dettagli delle serie} 
         \label{fig:serie}
 \end{figure}
-\subsection{Creazione delle piramide dell'immagine}
+\subsection{Creazione della piramide dell'immagine}
 Una semplice struttura per rappresentare un'immagine a più risoluzione è la cosiddetta piramide dell'immagine, in cui:
 \begin{itemize}
     \item alla base è presente la rappresentazione dell'immagine con la massima risoluzione, detto livello J;
@@ -174,7 +174,7 @@ La costruzione della piramide avviene nel modo seguente:
         \caption{Schema di costruzione della piramide dell'immagine} 
         \label{fig:cost}
 \end{figure}
-\subsection{Rappresentazione walet e condizioni}
+\subsection{Rappresentazione wavelet e condizioni}
 La rappresentazione wavelet consiste in un'approssimazione grossolana in totale dell'immagine, in cui viene influenzata dai coefficienti dei dettagli in scale differenti.\\
 Se un insieme di basi di funzioni $V$ si può rappresentare come una somma pesata di $\psi(2^jt-k)$, allora una gran parte dell'insieme ($V$ incluso) si può rappresentare da una somma pesata di $\psi(2^{j+1}t-k)$. Quindi
 in questo caso, per $V_j \subseteq V_{j+1}$, se $f(t) \in V_j$ allora $f(t) \in V_{j+1}$.\\
@@ -192,7 +192,7 @@ dove:
     \item il secondo fattore indicano le alte risoluzioni.
 \end{itemize}
 \section{Dalla trasformata di Haar alla trasformata Wavelet 2D}
-In questo paragrafo viene riportata la spiegazione da come si passa dalla trasformata Haar alla trasfarmata Wavelet in due dimensioni.
+In questo paragrafo viene riportata la spiegazione da come si passa dalla trasformata Haar alla trasformata Wavelet in due dimensioni.
 \subsection{Trasformata Haar}
 La trasformata di Haar si basa su base di funzioni che sono molto semplici, soprattutto che hanno la proprietà di essere simmetriche, separabili ed
 esprimibili in forma matriciale.

@@ -68,7 +68,7 @@ Nella fase di Motion JPEG, avviene la compressione JPEG ad ogni fotogramma del v
 compressione da 2:1 a 12:1 con perdita di dati fino a 5:1, detta qualità broadcast. A ciò si aggiunge lo sfruttamento della ridondanza temporale, infatti
 esistono tre tipologie di movimento:
 \begin{itemize}
-    \item traslazionella fase, il movimento tipico degli oggetti rigidi;
+    \item traslazione nella fase, il movimento tipico degli oggetti rigidi;
     \item rotazione attraverso un asse;
     \item zoom.
 \end{itemize}
@@ -144,7 +144,7 @@ Lo standard MPEG classifica tutti i frame di un video in tre gruppi:
     \item intra-frame, abbreviati in I-frame, che sono codificati senza riferirsi ad altri frame, necessari per ridurre l'errore di propagazione, per
             permettere l'accesso randomico e per il taglio attraverso le scene;
     \item predictive-frame, indicati con P-frame, sono codificati con riferimento al frame precedente, permettendo un tasso di compressione medio;
-    \item birectional-frame, detti anche B-frame, vengono codificati con riferimento al frame precedente ed al frame successivo, avendo un tasso di
+    \item bidirectional-frame, detti anche B-frame, vengono codificati con riferimento al frame precedente ed al frame successivo, avendo un tasso di
             compressione alto, aumentando però la complessità computazionale.
 \end{itemize}
 \begin{figure}[htbp]

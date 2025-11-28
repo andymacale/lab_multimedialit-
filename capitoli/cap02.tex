@@ -1,4 +1,4 @@
-Nelle telecomunicazioni, per filtrare un segnale nel dominio del tempo, si l'operazione di convoluzione.
+Nelle telecomunicazioni, per filtrare un segnale nel dominio del tempo, si usa l'operazione di convoluzione.
 \begin{center}
 \begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
     \centering
@@ -180,7 +180,7 @@ Il filtro di smussamento non lineare più comune è il filtro mediano, che consi
     \end{equation*}
     \item iterare i passaggi precedenti per tutta l'immagine.
 \end{enumerate}
-Questo filtro permette di rimuovere il rumore sale e pepe, molto comune nelle foto più datate, in cui l'immagine presenta dei pixel completamente bianchi e neri: infatti, tali pixel non saranno mai dei mediani: per questo motivo vengono eliminati. Inoltre, la sfocatora non è così evidente, un altro lato positivo da non sottovalutare.
+Questo filtro permette di rimuovere il rumore sale e pepe, molto comune nelle foto più datate, in cui l'immagine presenta dei pixel completamente bianchi e neri: infatti, tali pixel non saranno mai dei mediani: per questo motivo vengono eliminati. Inoltre, la sfocatura non è così evidente, un altro lato positivo da non sottovalutare.
 \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.85\textwidth]{cap02/salt} 
@@ -201,7 +201,7 @@ I filtri di shapening preservano i dettagli, andando ad evidenziare i bordi. Per
 \end{itemize}
 Per tali scopi, risulta molto conveniente usare la derivata seconda, poiché presenta una risposta più forte per i dettagli (facilmente intuibile) ed ha un'implementazione decisamente più semplice (poco intuibile).
 \subsection{Il Laplaciano}
-Il filtro di nitidezza più usato è il Laplaciano, che sfrutta il gradiente secondo dell'immagine: ciò è decisamente logico, dato che in più di una dimensione e con le derivate parziale, si fa riferimento ad ogni derivata parziale, perciò è necessario il gradiente.
+Il filtro di nitidezza più usato è il Laplaciano, che sfrutta il gradiente secondo dell'immagine: ciò è decisamente logico, dato che in più di una dimensione e con le derivate parziali, si fa riferimento ad ogni derivata parziale, perciò è necessario il gradiente.
 \begin{equation*}
         \nabla^2 f = \frac{\delta^2 f}{\delta x^2}+\frac{\delta^2 f}{\delta y^2}
 \end{equation*}
@@ -247,8 +247,8 @@ Perciò, la maschera è la seguente.
             0 & -1 & 0
         \end{bmatrix}
 \end{equation*}
-Infatti, ora si comprende il motivo per cui la sua semplicità di implementazione. Inoltre, il Laplaciano è presenta i seguenti vantaggi:
-isotopico:perciò è indipendente dal punto in cui viene applicato, poiché applica gli array circolare, quindi la rotazione resta invariata.
+Infatti, ora si comprende il motivo per cui la sua semplicità di implementazione. Inoltre, il Laplaciano presenta i seguenti vantaggi:
+isotropico:perciò è indipendente dal punto in cui viene applicato, poiché applica le maschere circolari, quindi la rotazione resta invariata.
 \begin{figure}[H]
         \centering
         \includegraphics[width=0.85\textwidth]{cap02/laplaciano.png} 

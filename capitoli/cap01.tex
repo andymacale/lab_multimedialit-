@@ -8,7 +8,7 @@ L'occhio umano è racchiuso da tre membrane, dove ognuna ha una funzione rilevan
         \label{fig:occhio}
 \end{figure}
 \subsection{Cornea e coroide: due membrane come protezione}
-La cornea è la membrana più esterna dell'occhio umano: infatti, essendo composta da un tessuto resistente e trasparente, è perfetta per racchiude la superficie anteriore dell'occhio.
+La cornea è la membrana più esterna dell'occhio umano: infatti, essendo composta da un tessuto resistente e trasparente, è perfetta per racchiudere la superficie anteriore dell'occhio.
 Inoltre, per ridurre la quantità di luce estranea che entra nell'occhio, è presente la coroide.
 \subsection{Retina: la membrana per la vista}
 La retina è quella membrana che fornisce il senso della vista all'essere umano. In particolare, permette di mettere a fuoco gli oggetti, grazie alla luce dell'oggetto stesso che entra nella retina.\\ Inoltre, sono presenti i cosiddetti percettori luminosi, che rendono possibile la visione a pattern. \\Il primo percettore sono i coni, che permettono la visione cromatica: infatti possono essere a lunghezza d'onda corta per il blu, a lunghezza d'onda media per il verde ed a lunghezza d'onda lunga per il rosso.\\ Per la visione acromatica, invece, sono presenti i bastoncelli, per esempio la visione scotopica e la penombra.
@@ -19,7 +19,7 @@ La retina è quella membrana che fornisce il senso della vista all'essere umano.
         \label{fig:coni}
 \end{figure}
 \subsection{Formazione dell'immagine}
-A questo punto, la formazione dell'immagine avviene nel modo seguente. Le lenti dell'occhio umano sono flessibili: la sua forma è controllata delle fibre del corpo ciliare. \\Inoltre, l'abilità dell'occhio di discriminare i cambiamenti delle intensità di luce a qualsiasi livello di adattibilità specifico, è descritto dalla legge di Weber.
+A questo punto, la formazione dell'immagine avviene nel modo seguente. Le lenti dell'occhio umano sono flessibili: la sua forma è controllata delle fibre del corpo ciliare. \\Inoltre, l'abilità dell'occhio di discriminare i cambiamenti delle intensità di luce a qualsiasi livello di adattibilità specifico, è descritta dalla legge di Weber.
 \begin{equation*}
     k=\frac{\Delta I_C}{I}
     \label{eq:Legge di Weber}
@@ -76,7 +76,7 @@ L'intensità di un'immagine monocromatica a $(x_0,y_0)$ è il livello di grigio 
     L=f(x_0,y_0)
     \label{eq:livello di grigio}
 \end{equation*}
-Il livello di grigio trovato appartiene ad un intervallo dove il minimo corrisponde corrisponde al nero ed il massimo corrisponde al massimo.
+Il livello di grigio trovato appartiene ad un intervallo dove il minimo corrisponde al nero ed il massimo corrisponde al bianco.
 \begin{equation*}
     L \in [L_{\text{min}},L_{\text{max}}]
     \label{eq:intervallo}
@@ -99,8 +99,8 @@ f(M-1,0) & \dots & f(M-1, N-1)
 \end{bmatrix}
 \]
 \section{Manipolazione delle immagini}
-La manipolazione delle immagini si pone come obiettivo principale quello di modificare l'immagine originale che si adatta di più al contesto richiesto: come sfocare lo sfondo in un ritratto oppure rendere più luminose le vene in un'immagine catturata da un'esame medico.\\
-In questo paragrafo, vengono elencati una serie di possibili manipolazioni, andando a modificare la $f(x,y)$ con un operatore $T$ definito con i suoi vicini $(x,y)$.
+La manipolazione delle immagini si pone come obiettivo principale quello di modificare l'immagine originale che si adatta di più al contesto richiesto: come sfocare lo sfondo in un ritratto oppure rendere più luminose le vene in un'immagine catturata da un esame medico.\\
+In questo paragrafo, vengono elencati una serie di possibili manipolazioni, andando a modificare la $f(x,y)$ con un operatore $T$ definito con i suoi vicini di $(x,y)$.
 \begin{equation*}
     g(x,y)=T[f(x,y)]
     \label{eq:manipolazione}
@@ -125,7 +125,7 @@ In questo paragrafo, vengono elencati una serie di possibili manipolazioni, anda
 In particolare, si considera:\\
 \begin{itemize}
     \item $r$ è il livello di grigio di input;
-    \item $s$ è il livello di griglio di output.
+    \item $s$ è il livello di grigio di output.
 \end{itemize}
 \subsection{Manipolazioni principali}
 Di seguito ne è riportato un grafico che ne riporta le principali tipologie di manipolazione delle immagini.
@@ -153,7 +153,7 @@ Tale funzione risulta molto utile per risaltare regioni di grigio incorporate da
     \label{fig:negativo}
 \end{figure}
 
-La terza funzione è la funzione logaritmica, che tende ad espandere i valori dei pixel scuri ed ad comprimere i pixel chiari. Se invece si vuole ottenere l'opposto, allora si usa la funzione logaritmica inversa. La prima equazione è la funzione logaritmica, mentre la seconda è la funzione logaritmica inversa. Entrambi sfruttano la costante di scala $r \in [0,L-1]$.
+La terza funzione è la funzione logaritmica, che tende ad espandere i valori dei pixel scuri ed ad comprimere i pixel chiari. Se invece si vuole ottenere l'opposto, allora si usa la funzione logaritmica inversa. La prima equazione è la funzione logaritmica, mentre la seconda è la funzione logaritmica inversa. Entrambi sfruttano la costante di scala $c \in [0,L-1]$.
 
 % --- NESSUNA RIGA VUOTA QUI ---
 \begin{align*}
@@ -261,7 +261,7 @@ La seconda funzione di trasformazione lineare a tratti è il gray-level slicing,
 \end{figure}
 La terza ed ultima funzione di trasformazione lineare a tratti è il bit-plain slicing, che consiste nel mettere evidenza solamente i bit più significativi (che sono i primi bit).
 \subsection{Equalizzazione dell'istogramma}
-Quando si parla di un'immagine, è possibile costruire l'istogramma dell'immagine stessa, che non è altro che il numero di pixel che contengono un determinato valore di livello di griglio per ogni livello $n_k$.
+Quando si parla di un'immagine, è possibile costruire l'istogramma dell'immagine stessa, che non è altro che il numero di pixel che contengono un determinato valore di livello di grigio per ogni livello $n_k$.
 \begin{center}
     % Uso \begin{equation*} e \end{equation*} per contenere l'ambiente align*
     \begin{equation*}

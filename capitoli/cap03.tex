@@ -56,7 +56,7 @@ La trasformata di Fourier gode della seguenti proprietà:
     \item separabilità, ossia si può eseguire prima la trasformata sulle righe e poi sulle colonne (o viceversa).
 \end{itemize}
 \subsection{Teorema della convoluzione e applicazione al filtraggio}
-La potenzialità del passaggio dal dominio spaziale al dominio della frequenza sta nel teorema della convoluzione. Tale teorema afferma che eseguire una convoluzione nel dominio spaziale corrisponde ad eseguire un prodotto nel dominio della frequenza, con un costo computazione molto meno elevato.
+La potenzialità del passaggio dal dominio spaziale al dominio della frequenza sta nel teorema della convoluzione. Tale teorema afferma che eseguire una convoluzione nel dominio spaziale corrisponde ad eseguire un prodotto nel dominio della frequenza, con un costo computazionale molto meno elevato.
 \begin{center}
     $f(x,y)\ast h(x,y) \longleftrightarrow F(u,v)H(u,v)$
 \end{center}
@@ -104,7 +104,7 @@ Il filtro passa-basso ideale fa passare solamente le frequenze la cui distanza e
 \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.5\textwidth]{cap03/idealeL} 
-        \caption{Funzionamento di un filtro passo-basso ideale} 
+        \caption{Funzionamento di un filtro passa-basso ideale} 
         \label{fig:LPF_ideale}
 \end{figure}
 In particolare, maggiore sarà il cutoff e minore sarà la sfocatura, poiché passarranno più frequenze.
@@ -189,7 +189,7 @@ dove:
 \begin{equation*}
         \nabla^2f=\frac{\delta^2 f}{\delta x^2}+\frac{\delta^2 f}{\delta y^2}
 \end{equation*}
-In frequenza, la trasformata di una Fourier della derivata è la seguente:
+In frequenza, la trasformata di Fourier della derivata è la seguente:
 \begin{equation*}
     F\left[ \frac{d^2 f}{d t^2} \right]=-\nu^2F(\nu)
 \end{equation*}

@@ -22,7 +22,7 @@ Comunque, la risoluzione delle componenti cromatiche vengono ridotte di un fatto
 \end{itemize}
 \subsection{Fase 2: trasformata DCT}
 A questo punto, viene suddivisa l'immagine in blocchi da $8x8$, poiché è la dimensione che permette la migliore qualità rispetto alla dimensione del file.
-Per ogni blocco, viene eseguita la cosiddetta DCT (Discete Cosine Transform), che lavora nell'intervallo da $-128$ a $128$, perciò il blocco deve essere
+Per ogni blocco, viene eseguita la cosiddetta DCT (Discrete Cosine Transform), che lavora nell'intervallo da $-128$ a $128$, perciò il blocco deve essere
 prima traslato negativamente di $128$. A questo punto, la formula della DCT è la seguente:
 \begin{equation*}
     G(u,v)=\alpha(u)\alpha(v)\sum_{x=0}^{7}\sum_{y=0}^{7}g(x,y)\cos{\left[\frac{\pi}{8}\left(x+\frac{1}{2}\right)u\right]}\cos{\left[\frac{\pi}{8}\left(y+\frac{1}{2}\right)v\right]}
@@ -105,7 +105,7 @@ Per prima cosa, si esegue il cosiddetto preprocessing, che si compone in tre sot
 Innanzittutto, si effettua l'estrazione delle componenti e la trasformazione, in cui si mappano le componenti RGB e si trasformano in YCbCr, per ridurre
 la correlazione tra le componenti, conducendo a due tipologie di trasformazioni:
 \begin{itemize}
-    \item trasformazione delle componenti irreversibile (ICT, irreversibile component transfomation);
+    \item trasformazione delle componenti irreversibili (ICT, irreversibile component transfomation);
     \item trasformazione delle componenti reversibile (RCT, reversibile component transfomation).
 \end{itemize}
 Successivamente, si esegue la cosiddetta piastrellatura dell'immagine (in inglese image tiling), in cui avviene una partizione dell'immagine in blocchi
@@ -156,7 +156,7 @@ più significativo a quello meno significativo. Inoltre, se alcuni piani più si
 di bit più in alto, con almeno un $1$.\\
 In questo modo, si ha una classificazione dei coefficienti, partendo da quelli più insignificanti, classificati come $0$, finché non viene codificato
 il primo non-zero, divendando significativo, codificando il suo segno e tutta la sua sottosequenza di bit. Ad esempio, i dati con la riduzione di
-distorsione più alta dovrebbere essere codificati per primi per media di rappresentazione di bit compressi. Per essere codificato, il coefficiente deve superare:
+distorsione più alta dovrebbere essere codificati per primi per mezzo di bit compressi. Per essere codificato, il coefficiente deve superare:
 \begin{itemize}
     \item la propagazione di significatività, in cui se è un bit è insignificante, ma almeno uno dei suo vicini lo è, allora viene codificato, oppure allora
     stesso tempo è significante, e il suo flag è $1$, allora il segno del simbolo è codificato;
