@@ -1,6 +1,84 @@
-ffe
-\section{Titolo}
-\subsection{1}
-\subsection{2}
-\section{Titolo 2}
+In questo capitolo viene spiegato il funzionamento dei multimedia.
+\section{Introduzione ai multimedia}
+L'audio si può dividere in naturale ed elettronici. Gli audio elettronici sono ciò che interessa nel corso.
+\subsection{Audio elettronico}
+L'audio elettronico comprende:
+\begin{itemize}
+    \item sorgenti sonore ($20\,\text{Hz}\,-\,20\,\text{kHz}$);
+    \item amplificazione e condizionamento del segnale;
+    \item trasduttore elettroacustico;
+    \item elaborazione per l'applicazione prevista;
+    \item mezzi di trasmissione;
+    \item archiviazione;
+    \item estrazione e misurazione delle informazioni;
+    \item riproduzione.
+\end{itemize}
+\subsection{Aspetti integrativi del multimedia}
+Il sistema del multimedia viene suddiviso in:
+\begin{itemize}
+    \item basi, che includono le architetture informatiche e soprattutto la compressione;
+    \item sistemi, che comprende ad esempio il database ed il media server;
+    \item servizi, che comprende l'elaborazione dei contenuti, sincronizzazione e comunicazione di gruppo;
+    \item utilizzo, che riguarda applicazioni come l'interfaccia utente.
+\end{itemize}
+Per quanto riguarda i multimedia audio, ne fanno parte:
+\begin{itemize}
+    \item la cattura audio;
+    \item la rappresentazione delle informazioni audio;
+    \item la trasmissione;
+    \item l'elaborazione;
+    \item l'archiviazione;
+    \item la riproduzione.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap12/aspetti} 
+        \caption{Esempio di aspetto integrativo di un multimedia audio} 
+        \label{fig:prog}
+\end{figure}
+\section{Audio sintetico, analisi e sintesi del discorso}
+Il modello generale del parlato suggerisce che i suoni del parlato, si possono analizzare determinando gli stati delle componenti del parlato 
+per ogni fonema. In particolare, si fa riferimento al:
+\begin{itemize}
+    \item parlato vocale, se è presente aria pulsata;
+    \item parlato non vocale, se è presente solamente flusso continuo oppure raffica d'aria.
+\end{itemize}
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{cap12/rec} 
+        \caption{Registrazione vocale} 
+        \label{fig:messaggio_vocale}
+\end{figure}
+A questo si esegue l'analisi spettrale del parlato vocale, che è in grado di rilevare l'inviluppo spettrale, che ne indica che la caratteristiche
+fondamentali del tratto vocale, detti formanti; ed i pitch delle corde vocali, denominati picchi armonici. Inoltre, si esegue l'analisi temporale per
+rilevare l'inviluppo temporale, che indica le dinamiche del volume; e le oscillazioni, che indicano il movimento delle corde vocali. Per visualizzare
+l'andamento delle frequenze nel tempo, si usa il cosiddetto spettogramma, che mostra le variazioni di intensità di diverse componenti delle frequenze. 
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{cap12/spettrogramma} 
+        \caption{Esempio di spettogramma} 
+        \label{fig:spettrogramma}
+\end{figure}
+Infine, per quanto riguarda il riconoscimento vocale, può variare in base a:
+\begin{itemize}
+    \item alla dipendenza o meno del parlante;
+    \item riconoscimento di parlato isolato, continuo o spot;
+    \item dimensione del vocabolario, complessità delle grammatica e stile del parlato;
+    \item condizione di registrazione.
+\end{itemize}
+Le componenti del riconoscimento vocale includono:
+\begin{enumerate}
+    \item parlato in ingresso;
+    \item trasduzione del parlato;
+    \item front-end;
+    \item corrispondenza locale;
+    \item modello linguistico del rilevatore globale;
+    \item stringa di parlato rilevata.
+\end{enumerate}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{cap12/google} 
+        \caption{Icona del riconoscimento vocale Google} 
+        \label{fig:google}
+\end{figure}
 \vfill

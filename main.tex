@@ -29,6 +29,7 @@
 \usepackage{amsmath}
 \usepackage{array}
 \usepackage{fancyhdr}
+\usepackage{rotating}
 \usepackage[utf8]{inputenc}
 \usepackage{eso-pic}
 \usepackage{tikz}
@@ -193,4 +194,20 @@
 \input{capitoli/cap11}
 \chapter{Multimedia}
 \input{capitoli/cap12}
+
+\begin{titlepage}
+    
+  \thispagestyle{empty} % Nasconde il numero della pagina.
+        
+  % === Immagine di Sfondo (Non ruotata) ===
+  \AddToShipoutPictureBG*{%
+      \begin{tikzpicture}[remember picture, overlay]
+        \node[opacity=1, inner sep=0pt] at (current page.center) {
+          \includegraphics[width=\paperwidth, height=\paperheight]{sfondo_sfocato.jpg}
+        };
+      \end{tikzpicture}%
+  }
+\null
+\vfill
+\end{titlepage}
 \end{document}
