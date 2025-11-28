@@ -108,7 +108,74 @@ calcola con l'MSE o l'MAE.
 \end{minipage}
 \end{center}
 \section{Processo di compressione video}
-In questo paragrafo si entra nel cuore del capitolo: vengono spiegate le varie tecniche della compressione video.
-\subsection{Codifica basata sul block matching}
-
+In questo paragrafo si entra nel cuore del capitolo: vengono spiegate le tecniche della compressione video.
+\subsection{Compressione basata sul block matching}
+La compressione basata sul block matching csi basa sulla tecnica appena spiegata del block matching. Assumendo un frame $f_{-1}$ che è stato codificato
+e ricostruito, ed il frame corrente che deve essere codificato $f$. A questo punto si procede nella maniera seguente:
+\begin{enumerate}
+    \item si divide $f$ in blocchi della stessa dimensione;
+    \item per ogni blocco, si trova il vettore di movimento usando il block matching, che si basa su $f_{-1}$, e si esegue la display frame difference;
+    \item si trasmette il vettore di movimento per ogni blocco al decoder;
+    \item si comprime ogni blocco a cui è stata applicata la display frame difference;
+    \item si trasmette la display frame difference al decoder.
+\end{enumerate}
+\subsection{Compressione basata sul codificatore ibrido}
+Il codificatore ibrido combina la stima del moto con la trasformata spaziale. Ciò consiste in:
+\begin{enumerate}
+    \item si stima il moto e si ottengono i vettori di moto;
+    \item si calcola l'immagine di residuo tra il blocco originale e quello predetto;
+    \item all'immagine residuo, si applica la DCT, la quantizzazione e la codifica VLC;
+    \item si trasmettono i vettori di moto ed il residuo codificato;
+    \item si esegue il cosiddetto loop di feedback, in cui il codificatore simula il decoder per assicurarsi che le predizioni si basano sugli stessi
+            dati che avrà il ricevente.
+\end{enumerate}
+Di seguito, ne viene riportato uno schema.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap10/schema} 
+        \caption{Schema di compressione video basata sul codificatore ibrido} 
+        \label{fig:schema_compressione_video}
+\end{figure}
+\section{Standard MPEG}
+In questo paragrafo viene spiegato come avviene la compressione video con lo standard MPEG e le sue varie versioni.
+\subsection{Compressione video MPEG}
+Lo standard MPEG classifica tutti i frame di un video in tre gruppi:
+\begin{itemize}
+    \item intra-frame, abbreviati in I-frame, che sono codificati senza riferirsi ad altri frame, necessari per ridurre l'errore di propagazione, per
+            permettere l'accesso randomico e per il taglio attraverso le scene;
+    \item predictive-frame, indicati con P-frame, sono codificati con riferimento al frame precedente, permettendo un tasso di compressione medio;
+    \item birectional-frame, detti anche B-frame, vengono codificati con riferimento al frame precedente ed al frame successivo, avendo un tasso di
+            compressione alto, aumentando però la complessità computazionale.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap10/rappresentazione} 
+        \caption{Rappresentazione da sinistra rispettivamente degli I-frame, P-frame e B-frame} 
+        \label{fig:schema_frame_MPEG}
+\end{figure}
+A questo punto, le tre tipologie di frame vengono organizzate in GOP (Group of Pictures), con un ordine ben preciso, poiché i B-frame richiedono che I
+frame futuri siano già stati elaborati. In questo modo, la ridondanza temporale viene descritta dal movimento degli oggetti attraverso i frame dagli
+I-frame ai P-frame ed i B-frame. Infatti, i P-frame ed i B-frame sono codificati tramite i vettori di movimento ed il corrispettivo errore di predizione.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{cap10/gop} 
+        \caption{Rappresentazione del GOP} 
+        \label{fig:gop}
+\end{figure}
+\subsection{Versioni di MPEG}
+Di seguito viene riportata l'evoluzione di MPEG, con i vari miglioramenti:
+\begin{itemize}
+    \item MPEG-1: supporta solo la scansione progressiva, perciò bassa qualità e non adatto ai broadcast TV;
+    \item MPEG-2: introduce il supporto video interlacciato e l'alta risoluzione TV, però con file pesanti ed alto utilizzo della CPU;
+    \item MPEG-3: abbandonato, perché MPEG-2 è più che sufficiente per l'HDTV;
+    \item MPEG-4: si basa sui video-object (VO), permettendo interattività, gestione contenuti 2D e 3D ed è scalabile da bit-rate molto bassi a molto alti;
+    \item H.264/AVC: migliore efficienza di compressione, poiché usa blocchi più piccoli e trasformate intere ed un filtro di deblocking integrato per migliorare la qualità visiva;
+    \item HEVC (H.265): progettato per risoluzioni in 4K, per ridurre il bit-rate anche del $50 \%$, usa una struttura a Quadtree con Coding Tree Unit (CTU) da blocchi 8x8 fino a 64x64, che si adattano meglio al contenuto dell'immagine.
+\end{itemize}
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.5\textwidth]{cap10/ver} 
+        \caption{Differenza tra HEVC e H.264/AVC} 
+        \label{fig:ver}
+\end{figure}
 \vfill
