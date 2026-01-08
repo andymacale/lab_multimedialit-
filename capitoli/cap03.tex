@@ -1,4 +1,4 @@
-Fino ad ora, sono state trattate le immagini nel dominio spaziale, considerandole come funzioni a due variabili $f(x,y)$. Questa rappresentazione è sicuramente molto comoda ed intuitiva, poiché nelle immagini in bianco e nero, non è altro che una matrice $M\to N$ dove ogni elemento corrisponde al livello di grigio di un pixel. Tuttavia, tale rappresentazione diventa decisamente meno comoda nel momento in cui si eseguono delle operazioni di filtraggio, perché l'operazione di convoluzione risulta decisamente costosa in termini computazionali.
+Fino ad ora, sono state trattate le immagini nel dominio spaziale, considerandole come funzioni a due variabili $f(x,y)$. Questa rappresentazione è sicuramente molto comoda ed intuitiva, poiché nelle immagini in bianco e nero, non è altro che una matrice $M\times N$ dove ogni elemento corrisponde al livello di grigio di un pixel. Tuttavia, tale rappresentazione diventa decisamente meno comoda nel momento in cui si eseguono delle operazioni di filtraggio, perché l'operazione di convoluzione risulta decisamente costosa in termini computazionali.
 \section{Dominio della frequenza}
 Per risolvere tale problema, si passa nel dominio della frequenza. L'idea di base, è:
 \begin{itemize}
@@ -33,7 +33,7 @@ Come si può intuire facilmente, se la funzione pesata in una dimensione ha due 
 \end{equation*}
 Il valore della trasformata di Fourier alla frequenza di origine prende il nome di componente DC: esso si calcola facendo la media tra il prodotto dell'intensità di $f(x,y)$ e un fattore $MN$. Infatti, risulta molto comune eseguire una traslazione della componente DC sul punto $(M/2, N/2)$.
 \begin{equation*}
-        F(u,v)=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[f(x,y)+(1)^{x+y}\right]\exp\left[-j2\pi\left(\frac{ux}{M}+\frac{vy}{N}\right)\right]
+        F(u,v)=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}\left[f(x,y)(-1)^{x+y}\right]\exp\left[-j2\pi\left(\frac{ux}{M}+\frac{vy}{N}\right)\right]
 \end{equation*}
 \begin{figure}[htbp]
         \centering
@@ -139,7 +139,7 @@ Il filtro passa-basso Guassiano è in grado di attenuare le alte frequenze con p
         \label{fig:LPF_ideale2}
 \end{figure}
 \section{Filtri passa-alto}
-I filtri passa-alto (HPF, dall'inglese high-pass filter) attenuano le basse frequenze e risaltano le alte frequenze, applicando quindi l'effetto di sfocatura e riduzione del rumore. Infatti, corrispondono ai filtri di nitidezza nel dominio spaziale. Anche in questo caso, si ha la distanze euclidea e la frequenza di cutoff.\\
+I filtri passa-alto (HPF, dall'inglese high-pass filter) attenuano le basse frequenze e risaltano le alte frequenze, applicando quindi l'effetto di esaltazione dei dettagli. Infatti, corrispondono ai filtri di nitidezza nel dominio spaziale. Anche in questo caso, si ha la distanze euclidea e la frequenza di cutoff.\\
 Inoltre, la funzione di trasferimento di un filtro passa-alto è l'inverso di quello del filtro passa-basso.
 \begin{equation*}
         H_{HPF}(u,v) = 1 - H_{LPF}(u,v)

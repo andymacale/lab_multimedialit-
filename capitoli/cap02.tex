@@ -158,7 +158,7 @@ La deviazione standard controlla l'intensità della sfocatura: più è alto più
 I filtri di smussamento non lineari non presentano un'operazione di convoluzione vera e propria, ma si basano su ordinamento statistico: in particolare, in base al ranking dei pixel. I pixel che sono considerati non rappresentativi vengono eliminati. Inoltre, vengono sostituiti i valori dei pixel con il valore della classifica. Questa tipologia viene usata per la riduzione del rumore, sfocando però l'immagine.\\
 Il filtro di smussamento non lineare più comune è il filtro mediano, che consiste nel:
 \begin{enumerate}
-    \item prendere una porzione di un'immagine (solitamente 3x3 o 5x5);
+    \item prendere una porzione di un'immagine (solitamente $3\times3$ o $5\times5$);
     \begin{equation*}
         \begin{bmatrix}
             9 & 12 & 0 \\
@@ -247,7 +247,7 @@ Perciò, la maschera è la seguente.
             0 & -1 & 0
         \end{bmatrix}
 \end{equation*}
-Infatti, ora si comprende il motivo della sua semplicità di implementazione. Inoltre, il Laplaciano presenta i seguenti vantaggi:
+Infatti, ora si comprende il motivo della sua semplicità di implementazione. Inoltre, il Laplaciano presenta il vantaggio di essere
 isotropico:perciò è indipendente dal punto in cui viene applicato, poiché applica le maschere circolari, quindi la rotazione resta invariata.
 \begin{figure}[H]
         \centering
