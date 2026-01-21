@@ -104,7 +104,7 @@ Nel caso in cui si ignorassero i bordi, si applicherebbe il filtro solamente nei
             -4 & 5  
          \end{bmatrix}
 \end{equation*}
-Infine, eseguire convoluzioni con maschere risulta essere molto versatile, poiché a seconda dei coefficienti della maschera, si possono ottenere risultati differenti: per esempio la sfocatura, il contrasto od il rilevamento dei bordi. In questo capitolo, vengono spiegati i filtri di smussamento e di nitidezza.
+Infine, eseguire convoluzioni con maschere risulta essere molto versatile, poiché a seconda dei coefficienti della maschera, si possono ottenere risultati differenti: per esempio la sfocatura, il contrasto od il rilevamento dei bordi. In questo capitolo, verranno spiegati i filtri di smussamento e di nitidezza.
 \section{Filtri di smussamento}
 I filtri di smussamento permettono di gestire la sfocatura dell'immagine e della riduzione del rumore. In particolare, la sfocatura è un processo che serve per rimuovere piccoli dettagli e colmare piccoli scalini in linee e curve. La sfocatura accompagna la riduzione del rumore. 
 \subsection{Filtri di smussamento lineari}
@@ -125,7 +125,7 @@ La prima tipologia è il filtro media aritmetica, in cui la maschera contiene il
 \begin{minipage}{0.48\textwidth} % Colonna Destra (48% della larghezza del testo)
     \centering
     \begin{equation*}
-         h(x,y) = \frac{1}{25}\begin{bmatrix}
+         h(x,y) = \frac{1}{16}\begin{bmatrix}
             1 & 1 & 1 & 1\\
             1 & 1 & 1 & 1\\
             1 & 1 & 1 & 1\\
@@ -155,7 +155,7 @@ La deviazione standard controlla l'intensità della sfocatura: più è alto più
         \label{fig:f1}
 \end{figure}
 \subsection{Filtri di smussamento non lineari}
-I filtri di smussamento non lineari non presentano un'operazione di convoluzione vera e propria, ma si basano su ordinamento statistico: in particolare, in base al ranking dei pixel. I pixel che sono considerati non rappresentativi vengono eliminati. Inoltre, vengono sostituiti i valori dei pixel con il valore della classifica. Questa tipologia viene usata per la riduzione del rumore, sfocando però l'immagine.\\
+I filtri di smussamento non lineari non presentano un'operazione di convoluzione vera e propria, ma si basano su un ordinamento statistico: in particolare, in base al ranking dei pixel. I pixel che sono considerati non rappresentativi vengono eliminati. Inoltre, vengono sostituiti i valori dei pixel con il valore della classifica. Questa tipologia viene usata per la riduzione del rumore, sfocando però l'immagine.\\
 Il filtro di smussamento non lineare più comune è il filtro mediano, che consiste nel:
 \begin{enumerate}
     \item prendere una porzione di un'immagine (solitamente $3\times3$ o $5\times5$);
