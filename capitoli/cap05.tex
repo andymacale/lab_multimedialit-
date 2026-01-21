@@ -81,7 +81,7 @@ Per esempio data un'immagine $256 \times 256$ con le seguenti caratteristiche:
             \hline
     \end{tabular}
 \end{table}
-per esempio si usa per ogni livello di grigio il numero massimo rappresentabile del livello di grigio più alto ($255$), che è $8$ ($\log_{2}{(255)}$): Il
+per esempio si usa per ogni livello di grigio il numero massimo rappresentabile del livello di grigio più alto ($255$), che è $8$ ($\log_{2}{(256)}$ ($[0, \, 255]$)). A questo punto, il
 livello medio di grigio è $L_{avg_{1}}=8\, b$. A questo punto conviene assegnare il numero di bit a seconda della probabilità: maggiore è la probabilità,
 meno bit deve avere quel livello di grigio, così lo spazio occupato sarebbe decisamente minore.
 \begin{table}[H] % Usa [H] per renderla non flottante
@@ -132,7 +132,7 @@ i dati dovrebberero essere mappati.
 \end{figure}
 \subsection{Ridondanza psicovisiva}
 La ridondanza psicovisiva sta nel fatto che alcuni pixel sono talmente simili che l'occhio umano non li percepisce, dato che il sistema visivo umano
-non percepisce tutta l'informazione visiva con la stessa intensità: ma cerca solo caratteristiche importanti, come angoli e texture. Il classico esempio
+non percepisce tutta l'informazione visiva con la stessa intensità, ma cerca solo caratteristiche importanti, come angoli e texture. Il classico esempio
 è un immagine a tinta unita.
 \begin{figure}[htbp]
         \centering
@@ -152,7 +152,7 @@ Per effettuare una codifica efficiente, è necessario conoscere dei cenni di teo
 Per prima cosa è necessario comprendere i concetti base dell'informazione:
 \begin{itemize}
     \item più la probabilità di un evento è bassa più il contenuto informativo è alto;
-    \item l'informazione di più messaggi indipendenti sono la somma delle informazione corrispottive.
+    \item l'informazione di più messaggi indipendenti sono la somma delle informazione corrispettive.
 \end{itemize}
 Detto ciò, sia $X$ una sorgente che genera un messaggio $x_i$ con probabilità $p(x_i)$, l'informazione si calcola nel modo seguente:
 \begin{equation*}
@@ -168,9 +168,9 @@ L'entropia dell'informazione è protagonista del teorema della codifica di sorge
 che presentano come velocità di codifica, cioè il numero di simboli trasmessi per secondo, minore dell'entropia senza perdere del contenuto informativo.
 \subsection{Criteri di fedeltà}
 Infine, l'ultima parte analizzata della teoria dell'informazione è quella dedicata ai criteri di fedeltà, che quantifica quanta informazione è possibile
-perdere mantenendo ancora l'informazione accettata oppure no. In particolare, si considerano due tipologie di criteri di fedeltà.\\
-Il primo criterio è quello soggettivo, che si basano solamente sulla comparazione visiva tra due immagini, classificando le immagini in rankig da eccellente ad inutilizzabile.\\
-Il secondo ed ultimo criterio è quello oggettivo, che si basa in base a delle metriche matematiche, che dipendono dall'errore ($\epsilon(x,y)$) e dall'errore assoluto ($\epsilon$),
+perdere mantenendo ancora l'informazione accettabile. In particolare, si considerano due tipologie di criteri di fedeltà.\\
+Il primo criterio è quello soggettivo, che si basa solamente sulla comparazione visiva tra due immagini, classificando le immagini in ranking da eccellente ad inutilizzabile.\\
+Il secondo ed ultimo criterio è quello oggettivo, che si basa su delle metriche matematiche, che dipendono dall'errore ($\epsilon(x,y)$) e dall'errore assoluto ($\epsilon$),
 calcolati in base all'immagine originale ($f(x,y)$) ed all'immagine compressa ($\hat{f}(x,y)$).
 \begin{center}
 \begin{minipage}{0.48\textwidth} % Colonna Sinistra (48% della larghezza del testo)
@@ -211,13 +211,13 @@ ed il rapporto segnale-rumore di picco ($PSNR$), dove questi ultimi due si misur
 \end{minipage}
 \end{center}
 \section{Modello di compressione delle immagini}
-Il modello di compressione delle immagini consistono nei seguenti operazioni:
+Il modello di compressione delle immagini consiste nelle seguenti operazioni:
 \begin{enumerate}
     \item mappatura, che consiste nel prendere l'immagine ed eseguire una mappatura dei dati, riducendo la ridondanza interpixel (operazione reversibile);
     \item quantizzazione, che esegue l'operazione di quantizzazione, riducendo la ridondanza psicovisiva (operazione irreversibile);
-    \item codifica di simbolo, che esegue un sistema di codifica dell'immagine (operazione reversibile) e lo invia al canale;
-    \item decodifica di simbolo, che dal canale prende l'immagine codifica e la ritrasforma prima della codifica;
-    \item mappatura inversa, che la riporta come matrice di pixel, leggermente diversa a causa del quantizzatore.
+    \item codifica di simbolo, che esegue un sistema di codifica dell'immagine (operazione reversibile) e invia il risultato al canale;
+    \item decodifica di simbolo, che prende l'immagine codificata dal canale e la ritrasforma a quella prima della codifica;
+    \item mappatura inversa, che riporta l'immagine come matrice di pixel, leggermente diversa a causa della quantizzazione.
 \end{enumerate}
 \begin{figure}[htbp]
         \centering
@@ -225,9 +225,9 @@ Il modello di compressione delle immagini consistono nei seguenti operazioni:
         \caption{Schema del modello di compressione di un'immagine} 
         \label{fig:modello}
 \end{figure}
-A seconda dell'errore, la tipologia di compressione di un'immagine si suddividono in due grandi categorie:
+A seconda dell'errore, la tipologia di compressione di un'immagine si suddivide in due grandi categorie:
 \begin{itemize}
-    \item compressione lossless, in cui l'errore è nullo, perciò non viene perso alcuna informazione, sfruttando la ridondanza di codifica ed interpixel;
+    \item compressione lossless, in cui l'errore è nullo, perciò non viene persa alcuna informazione, sfruttando la ridondanza di codifica ed interpixel;
     \item compressione lossy, invece, sfrutta ogni tipologia di ridondanza (anche quella psicovisiva), tollerando qualche errore o qualche
         perdita d'informazione.
 \end{itemize}
@@ -298,7 +298,7 @@ $BBC$, si considerano i seguenti simboli:
 \end{enumerate}
 \subsection{Codifica RLC}
 La codifica RLC (Run-length coding) è una codifica lossless molto semplice in cui concatena ogni simbolo con il numero di volte che si ripete
-consecutivamente. Ad esempio $AAABBAC$ diventa $(A, 3)(B, 2)(A, 1), (C, 1)$. Tuttavia, tale sistema di codifica non è molto efficiente, tuttavia è
+consecutivamente. Ad esempio $AAABBAC$ diventa $(A, 3)(B, 2)(A, 1)(C, 1)$. Tuttavia, tale sistema di codifica non è molto efficiente, tuttavia è
 veramente semplice da implementare.
 \subsection{Codifica di Lempel Ziv}
 La codifica di Lempel Ziv è una codifica lossless che è un sistema di codifica che è composto da tre elementi: $<P,L,C>$. Dove:
@@ -334,6 +334,6 @@ qualsiasi altra codifica lossless, ottenendo una compressione lossless.
 \end{figure}
 \subsection{Standard di compressione lossy}
 Molto spesso, le immagini vengono compresse in maniera lossy, altrimenti occuperebbero troppo spazio, perciò molto più difficili da trasmettere. Inoltre,
-tali compressioni non presentano delle perdite significative nella maggior parte degli ambiti in cui si usano, grazie a molti standard. Lo standard più
+tali compressioni non presentano delle perdite significative nella maggior parte degli ambiti in cui si usano. Lo standard più
 usato e conosciuto è il JPEG, a cui gli viene dedicato l'intero capitolo successivo.
 \vfill

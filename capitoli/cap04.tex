@@ -12,14 +12,14 @@ Da qui, si nota che l'immagine è un segnale non stazionario: per prima conviene
 \begin{figure}[htbp]
         \centering
         \includegraphics[width=1\textwidth]{cap04/asse_tempo} 
-        \caption{Variazione delle frequenze nell'asse temporale da $t_0=0\,\text{s}$ a $t_3=1\,\text{s}$} 
+        \caption{Variazione delle frequenze nell'asse temporale da $t_0=0 \,\text{s}$ a $t_3=1 \,\text{s}$} 
         \label{fig:asse_tempo}
 \end{figure}
 Come si può osservare:
 \begin{itemize}
-    \item da $t_0=0\,\text{s}$ a $t_1=0,3\,\text{s}$ si hanno le basse frequenze, in cui il segnale oscilla molto lentamente;
-    \item da $t_1=0,3\,\text{s}$ a $t_2=0,85\,\text{s}$ si hanno le medie frequenze, dove le oscillazioni diventano sempre più ravvicinate e veloci;
-    \item da $t_2=0,85\,\text{s}$ a $t_3=1\,\text{s}$ si hanno le alte frequenze, dove il segnale oscilla molto velocemente.
+    \item da $t_0=0 \,\text{s}$ a $t_1=0,3 \,\text{s}$ si hanno le basse frequenze, in cui il segnale oscilla molto lentamente;
+    \item da $t_1=0,3 \,\text{s}$ a $t_2=0,85 \,\text{s}$ si hanno le medie frequenze, dove le oscillazioni diventano sempre più ravvicinate e veloci;
+    \item da $t_2=0,85 \,\text{s}$ a $t_3=1 \,\text{s}$ si hanno le alte frequenze, dove il segnale oscilla molto velocemente.
 \end{itemize}
 Perciò, le immagini hanno le statistiche che variano localmente: per questo motivo costruire un modello statistico che copre l'intera immagine, risulta decisamente molto complesso.
 \subsection{Problemi della trasformata di Fourier}
@@ -35,10 +35,10 @@ La trasformata di Fourier a breve termine (STFT, dall'inglese Short Time Fourier
 \begin{center}
 \begin{minipage}{0.46\textwidth} % Colonna Sinistra (48% della larghezza del testo)
     \begin{enumerate}
-    \item si definisce una finestra di tempo di una dimensione fissa;
-    \item si applica la trasformata di Fourier al segnale finestrato;
-    \item si memorizzano le frequenze trovate in quel intervallo di tempo;
-    \item si scorre la finestra leggermente avanti nel tempo e si ripete le analisi, finché non finisce il segnale, costruendo una mappa.
+    \item definire una finestra di tempo di una dimensione fissa;
+    \item applicare la trasformata di Fourier al segnale finestrato;
+    \item memorizzare le frequenze trovate in quel intervallo di tempo;
+    \item scorrere la finestra leggermente avanti nel tempo e si ripete le analisi, finché non finisce il segnale, costruendo una mappa.
 \end{enumerate}
 \end{minipage}
 \hfill % Spazio elastico per separare le due colonne
@@ -128,7 +128,7 @@ Nella figura che segue, viene mostrata una rappresentazione di una possibile tra
 \subsection{Proprietà}
 La trasformata Wavelet gode delle seguenti proprietà:
 \begin{itemize}
-    \item localizzazione simultanea spaziale e temporale, in cui la localizzazione della wavelet permette esplicitamente di rappresentare gli eventi nel tempo e la forma delle wavelet permettono di rappresentare i dettagli differenti e risoluzione differenti;
+    \item localizzazione simultanea spaziale e temporale, in cui la localizzazione della wavelet permette esplicitamente di rappresentare gli eventi nel tempo e la forma delle wavelet permette di rappresentare i dettagli differenti e la risoluzione differente;
     \item sparsità, in cui le funzioni usate nella pratica presentano coefficienti pari a zero o molto piccoli;
     \item adattabilità, poiché si possono rappresentare funzioni discontinue e con angoli in modo molto efficiente;
     \item complessità temporale lineare, cioè diverse trasformazioni si possono compiere in tempo $O(N)$.
@@ -180,7 +180,7 @@ Se un insieme di basi di funzioni $V$ si può rappresentare come una somma pesat
 in questo caso, per $V_j \subseteq V_{j+1}$, se $f(t) \in V_j$ allora $f(t) \in V_{j+1}$.\\
 A questo punto, l'idea di base è definire un insieme di basi di funzioni che coprono la differenza tra $V_j$ e $V_{j+1}$: costruendo la base ortogonale $W_j$.
 \begin{equation*}
-    V_{j+1}=V_j+W_j
+   W_j=V_{j+1}-V_j \leftrightarrow V_{j+1}=V_j+W_j
 \end{equation*}
 Infine, si sfruttano $\varphi(t)$ per $V_j$ e $\psi(t)$ per $W_j$, per ricostruire la decomposizione come coppia di wavelet:
 \begin{equation*}
@@ -241,10 +241,10 @@ Per prima cosa, si espande in serie in approssimazione in alta risoluzione per $
     $\varphi_{2,k}(x)=2\varphi\left(4x-k\right)=2\operatorname{rect}\left(4x-k-\frac{1}{2}\right)=2$ (altezza $2$)
 \end{center}
 \begin{itemize}
-    \item $k=0$: $8c_{2, 0}=2 \leftrightarrow c_{2, 0} = 4$;
-    \item $k=1$: $2c_{2, 1}=2 \leftrightarrow c_{2, 1} = 1$;
-    \item $k=2$: $4c_{2, 2}=2 \leftrightarrow c_{2, 2} = 2$;
-    \item $k=3$: $6c_{2, 3}=2 \leftrightarrow c_{2, 1} = 3$.
+    \item $k=0$: $8 \,c_{2, 0}=2 \leftrightarrow c_{2, 0} = 4$;
+    \item $k=1$: $2 \, c_{2, 1}=2 \leftrightarrow c_{2, 1} = 1$;
+    \item $k=2$: $4 \,c_{2, 2}=2 \leftrightarrow c_{2, 2} = 2$;
+    \item $k=3$: $6 \,c_{2, 3}=2 \leftrightarrow c_{2, 1} = 3$.
 \end{itemize}
 \begin{equation*}
     f(x)=4\varphi_{2,0}(x)+\varphi_{2,1}(x)+2\varphi_{2,2}(x)+6\varphi_{2,3}(x)
@@ -307,10 +307,10 @@ Ovviamente, una o più di queste sottobande può a loro volta essere suddivise i
 \subsection{Vantaggi della trasformata di Haar e trasformata Wavelet 2D}
 La trasformata di Haar presenta i seguenti vantaggi:
 \begin{itemize}
-    \item contiene i stessi pixel dell'immagine originale;
+    \item contiene gli stessi pixel dell'immagine originale;
     \item le sue statistiche locali rimangono relativamente costanti e facilmente modellate;
-    \item molti valori sono nulli od infinitesimi, perciò è un'ottima candidata alla compressione (trattata nel prossimo capitolo);
-    \item si possono estrarre sia le approssimazione grossolane sia quelle fini.
+    \item molti valori sono nulli od infinitesimi, perciò è un'ottima candidata per essere utilizzata nel processo di compressione (trattato nel prossimo capitolo);
+    \item si possono estrarre sia le approssimazioni grossolane sia quelle fini.
 \end{itemize}
 Per questo motivo, si estende ciò alla trasformata Wavelet in due dimensioni, dove i filtri passa-basso e passa-alto sono definiti 
 rispettivamente con $\varphi$ e $\psi$:

@@ -8,7 +8,7 @@ della videocamera.
 \end{figure}
 In questo capitolo, verranno analizzate le caretteristiche del video.
 \section{Proporzioni}
-La prima caratteristica fondamentale del video è la proporzione, che non è altro che il rapporto tra la larghezza e l'altezza. Tale rapporto è fisso:
+La prima caratteristica fondamentale del video è la proporzione, che non è altro che il rapporto tra la larghezza e l'altezza. Tale rapporto è fisso,
 infatti risultano tre valori standard:
 \begin{itemize}
     \item 4:3, usato nelle vecchie TV, per i canali SD, poiché risulta troppo squadrato;
@@ -34,9 +34,9 @@ almeno 30 fps, mentre è buono a 60 fps, eccellente sopra i 120 fps.
 \end{figure}
 \section{Modalità di trasmissione}
 Una caratteristica molto importante è come avviene la trasmissione di un video, a seconda della qualità richiesta.\\
-Il metodo di trasmissione più semplice, ma che richiede molto più risoluzione e larghezza di banda è il metodo progressivo, in cui ogni immagine viene
+Il metodo di trasmissione più semplice, ma che richiede molta più risoluzione e larghezza di banda è il metodo progressivo, in cui ogni immagine viene
 trasmessa esattamente come viene mostrata.\\
-Se invece, non si possiede molta larghezza di banda oppure il framerate non è molto alto, allora si opta per il metodo interlacciato, che consiste nel
+Se invece, non si possiede molta larghezza di banda oppure il frame rate non è molto alto, allora si opta per il metodo interlacciato, che consiste nel
 trasmettere prima le linee pari e poi quelle dispari, creando l'illusione del frame rate doppio rispetto a quello reale. Tuttavia, è necessario fornire
 le seguenti considerazioni:
 \begin{itemize}
@@ -45,11 +45,11 @@ le seguenti considerazioni:
         \item per evitare lo sfarfallio, si deve effettuare un aggiornamento completo a $50 \, \text{Hz}$.
 \end{itemize}
 \section{Risoluzione}
-Analogamente per le immagini, anche per quanto riguarda i video la risoluzione non è altro che il numero di pixel presenti. Tuttavia, qui è cruciale
+Analogamente per le immagini, anche per quanto riguarda i video la risoluzione non è altro che il numero di pixel presenti. Tuttavia, qui sono cruciali
 anche le proporzioni, il frame rate e la modalità di trasmissione. In particolare:
 \begin{itemize}
         \item formato PAL (Phase Alternate Line), sviluppato principalmente in Europa (Francia esclusa ad esempio), in 4:3 a $25 \, \text{fps}$ ad una risoluzione 
-              massima a $720\times576 \, px$;
+              massima a $720\times576 \, \text{px}$;
         \item HD ready, con risoluzione a 720p (progressivo) a $50 \, \text{fps}$ (720p/50);
         \item HDTV (1080i/25);
         \item Full HDTV (1080p/50);
@@ -174,7 +174,7 @@ con il sistema visivo umano.
 \end{figure}
 \subsection{Acquisizione dei colori}
 Nella fase di acquisizione, la luce viene catturata tramite il CCD (Charge Coupled Device), che non è altro che un array di celle che contengono colori.
-Nella maggior parte delle camere possiedono un chip singolo: tuttavia, la soluzione migliore sarebbe possederne tre diversi. Per l'occhio umano, la
+La maggior parte delle camere possiedono un chip singolo: tuttavia, la soluzione migliore sarebbe possederne tre diversi. Per l'occhio umano, la
 distribuzione migliore è $50 \%$ di verde, $25 \%$ di rosso e $25 \%$ di blu. In particolare:
 \begin{itemize}
         \item i sensori verdi sono elementi sensibili alla luminanza;
@@ -187,12 +187,12 @@ distribuzione migliore è $50 \%$ di verde, $25 \%$ di rosso e $25 \%$ di blu. I
         \label{fig:camere}
 \end{figure}
 \subsection{Quantizzazione}
-Per quanto riguarda la quantizzazione, devono essere definiti il numero di livelli, tipicamente sono $8$ ($8 b/p$). Questo numero viene definito dalla
-legge di Weber, di meno (già con $6$) si comincia ad avere sfocatura. Con $8 b/p$ si ha l'LDR (Low Dynamic Range), che è il rapporto tra il valore
+Per quanto riguarda la quantizzazione, devono essere definiti il numero di livelli, tipicamente sono $8$ ($8 \, \text{b/p}$). Questo numero viene definito dalla
+legge di Weber, di meno (già con $6$) si comincia ad avere sfocatura. Con $8 \, \text{b/p}$ si ha l'LDR (Low Dynamic Range), che è il rapporto tra il valore
 massimo ed il valore minimo di una misura fisica. Per esempio:
 \begin{itemize}
         \item per una scena tra la parte più chiara e quella più scura;
         \item per un display tra il massimo e minimo dell'intensità emessa dallo schermo.
 \end{itemize}
-Infine, con $32 b/p$ si ha l'HDR (High Dynamic Range), che posso acquisire immagini con esposizioni molto diverse, per avere scene più dinamiche.
+Infine, con $32 \, \text{b/p}$ si ha l'HDR (High Dynamic Range), che posso acquisire immagini con esposizioni molto diverse, per avere scene più dinamiche.
 \vfill

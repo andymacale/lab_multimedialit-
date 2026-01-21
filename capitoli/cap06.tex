@@ -10,10 +10,10 @@ Di seguito è mostrato uno schema che riassume i passi eseguiti nel formato di c
         \label{fig:schemaJPEG1}
 \end{figure}
 \subsection{Fase 1: conversione da RGB a YCbCr}
-Un'immagine a colori viene rappresentata nel formato RGB, che non sono altre tre matrici dove R contiene i livelli di rosso, G di verde e B di blu. tuttavia
-tale rappresentazione non risulta efficace nella compressione, dato che sono ridondanti. Per questo motivo, si convertono tali matrici nel formato YCbCr, dove Y è luminanza e CbCr
-rappresentano la crominanza, che insieme non sono affatto ridondanti. Infatti, l'occhio umano percepisci la variazione di luminosità che di colore, dato
-dal fatto che l'occhio umano ha molti più bastoncelli che coni. Ciò, verrà trattato nei capitoli successivi. \\
+Un'immagine a colori viene rappresentata nel formato RGB, che non sono altre tre matrici dove R contiene i livelli di rosso, G di verde e B di blu. Tuttavia
+tale rappresentazione non risulta efficace nella compressione, dato che sono ridondanti, poiché rappresentano tre diverse immagini in scala d grigi molto simili. 
+Per questo motivo, si convertono tali matrici nel formato YCbCr, dove Y è luminanza e CbCr rappresentano la crominanza: ciò avviene perché 
+l'occhio umano percepisce di più la variazione di luminosità che di colore, dato dal fatto che possiede molti più bastoncelli che coni.\\
 Comunque, la risoluzione delle componenti cromatiche vengono ridotte di un fattore $2$. In particolare:
 \begin{itemize}
     \item $4:4:4$ non si ha nessun sottocampionamento;
@@ -49,11 +49,11 @@ campionamento. La formula è la seguente:
 dove:
 \begin{itemize}
     \item $T(u,v)$ è il coefficiente trasformato;
-    \item $Z(u,v)$ è il coefficiente trasformato normalizzato;
+    \item $Z(u,v)$ è il coefficiente trasformato normalizzato, ($Z$ è una matrice ben nota);
     \item $T^{*}(u,v)$ è il coefficiente sogliato e quantizzato dell'approssimazione di $T(u,v)$.
 \end{itemize}
 \subsection{Fase 4: pattern zig-zag}
-A questo punto, vengono ordinati i coefficienti usando un pattern zig-zag, in questo modo vengono ottenute sequenze consecutive di $0$ molto più lungh
+A questo punto, vengono ordinati i coefficienti usando un pattern zig-zag, in questo modo vengono ottenute sequenze consecutive di $0$ molto più lunghe
 rispetto che farlo per riga.
 \begin{figure}[htbp]
         \centering
@@ -65,7 +65,7 @@ rispetto che farlo per riga.
 A questo punto:
 \begin{itemize}
     \item tutti i coefficienti DC vengono codificati con la DPCM (Differential pulse-code modulation), che non è altro che la differenza tra i
-    coefficienti DC ed i coefficienti DC dell'immagine precedente;
+    coefficienti DC dell'immagine corrente ed i coefficienti DC dell'immagine precedente;
     \item tutti i coefficienti AC vengono codificati utilizzando la RLC, siccome sono presenti molti $0$ consecutivi.
 \end{itemize}
 Infine, tutti i coefficienti vengono codificati in una sequenza binaria, come quella di Huffman e quella aritmetica; ed infine viene rieseguita la
@@ -84,7 +84,7 @@ Tuttavia, il vantaggio più importante di JPEG2000 è sicuramente la scalabilit�
 \begin{itemize}
     \item scalabilità di risoluzione, ossia è possibile ottenere un flusso progressivo di immagini, partendo dalla risoluzione più bassa;
     \item scalabilità di distorsione, cioè è possibile ottenere un flusso progressivo di SNR basso;
-    \item scalabilità spazioale, ovvero è possibile ottenere un flusso progressivo di una specifica regione, partendo da una piccola ridotta;
+    \item scalabilità spaziale, ovvero è possibile ottenere un flusso progressivo di una specifica regione, partendo da una piccola ridotta;
     \item scalabilità dei componenti, dove possibile ottenere un flusso progressivo, partendo da una scala di grigi per arrivare ad un'immagine a colori.
 \end{itemize}
 \begin{figure}[htbp]
@@ -105,8 +105,8 @@ Per prima cosa, si esegue il cosiddetto preprocessing, che si compone in tre sot
 Innanzittutto, si effettua l'estrazione delle componenti e la trasformazione, in cui si mappano le componenti RGB e si trasformano in YCbCr, per ridurre
 la correlazione tra le componenti, conducendo a due tipologie di trasformazioni:
 \begin{itemize}
-    \item trasformazione delle componenti irreversibili (ICT, irreversibile component transfomation);
-    \item trasformazione delle componenti reversibile (RCT, reversibile component transfomation).
+    \item trasformazione delle componenti irreversibili (ICT, Irreversibile Component Transfomation);
+    \item trasformazione delle componenti reversibili (RCT, Reversibile Component Transfomation).
 \end{itemize}
 Successivamente, si esegue la cosiddetta piastrellatura dell'immagine (in inglese image tiling), in cui avviene una partizione dell'immagine in blocchi
 rettangolari non sovrapposti, in modo tale da poter essere compressi in maniera indipendente.\\
@@ -158,7 +158,7 @@ In questo modo, si ha una classificazione dei coefficienti, partendo da quelli p
 il primo non-zero, divendando significativo, codificando il suo segno e tutta la sua sottosequenza di bit. Ad esempio, i dati con la riduzione di
 distorsione più alta dovrebbere essere codificati per primi per mezzo di bit compressi. Per essere codificato, il coefficiente deve superare:
 \begin{itemize}
-    \item la propagazione di significatività, in cui se è un bit è insignificante, ma almeno uno dei suo vicini lo è, allora viene codificato, oppure allora
+    \item la propagazione di significatività, in cui se è un bit è insignificante, ma almeno uno dei suo vicini lo è, allora viene codificato, oppure allo
     stesso tempo è significante, e il suo flag è $1$, allora il segno del simbolo è codificato;
     \item la raffinatezza di magnitudine, che codifica campioni significativi che non sono stati codificati nel passaggio precedente;
     \item il passaggio di pulizia, in cui codifica tutti i bit che sono stati passati attraverso i due passaggi di codifica precedenti.
@@ -173,9 +173,9 @@ distorsione più alta dovrebbere essere codificati per primi per mezzo di bit co
 Ora, per ridurre la ridondanza sostanziale tra piani di bit successivi, si usa la codifica aritmetica adattiva, in cui è in grado di cambiare tra ben
 $18$ modelli di probabilità adattiva. In particolare:
 \begin{itemize}
-    \item seleziona i modelli basati sulla bit codificati precedentemente dal piano corrette a quelli precedenti;
+    \item seleziona i modelli basati sui bit codificati precedentemente dal piano corrente a quelli precedenti;
     \item ogni modello stima la sua distribuzione di probabilità;
-    \item in questo contesto usa la probabilità condizionale.
+    \item in questo contesto si usa la probabilità condizionale.
 \end{itemize}
 \subsection{Fase 7: strati di qualità}
 I flussi di bit risultanti per ogni blocco di codice sono organizzati in livelli di qualità per ottenere:
